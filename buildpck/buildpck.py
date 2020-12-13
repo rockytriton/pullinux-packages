@@ -67,12 +67,20 @@ for f in files:
     os.chdir(f)
     break
 
-p = Popen("bash " + plx_pck + "/build.sh", shell=True)
-p.wait()
+plx_bin = os.environ["PLX_BIN"]
+
+p = Popen("bash -e " + plx_pck + "/build.sh", shell=True, stderr=subprocess.PIPE)
+outp, errors = p.communicate()
+
+if p.wait() != 0:
+    print("FAILED TO INSTALL...")
+    print(errors)
+    f = open(plx_bin + "/" + obj["name"] + "-errors.txt", "w")
+    f.write(errors)
+    f.close()
+    sys.exit(1)    
 
 print("Installed into " + inst_path)
-
-plx_bin = os.environ["PLX_BIN"]
 
 os.chdir(inst_path)
 p = Popen("tar -cJf " + plx_bin + "/" + obj["name"] + "-" + obj["version"] + "-pullinux-1.1.1.tar.xz .", shell=True)
