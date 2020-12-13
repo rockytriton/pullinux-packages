@@ -85,8 +85,8 @@ outp, errors = p.communicate()
 if p.wait() != 0:
     print("FAILED TO INSTALL...")
     print(errors)
-    shutil.rmtree(build_path)
-    shutil.rmtree(inst_path)
+    print(build_path)
+    print(inst_path)
     sys.exit(1)    
 
 print("Installed into " + inst_path)
