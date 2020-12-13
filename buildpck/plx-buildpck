@@ -1,0 +1,103 @@
+#!/usr/bin/env python3
+
+import json
+import os
+import subprocess
+import sys
+from os import path
+import tempfile
+from subprocess import Popen, PIPE, DEVNULL
+import shutil
+
+if len(sys.argv) < 2:
+    print("Usage: buildpck <package_name>")
+    sys.exit(1)
+
+pck = sys.argv[1]
+
+print("Building", pck + "...")
+
+build_path = tempfile.mkdtemp()
+
+print("Fetching package...")
+
+p = Popen(os.path.dirname(os.path.realpath(__file__)) + "/plx-getpck " + pck + " " + build_path)
+
+if p.wait() != 0:
+    print("FAILED TO FETCH PACKAGE: " + pck)
+    shutil.rmtree(build_path)
+    sys.exit(1)
+
+print("Using Path:", build_path)
+
+inst_path = tempfile.mkdtemp()
+
+os.environ["PLX_BUILD"] = build_path
+os.environ["PLX_INST"] = inst_path
+os.environ["P"] = inst_path
+os.environ["MAKEFLAGS"] = "-j8"
+
+obj = json.load(open(build_path + "/pck.json"))
+
+print("Fetching sources...")
+
+os.chdir(build_path)
+
+print("Changed directory into: ", build_path)
+
+p = Popen(os.path.dirname(os.path.realpath(__file__)) + "/plx-get " + obj["source"] + " " + build_path)
+
+if p.wait() != 0:
+    print("FAILED TO FETCH SOURCE: " + obj["source"])
+    sys.exit(1)
+
+if "extras" in obj:
+    for x in obj["extras"]:
+        p = Popen(os.path.dirname(os.path.realpath(__file__)) + "/plx-get " + x + " " + build_path)
+
+        if p.wait() != 0:
+            print("FAILED TO FETCH EXTRA: " + x)
+            sys.exit(1)
+
+files = os.listdir()
+tarf = files[0]
+
+for ff in files:
+    if obj["source"].endswith(ff):
+        tarf = ff
+        break
+
+p = Popen("tar -xf " + tarf, shell=True)
+p.wait()
+
+files = os.listdir()
+
+for f in files:
+    if os.path.isdir(f):
+        os.chdir(f)
+        break
+
+plx_bin = os.environ["PLX_BIN"]
+
+p = Popen("bash -e " + build_path + "/build.sh", universal_newlines=True, shell=True, stderr=subprocess.PIPE)
+outp, errors = p.communicate()
+
+if p.wait() != 0:
+    print("FAILED TO INSTALL...")
+    print(errors)
+    shutil.rmtree(build_path)
+    shutil.rmtree(inst_path)
+    sys.exit(1)    
+
+print("Installed into " + inst_path)
+
+os.chdir(inst_path)
+p = Popen("tar -cJf " + plx_bin + "/" + obj["name"] + "-" + obj["version"] + "-pullinux-1.1.1.tar.xz .", shell=True)
+p.wait()
+
+shutil.rmtree(build_path)
+shutil.rmtree(inst_path)
+
+print("")
+print("DONE")
+print("")

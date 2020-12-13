@@ -20,9 +20,9 @@ pcks = f.readlines()
 for pck in pcks:
     print("Building package: ", pck)
 
-    p = subprocess.Popen(os.path.dirname(os.path.realpath(__file__)) + "/buildpck.py " + pck, shell=True)
+    p = subprocess.Popen(os.path.dirname(os.path.realpath(__file__)) + "/plx-buildpck " + pck, shell=True)
 
     if p.wait() != 0:
-        print("FAILED")
+        print("FAILED: " + pck)
         sys.exit(1)
 

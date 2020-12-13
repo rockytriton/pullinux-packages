@@ -1,0 +1,34 @@
+#!/usr/bin/env python3
+
+import json
+import os
+import subprocess
+import sys
+from os import path
+import tempfile
+from subprocess import Popen, PIPE, DEVNULL
+import shutil
+
+if len(sys.argv) < 3:
+    print("Usage: plx-getpck <package_name> <download_path>")
+    sys.exit(1)
+
+pck = sys.argv[1]
+
+base_url = "https://raw.githubusercontent.com/rockytriton/pullinux-packages/main/"
+
+get_json = base_url + pck[0] + "/" + pck[1:] + "/pck.json"
+get_build = base_url + pck[0] + "/" + pck[1:] + "/build.sh"
+
+p = subprocess.Popen(os.path.dirname(os.path.realpath(__file__)) + "/plx-get " + get_json + " " + sys.argv[2], shell=True)
+
+if p.wait() != 0:
+    print("FAILED: " + get_json)
+    sys.exit(1)
+
+p = subprocess.Popen(os.path.dirname(os.path.realpath(__file__)) + "/plx-get " + get_build + " " + sys.argv[2], shell=True)
+
+if p.wait() != 0:
+    print("FAILED: " + get_build)
+    sys.exit(1)
+
