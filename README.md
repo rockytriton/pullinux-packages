@@ -1,2 +1,1 @@
-# pullinux-packages
-Pullinux Packages.
+Information needed to build pullinux packages.
