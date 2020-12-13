@@ -21,7 +21,7 @@ build_path = tempfile.mkdtemp()
 
 print("Fetching package...")
 
-p = Popen(os.path.dirname(os.path.realpath(__file__)) + "/plx-getpck " + pck + " " + build_path)
+p = Popen(os.path.dirname(os.path.realpath(__file__)) + "/plx-getpck " + pck + " " + build_path, shell=True)
 
 if p.wait() != 0:
     print("FAILED TO FETCH PACKAGE: " + pck)
@@ -45,7 +45,7 @@ os.chdir(build_path)
 
 print("Changed directory into: ", build_path)
 
-p = Popen(os.path.dirname(os.path.realpath(__file__)) + "/plx-get " + obj["source"] + " " + build_path)
+p = Popen(os.path.dirname(os.path.realpath(__file__)) + "/plx-get " + obj["source"] + " " + build_path, shell=True)
 
 if p.wait() != 0:
     print("FAILED TO FETCH SOURCE: " + obj["source"])
@@ -53,7 +53,7 @@ if p.wait() != 0:
 
 if "extras" in obj:
     for x in obj["extras"]:
-        p = Popen(os.path.dirname(os.path.realpath(__file__)) + "/plx-get " + x + " " + build_path)
+        p = Popen(os.path.dirname(os.path.realpath(__file__)) + "/plx-get " + x + " " + build_path, shell=True)
 
         if p.wait() != 0:
             print("FAILED TO FETCH EXTRA: " + x)
