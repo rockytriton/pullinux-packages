@@ -1,0 +1,11 @@
+{
+    "name": "zstd",
+    "version": "1.4.5",
+    "source": "https://github.com/facebook/zstd/releases/download/v1.4.5/zstd-1.4.5.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "zstd"
+    ]
+}

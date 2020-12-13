@@ -1,0 +1,13 @@
+{
+    "name": "glibc",
+    "version": "2.32",
+    "source": "http://ftp.gnu.org/gnu/glibc/glibc-2.32.tar.xz",
+    "extras": ["http://www.linuxfromscratch.org/patches/lfs/10.0/glibc-2.32-fhs-1.patch", 
+	    "https://www.iana.org/time-zones/repository/releases/tzdata2020a.tar.gz"],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "glibc"
+    ]
+}
+

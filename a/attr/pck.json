@@ -1,0 +1,11 @@
+{
+    "name": "attr",
+    "version": "2.4.48",
+    "source": "http://download.savannah.gnu.org/releases/attr/attr-2.4.48.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "attr"
+    ]
+}

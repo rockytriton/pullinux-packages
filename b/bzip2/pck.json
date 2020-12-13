@@ -1,0 +1,11 @@
+{
+    "name": "bzip2",
+    "version": "1.0.8",
+    "source": "https://www.sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz",
+    "extras": ["http://www.linuxfromscratch.org/patches/lfs/10.0/bzip2-1.0.8-install_docs-1.patch"],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "bzip2"
+    ]
+}
