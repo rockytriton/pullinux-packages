@@ -17,8 +17,8 @@ pck = sys.argv[1]
 
 base_url = "https://raw.githubusercontent.com/rockytriton/pullinux-packages/main/"
 
-get_json = base_url + pck[0] + "/" + pck[1:] + "/pck.json"
-get_build = base_url + pck[0] + "/" + pck[1:] + "/build.sh"
+get_json = base_url + pck[0] + "/" + pck + "/pck.json"
+get_build = base_url + pck[0] + "/" + pck + "/build.sh"
 
 p = subprocess.Popen(os.path.dirname(os.path.realpath(__file__)) + "/plx-get " + get_json + " " + sys.argv[2], shell=True)
 
