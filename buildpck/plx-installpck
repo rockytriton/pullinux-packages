@@ -28,7 +28,8 @@ inst_path = sys.argv[2]
 
 try:
     plx.install_package(pck, inst_path)
-except:
+except Exception as err:
+    print("Installation Error: {0}".format(err))
     plx.unlock()
     sys.exit(1)
 

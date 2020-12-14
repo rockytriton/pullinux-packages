@@ -121,6 +121,35 @@ def get_package(pck, version):
 
     return tar
 
+def complete_install(pck, inst_path):
+    if not path.exists(inst_path + "/_install"):
+        return True
+
+    if inst_path == "/":
+        inst_script = inst_path + "/_install/install.sh"
+
+        if path.exists(inst_script):
+            p = Popen("bash -e " + inst_script, shell=True)
+
+            if p.wait() != 0:
+                print("Failed to run install script")
+                shutil.rmtree("/_install")
+                return False
+
+    shutil.rmtree("/_install")
+    return True
+
+def install_deps(obj, inst_path):
+    for dep in obj["deps"]:
+        if get_installed_version(dep, inst_path) == None:
+            print("Installing dependency: " + dep + "...")
+            if not install_package(dep, inst_path):
+                print("Failed to install dependency " + dep + " for " + obj["name"])
+                return False
+    
+    return True
+
+
 def install_package(pck, inst_path):
     print("Fetching package Information: " + pck + "...")
     build_path = tempfile.mkdtemp()
@@ -142,6 +171,10 @@ def install_package(pck, inst_path):
         print("Already installed with version: ", version)
         return False
 
+    if not install_deps(obj):
+        print("Failed to install dependencies")
+        return False
+
     tar = get_package(pck, obj["version"])
 
     if tar == None:
@@ -155,10 +188,9 @@ def install_package(pck, inst_path):
         print("Failed to install")
         return False
 
-    add_installed_version(pck, obj["version"], inst_path)
+    complete_install(pck, inst_path)
 
-    p = Popen("rm -rf " + inst_path + "/_install", shell=True, stderr=DEVNULL)
-    p.wait()
+    add_installed_version(pck, obj["version"], inst_path)
 
     p = Popen("chmod 755 " + inst_path, shell=True, stderr=DEVNULL)
     p.wait()
