@@ -1,0 +1,11 @@
+{
+    "name": "e2fsprogs",
+    "version": "1.45.6",
+    "source": "https://downloads.sourceforge.net/project/e2fsprogs/e2fsprogs/v1.45.6/e2fsprogs-1.45.6.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "e2fsprogs"
+    ]
+}

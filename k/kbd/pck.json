@@ -1,0 +1,11 @@
+{
+    "name": "kbd",
+    "version": "2.3.0",
+    "source": "https://www.kernel.org/pub/linux/utils/kbd/kbd-2.3.0.tar.xz",
+    "extras": ["http://www.linuxfromscratch.org/patches/lfs/10.0/kbd-2.3.0-backspace-1.patch"],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "kbd"
+    ]
+}

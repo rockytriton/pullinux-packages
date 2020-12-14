@@ -1,0 +1,11 @@
+{
+    "name": "gdbm",
+    "version": "1.18.1",
+    "source": "http://ftp.gnu.org/gnu/gdbm/gdbm-1.18.1.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "gdbm"
+    ]
+}

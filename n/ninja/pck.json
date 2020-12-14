@@ -1,0 +1,11 @@
+{
+    "name": "ninja",
+    "version": "1.10.0",
+    "source": "https://github.com/ninja-build/ninja/archive/v1.10.0/ninja-1.10.0.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "ninja"
+    ]
+}

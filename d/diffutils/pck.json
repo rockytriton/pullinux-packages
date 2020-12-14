@@ -1,0 +1,11 @@
+{
+    "name": "diffutils",
+    "version": "3.7",
+    "source": "http://ftp.gnu.org/gnu/diffutils/diffutils-3.7.tar.xz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "diffutils"
+    ]
+}

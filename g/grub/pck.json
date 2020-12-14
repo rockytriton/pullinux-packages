@@ -1,0 +1,11 @@
+{
+    "name": "grub",
+    "version": "2.04",
+    "source": "https://ftp.gnu.org/gnu/grub/grub-2.04.tar.xz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "grub"
+    ]
+}

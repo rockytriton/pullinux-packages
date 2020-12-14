@@ -1,0 +1,11 @@
+{
+    "name": "patch",
+    "version": "2.7.6",
+    "source": "http://ftp.gnu.org/gnu/patch/patch-2.7.6.tar.xz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "patch"
+    ]
+}

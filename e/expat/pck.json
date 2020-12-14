@@ -1,0 +1,11 @@
+{
+    "name": "expat",
+    "version": "2.2.9",
+    "source": "https://prdownloads.sourceforge.net/expat/expat-2.2.9.tar.xz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "expat"
+    ]
+}

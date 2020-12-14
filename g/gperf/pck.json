@@ -1,0 +1,11 @@
+{
+    "name": "gperf",
+    "version": "3.1",
+    "source": "http://ftp.gnu.org/gnu/gperf/gperf-3.1.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "gperf"
+    ]
+}

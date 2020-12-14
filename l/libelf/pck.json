@@ -1,0 +1,11 @@
+{
+    "name": "libelf",
+    "version": "0.180",
+    "source": "https://sourceware.org/ftp/elfutils/0.180/elfutils-0.180.tar.bz2",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "libelf"
+    ]
+}

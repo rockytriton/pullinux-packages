@@ -1,0 +1,11 @@
+{
+    "name": "vim",
+    "version": "8.2.1361",
+    "source": "http://anduin.linuxfromscratch.org/LFS/vim-8.2.1361.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "vim"
+    ]
+}

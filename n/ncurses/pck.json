@@ -1,0 +1,11 @@
+{
+    "name": "ncurses",
+    "version": "6.2",
+    "source": "http://ftp.gnu.org/gnu/ncurses/ncurses-6.2.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "ncurses"
+    ]
+}
