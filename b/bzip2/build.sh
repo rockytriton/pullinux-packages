@@ -13,7 +13,7 @@ mkdir -p $P/bin
 mkdir -p $P/usr/bin
 mkdir -p $P/usr/lib
 
-make DESTDIR=$P PREFIX=/usr install
+make DESTDIR=$P PREFIX=$P/usr install
 
 cp -v bzip2-shared $P/bin/bzip2
 cp -av libbz2.so* $P/lib
