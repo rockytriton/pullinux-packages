@@ -1,0 +1,11 @@
+{
+    "name": "linux-pam",
+    "version": "1.4.0",
+    "source": "https://github.com/linux-pam/linux-pam/releases/download/v1.4.0/Linux-PAM-1.4.0.tar.xz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "linux-pam"
+    ]
+}

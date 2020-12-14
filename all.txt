@@ -25,7 +25,6 @@ patch
 readline
 sed
 shadow
-systemd
 zstd
 zlib
 ninja
@@ -63,9 +62,14 @@ automake
 tcl
 texinfo
 tar
-libcap
 libpipeline
 libelf
 libffi
 less
 libtool
+linux-pam
+libcap
+libtasn1
+p11-kit
+make-ca
+systemd

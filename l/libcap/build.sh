@@ -12,3 +12,11 @@ mv -v $P/lib/libpsx.a $P/usr/lib
 rm -v $P/lib/libcap.so
 ln -sfv ../../lib/libcap.so.2 $P/usr/lib/libcap.so
 
+make -C pam_cap
+
+install -v -dm755 $P/lib/security
+install -v -dm755 $P/etc/security
+
+install -v -m755 pam_cap/pam_cap.so $P/lib/security &&
+install -v -m644 pam_cap/capability.conf $P/etc/security
+

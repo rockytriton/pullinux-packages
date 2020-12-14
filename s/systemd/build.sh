@@ -56,3 +56,20 @@ EOF
 
 rm -f $P/usr/lib/sysctl.d/50-pid-max.conf
 
+cat > /etc/pam.d/systemd-user << "EOF"
+
+account  required    pam_access.so
+account  include     system-account
+
+session  required    pam_env.so
+session  required    pam_limits.so
+session  required    pam_unix.so
+session  required    pam_loginuid.so
+session  optional    pam_keyinit.so force revoke
+session  optional    pam_systemd.so
+
+auth     required    pam_deny.so
+password required    pam_deny.so
+
+EOF
+

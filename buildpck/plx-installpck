@@ -12,43 +12,24 @@ import shutil
 import plx
 
 if len(sys.argv) < 3:
-    print("Usage: plx-getpck <package_name> <install_path>")
+    print("Usage: plx-installpck <package_name> <install_path>")
     sys.exit(1)
 
 if os.geteuid() != 0:
     print("Permission Denied")
     sys.exit(1)
 
-plx_bin = os.environ["PLX_BIN"]
+if not plx.lock():
+    print("Failed lock package db")
+    sys.exit(1)
+
 pck = sys.argv[1]
 inst_path = sys.argv[2]
-build_path = tempfile.mkdtemp()
 
-print("Fetching package Information...")
-
-if not plx.download_pck_info(pck, build_path, True):
-    print("Install Failed")
+try:
+    plx.install_package(pck, inst_path)
+except:
+    plx.unlock()
     sys.exit(1)
 
-obj = plx.read_json(build_path + "/pck.json")
-
-version = plx.get_installed_version(pck)
-
-if version != None:
-    print("Already installed with version: ", version)
-    sys.exit(1)
-
-tar = plx.get_package(pck, obj["version"])
-
-if tar == None:
-    print("Package binaries not found")
-    sys.exit(1)
-
-os.chdir(inst_path)
-p = Popen("tar -xhf " + tar, shell=True)
-
-if p.wait() != 0:
-    print("Failed to install")
-    sys.exit(2)
-
-print("Installation of " + pck + " " + obj["version"] + " Complete")
+plx.unlock()
