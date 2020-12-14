@@ -19,8 +19,6 @@ mv -v $P/usr/lib/libncursesw.so.6* $P/lib
 
 ln -sfv ../../lib/$(readlink $P/usr/lib/libncursesw.so) $P/usr/lib/libncursesw.so
 
-echo "MADE PKGCONFIG"
-
 for lib in ncurses form panel menu ; do
     rm -vf                    $P/usr/lib/lib${lib}.so
     echo "INPUT(-l${lib}w)" > $P/usr/lib/lib${lib}.so
