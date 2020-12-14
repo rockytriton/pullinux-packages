@@ -13,7 +13,7 @@ make
 make DESTDIR=$P install
 
 mkdir -p $P/lib
-
+mkdir -p $P/usr/lib/pkgconfig
 mv -v $P/usr/lib/libncursesw.so.6* $P/lib
 
 ln -sfv ../../lib/$(readlink $P/usr/lib/libncursesw.so) $P/usr/lib/libncursesw.so
