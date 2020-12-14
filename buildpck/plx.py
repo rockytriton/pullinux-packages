@@ -157,5 +157,11 @@ def install_package(pck, inst_path):
 
     add_installed_version(pck, obj["version"], inst_path)
 
+    p = Popen("rm -rf " + inst_path + "/_install", shell=True, stderr=DEVNULL)
+    p.wait()
+
+    p = Popen("chmod 755 " + inst_path, shell=True, stderr=DEVNULL)
+    p.wait()
+
     print("Installation of " + pck + " " + obj["version"] + " Complete")
     return True
