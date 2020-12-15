@@ -273,7 +273,7 @@ def build_package(pck):
         p = Popen("tar -xf " + src, shell=True)
         p.wait()
 
-    if "nosubdir" in obj:
+    if "nosubdir" in obj and obj["nosubdir"] == True:
         print("No sub-directory extracted, using current: " + build_path)
     else:
         files = os.listdir()

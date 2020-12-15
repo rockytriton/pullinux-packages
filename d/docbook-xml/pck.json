@@ -5,6 +5,7 @@
     "extras": [],
     "deps": ["libxml2", "sgml-common"],
     "mkdeps": ["unzip"],
+    "nosubdir":true,
     "provides": [
         "docbook-xml"
     ]
