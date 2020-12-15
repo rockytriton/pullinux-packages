@@ -1,7 +1,7 @@
 {
     "name": "docbook-xml",
-    "version": "5.1",
-    "source": "https://docbook.org/xml/5.1/docbook-v5.1-os.zip",
+    "version": "4.5",
+    "source": "http://www.docbook.org/xml/4.5/docbook-xml-4.5.zip",
     "extras": [],
     "deps": ["libxml2", "sgml-common"],
     "mkdeps": ["unzip"],
