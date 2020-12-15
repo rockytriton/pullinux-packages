@@ -143,6 +143,7 @@ def install_deps(obj, inst_path):
     for dep in obj["deps"]:
         if get_installed_version(dep, inst_path) == None:
             print("Installing dependency: " + dep + "...")
+            
             if not install_package(dep, inst_path):
                 print("Failed to install dependency " + dep + " for " + obj["name"])
                 return False
@@ -196,4 +197,127 @@ def install_package(pck, inst_path):
     p.wait()
 
     print("Installation of " + pck + " " + obj["version"] + " Complete")
+    return True
+
+def build_package(pck):
+    print("Building", pck + "...")
+
+    build_path = tempfile.mkdtemp()
+
+    print("Fetching package...")
+
+    if not download_pck_info(pck, build_path, False):
+        print("FAILED TO FETCH PACKAGE: " + pck)
+        shutil.rmtree(build_path)
+        return False
+
+    print("Using Path:", build_path)
+
+    inst_path = tempfile.mkdtemp()
+
+    os.environ["PLX_BUILD"] = build_path
+    os.environ["PLX_INST"] = inst_path
+    os.environ["P"] = inst_path
+    os.environ["MAKEFLAGS"] = "-j8"
+
+    obj = read_json(build_path + "/pck.json")
+
+    for dep in obj["deps"]:
+        if not install_package(dep, "/"):
+            print("Unable to install package, try building it first...")
+            if not build_package(dep):
+                print("Failed to install and build " + dep)
+                return False
+            else if not install_package(dep, "/"):
+                print("Built package, but failed to install it: " + dep)
+                return False
+
+    for dep in obj["mkdeps"]:
+        if not install_package(dep, "/"):
+            print("Unable to install package, try building it first...")
+            if not build_package(dep):
+                print("Failed to install and build " + dep)
+                return False
+            else if not install_package(dep, "/"):
+                print("Built package, but failed to install it: " + dep)
+                return False
+
+    os.chdir(build_path)
+
+    print("Changed directory into: ", build_path)
+
+    if not download_url( obj["source"], build_path):
+        print("FAILED TO FETCH SOURCE: " + obj["source"])
+        return False
+
+    if "extras" in obj:
+        for x in obj["extras"]:
+            if not download_url(x, build_path):
+                print("FAILED TO FETCH EXTRA: " + x)
+                return False
+
+
+    files = os.listdir()
+    src = files[0]
+
+    for ff in files:
+        if obj["source"].endswith(ff):
+            src = ff
+            break
+
+    if (src.endswith("zip")):
+        p = Popen("unzip " + src, shell=True)
+        p.wait()
+    else:
+        p = Popen("tar -xf " + src, shell=True)
+        p.wait()
+
+    if "nosubdir" in obj:
+        print("No sub-directory extracted, using current: " + build_path)
+    else:
+        files = os.listdir()
+
+        for f in files:
+            if os.path.isdir(f):
+                os.chdir(f)
+                break
+
+    plx_bin = os.environ["PLX_BIN"]
+
+    p = Popen("bash -e " + build_path + "/build.sh", universal_newlines=True, shell=True, stderr=subprocess.PIPE)
+    outp, errors = p.communicate()
+
+    if p.wait() != 0:
+        print("FAILED TO INSTALL...")
+        print(errors)
+        print(build_path)
+        print(inst_path)
+        return False    
+
+    print("Installed into " + inst_path)
+
+    p = Popen("strip --strip-debug $P/usr/lib/*", shell=True, stderr=subprocess.DEVNULL)
+    p.wait()
+
+    p = Popen("strip --strip-unneeded $P/usr/{,s}bin/*", shell=True, stderr=subprocess.DEVNULL)
+    p.wait()
+
+    p = Popen("find $P/usr/lib -type f -name \*.a -exec strip --strip-debug {} ';'", shell=True, stderr=subprocess.DEVNULL)
+    p.wait()
+
+    p = Popen("find $P/lib $P/usr/lib -type f -name \*.so* ! -name \*dbg -exec strip --strip-unneeded {} ';'", shell=True, stderr=subprocess.DEVNULL)
+    p.wait()
+
+    p = Popen("find $P/{bin,sbin} $P/usr/{bin,sbin,libexec} -type f -exec strip --strip-all {} ';'", shell=True, stderr=subprocess.DEVNULL)
+    p.wait()
+
+    os.chdir(inst_path)
+    p = Popen("tar -cJf " + plx_bin + "/" + obj["name"] + "-" + obj["version"] + "-pullinux-1.1.1.tar.xz .", shell=True)
+    p.wait()
+
+    shutil.rmtree(build_path)
+    shutil.rmtree(inst_path)
+
+    print("Build of " + pck + " " + obj["version"] + " Complete")
+
     return True

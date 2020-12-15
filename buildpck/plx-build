@@ -7,6 +7,7 @@ import sys
 from os import path
 import tempfile
 from subprocess import Popen, PIPE, DEVNULL
+import plx
 
 if len(sys.argv) < 2:
     print("Usage: buildlist <list_file>")
@@ -20,9 +21,9 @@ pcks = f.readlines()
 for pck in pcks:
     print("Building package: ", pck)
 
-    p = subprocess.Popen(os.path.dirname(os.path.realpath(__file__)) + "/plx-buildpck " + pck, shell=True)
-
-    if p.wait() != 0:
+    if not plx.build_package(pck):
         print("FAILED: " + pck)
         sys.exit(1)
 
+print("")
+print("Finished installing list: " + list_file)

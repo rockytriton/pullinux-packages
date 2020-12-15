@@ -1,0 +1,11 @@
+{
+    "name": "sudo",
+    "version": "1.9.2",
+    "source": "http://www.sudo.ws/dist/sudo-1.9.2.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "sudo"
+    ]
+}

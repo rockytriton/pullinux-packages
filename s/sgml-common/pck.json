@@ -1,0 +1,11 @@
+{
+    "name": "sgml-common",
+    "version": "0.6.3",
+    "source": "https://sourceware.org/ftp/docbook-tools/new-trials/SOURCES/sgml-common-0.6.3.tgz",
+    "extras": ["http://www.linuxfromscratch.org/patches/blfs/10.0/sgml-common-0.6.3-manpage-1.patch"],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "sgml-common"
+    ]
+}
