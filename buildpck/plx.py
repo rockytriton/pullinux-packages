@@ -172,7 +172,7 @@ def install_package(pck, inst_path):
         print("Already installed with version: ", version)
         return False
 
-    if not install_deps(obj):
+    if not install_deps(obj, inst_path):
         print("Failed to install dependencies")
         return False
 
@@ -228,7 +228,8 @@ def build_package(pck):
             if not build_package(dep):
                 print("Failed to install and build " + dep)
                 return False
-            else if not install_package(dep, "/"):
+            
+            if not install_package(dep, "/"):
                 print("Built package, but failed to install it: " + dep)
                 return False
 
@@ -238,7 +239,7 @@ def build_package(pck):
             if not build_package(dep):
                 print("Failed to install and build " + dep)
                 return False
-            else if not install_package(dep, "/"):
+            if not install_package(dep, "/"):
                 print("Built package, but failed to install it: " + dep)
                 return False
 
