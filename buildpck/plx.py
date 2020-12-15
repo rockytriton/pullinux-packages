@@ -215,11 +215,6 @@ def build_package(pck):
 
     inst_path = tempfile.mkdtemp()
 
-    os.environ["PLX_BUILD"] = build_path
-    os.environ["PLX_INST"] = inst_path
-    os.environ["P"] = inst_path
-    os.environ["MAKEFLAGS"] = "-j8"
-
     obj = read_json(build_path + "/pck.json")
 
     for dep in obj["deps"]:
@@ -243,6 +238,12 @@ def build_package(pck):
                 print("Built package, but failed to install it: " + dep)
                 return False
 
+
+    os.environ["PLX_BUILD"] = build_path
+    os.environ["PLX_INST"] = inst_path
+    os.environ["P"] = inst_path
+    os.environ["MAKEFLAGS"] = "-j8"
+    
     os.chdir(build_path)
 
     print("Changed directory into: ", build_path)
@@ -313,7 +314,7 @@ def build_package(pck):
     p.wait()
 
     print("Packaging " + pck + "...")
-    
+
     os.chdir(inst_path)
     p = Popen("tar -cJf " + plx_bin + "/" + obj["name"] + "-" + obj["version"] + "-pullinux-1.1.1.tar.xz .", shell=True)
     p.wait()

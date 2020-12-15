@@ -16,9 +16,9 @@ useradd  -c 'sshd PrivSep' \
 UNITSDIR=/lib/systemd/system
 CONFMODE=644
 
-install -m ${CONFMODE} units/sshd.service ${UNITSDIR}/
-install -m ${CONFMODE} units/sshdat.service ${UNITSDIR}/sshd@.service
-install -m ${CONFMODE} units/sshd.socket ${UNITSDIR}/
+install -m ${CONFMODE} _install/units/sshd.service ${UNITSDIR}/
+install -m ${CONFMODE} _install/units/sshdat.service ${UNITSDIR}/sshd@.service
+install -m ${CONFMODE} _install/units/sshd.socket ${UNITSDIR}/
 systemctl enable sshd.service
 
 ssh-keygen -A
