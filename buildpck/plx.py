@@ -312,6 +312,8 @@ def build_package(pck):
     p = Popen("find $P/{bin,sbin} $P/usr/{bin,sbin,libexec} -type f -exec strip --strip-all {} ';'", shell=True, stderr=subprocess.DEVNULL)
     p.wait()
 
+    print("Packaging " + pck + "...")
+    
     os.chdir(inst_path)
     p = Popen("tar -cJf " + plx_bin + "/" + obj["name"] + "-" + obj["version"] + "-pullinux-1.1.1.tar.xz .", shell=True)
     p.wait()

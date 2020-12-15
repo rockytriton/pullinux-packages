@@ -16,7 +16,9 @@ if len(sys.argv) < 2:
 
 pck = sys.argv[1]
 
-plx.build_package(pck)
+if not plx.build_package(pck):
+    print("Failed to build " + pck)
+    sys.exit(1)
 
 print("")
 print("DONE")

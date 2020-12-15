@@ -1,0 +1,11 @@
+{
+    "name": "glib",
+    "version": "2.64.4",
+    "source": "http://ftp.gnome.org/pub/gnome/sources/glib/2.64/glib-2.64.4.tar.xz",
+    "extras": ["http://www.linuxfromscratch.org/patches/blfs/10.0/glib-2.64.4-skip_warnings-1.patch"],
+    "deps": ["libxslt", "pcre"],
+    "mkdeps": [],
+    "provides": [
+        "glib"
+    ]
+}
