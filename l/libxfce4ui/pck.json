@@ -1,0 +1,11 @@
+{
+    "name": "libxfce4ui",
+    "version": "4.14.1",
+    "source": "http://archive.xfce.org/src/xfce/libxfce4ui/4.14/libxfce4ui-4.14.1.tar.bz2",
+    "extras": [],
+    "deps": ["gtk+3", "gtk+2", "xfconf", "startup-notification"],
+    "mkdeps": [],
+    "provides": [
+        "libxfce4ui"
+    ]
+}

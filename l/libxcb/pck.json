@@ -1,0 +1,11 @@
+{
+    "name": "libxcb",
+    "version": "1.14",
+    "source": "https://xorg.freedesktop.org/archive/individual/lib/libxcb-1.14.tar.xz",
+    "extras": [],
+    "deps": ["libXau", "xcb-proto", "libXdmcp"],
+    "mkdeps": [],
+    "provides": [
+        "libxcb"
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "name": "graphviz",
+    "version": "2.44.1",
+    "source": "https://www2.graphviz.org/Packages/stable/portable_source/graphviz-2.44.1.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "graphviz"
+    ]
+}

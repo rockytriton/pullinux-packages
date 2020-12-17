@@ -1,0 +1,11 @@
+{
+    "name": "exo",
+    "version": "0.12.11",
+    "source": "http://archive.xfce.org/src/xfce/exo/0.12/exo-0.12.11.tar.bz2",
+    "extras": [],
+    "deps": ["libxfce4ui", "libxfce4util", "perl-uri"],
+    "mkdeps": [],
+    "provides": [
+        "exo"
+    ]
+}

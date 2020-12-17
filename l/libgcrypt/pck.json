@@ -1,0 +1,11 @@
+{
+    "name": "libgcrypt",
+    "version": "1.8.6",
+    "source": "https://www.gnupg.org/ftp/gcrypt/libgcrypt/libgcrypt-1.8.6.tar.bz2",
+    "extras": [],
+    "deps": ["libgpg-error"],
+    "mkdeps": [],
+    "provides": [
+        "libgcrypt"
+    ]
+}

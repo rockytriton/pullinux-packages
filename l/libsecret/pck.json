@@ -1,0 +1,11 @@
+{
+    "name": "libsecret",
+    "version": "0.20.3",
+    "source": "http://ftp.gnome.org/pub/gnome/sources/libsecret/0.20/libsecret-0.20.3.tar.xz",
+    "extras": [],
+    "deps": ["libgcrypt", "vala", "gobject-introspection", "glib", "gnome-keyring"],
+    "mkdeps": [],
+    "provides": [
+        "libsecret"
+    ]
+}

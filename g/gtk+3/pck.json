@@ -1,0 +1,11 @@
+{
+    "name": "gtk+3",
+    "version": "3.24.22",
+    "source": "http://ftp.gnome.org/pub/gnome/sources/gtk+/3.24/gtk+-3.24.22.tar.xz",
+    "extras": [],
+    "deps": ["gobject-introspection", "at-spi2-atk", "fribidi", "gdk-pixbuf", "librsvg", "libepoxy", "pango", "adwaita-icon-theme", "hicolor-icon-theme", "iso-codes", "libxkbcommon", "sassc", "wayland-protocols"],
+    "mkdeps": [],
+    "provides": [
+        "gtk+3"
+    ]
+}

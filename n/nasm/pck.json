@@ -1,0 +1,11 @@
+{
+    "name": "nasm",
+    "version": "2.15.03",
+    "source": "http://www.nasm.us/pub/nasm/releasebuilds/2.15.03/nasm-2.15.03.tar.xz",
+    "extras": ["http://www.nasm.us/pub/nasm/releasebuilds/2.15.03/nasm-2.15.03-xdoc.tar.xz"],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "nasm"
+    ]
+}

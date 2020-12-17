@@ -1,0 +1,11 @@
+{
+    "name": "thunar",
+    "version": "1.8.15",
+    "source": "http://archive.xfce.org/src/xfce/thunar/1.8/thunar-1.8.15.tar.bz2",
+    "extras": [],
+    "deps": ["exo", "libxfce4ui", "lxde-icon-theme", "libgudev", "libnotify", "xfce4-panel"],
+    "mkdeps": [],
+    "provides": [
+        "thunar"
+    ]
+}

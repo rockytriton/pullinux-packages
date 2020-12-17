@@ -1,0 +1,11 @@
+{
+    "name": "pixman",
+    "version": "0.40.0",
+    "source": "https://www.cairographics.org/releases/pixman-0.40.0.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "pixman"
+    ]
+}

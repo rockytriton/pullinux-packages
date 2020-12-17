@@ -1,0 +1,11 @@
+{
+    "name": "gnupg",
+    "version": "2.2.21",
+    "source": "https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-2.2.21.tar.bz2",
+    "extras": [],
+    "deps": ["libassuan", "libgcrypt", "libksba", "npth", "pinentry"],
+    "mkdeps": [],
+    "provides": [
+        "gnupg"
+    ]
+}

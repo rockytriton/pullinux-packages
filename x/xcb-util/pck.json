@@ -1,0 +1,11 @@
+{
+    "name": "xcb-util",
+    "version": "0.4.0",
+    "source": "https://xcb.freedesktop.org/dist/xcb-util-0.4.0.tar.bz2",
+    "extras": [],
+    "deps": ["libxcb"],
+    "mkdeps": [],
+    "provides": [
+        "xcb-util"
+    ]
+}

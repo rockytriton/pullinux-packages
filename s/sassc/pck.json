@@ -1,0 +1,11 @@
+{
+    "name": "sassc",
+    "version": "3.6.1",
+    "source": "https://github.com/sass/sassc/archive/3.6.1/sassc-3.6.1.tar.gz",
+    "extras": ["https://github.com/sass/libsass/archive/3.6.4/libsass-3.6.4.tar.gz"],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "sassc"
+    ]
+}

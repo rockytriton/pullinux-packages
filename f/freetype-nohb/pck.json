@@ -1,0 +1,11 @@
+{
+    "name": "freetype-nohb",
+    "version": "2.10.2",
+    "source": "https://downloads.sourceforge.net/freetype/freetype-2.10.2.tar.xz",
+    "extras": ["https://downloads.sourceforge.net/freetype/freetype-doc-2.10.2.tar.xz"],
+    "deps": ["libpng"],
+    "mkdeps": ["which"],
+    "provides": [
+        "freetype-nohb"
+    ]
+}

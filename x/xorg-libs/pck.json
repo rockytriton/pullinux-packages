@@ -1,0 +1,11 @@
+{
+    "name": "xorg-libs",
+    "version": "1.1.1",
+    "source": "",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "xorg-libs"
+    ]
+}

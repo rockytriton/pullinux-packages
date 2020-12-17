@@ -1,0 +1,11 @@
+{
+    "name": "mesa",
+    "version": "20.1.5",
+    "source": "https://mesa.freedesktop.org/archive/mesa-20.1.5.tar.xz",
+    "extras": [],
+    "deps": ["xorg-libs", "libdrm", "mako", "llvm", "libvdpau", "wayland-protocols"],
+    "mkdeps": ["libva-nomesa"],
+    "provides": [
+        "mesa"
+    ]
+}

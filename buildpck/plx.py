@@ -243,14 +243,19 @@ def build_package(pck):
     os.environ["PLX_INST"] = inst_path
     os.environ["P"] = inst_path
     os.environ["MAKEFLAGS"] = "-j8"
+    os.environ["XORG_PREFIX"] = "/usr"
+    os.environ["XORG_CONFIG"] = "--prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static"
     
     os.chdir(build_path)
 
     print("Changed directory into: ", build_path)
 
-    if not download_url( obj["source"], build_path):
-        print("FAILED TO FETCH SOURCE: " + obj["source"])
-        return False
+    nosource = obj["source"] == ""
+
+    if not nosource:
+        if not download_url( obj["source"], build_path):
+            print("FAILED TO FETCH SOURCE: " + obj["source"])
+            return False
 
     if "extras" in obj:
         for x in obj["extras"]:
@@ -258,21 +263,21 @@ def build_package(pck):
                 print("FAILED TO FETCH EXTRA: " + x)
                 return False
 
+    if not nosource:
+        files = os.listdir()
+        src = files[0]
 
-    files = os.listdir()
-    src = files[0]
+        for ff in files:
+            if obj["source"].endswith(ff):
+                src = ff
+                break
 
-    for ff in files:
-        if obj["source"].endswith(ff):
-            src = ff
-            break
-
-    if (src.endswith("zip")):
-        p = Popen("unzip " + src, shell=True)
-        p.wait()
-    else:
-        p = Popen("tar -xf " + src, shell=True)
-        p.wait()
+        if (src.endswith("zip")):
+            p = Popen("unzip " + src, shell=True)
+            p.wait()
+        else:
+            p = Popen("tar -xf " + src, shell=True)
+            p.wait()
 
     if "nosubdir" in obj and obj["nosubdir"] == True:
         print("No sub-directory extracted, using current: " + build_path)

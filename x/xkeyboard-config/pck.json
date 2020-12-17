@@ -1,0 +1,11 @@
+{
+    "name": "xkeyboard-config",
+    "version": "2.30",
+    "source": "https://www.x.org/pub/individual/data/xkeyboard-config/xkeyboard-config-2.30.tar.bz2",
+    "extras": [],
+    "deps": ["xorg-libs"],
+    "mkdeps": [],
+    "provides": [
+        "xkeyboard-config"
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "name": "hicolor-icon-theme",
+    "version": "0.17",
+    "source": "https://icon-theme.freedesktop.org/releases/hicolor-icon-theme-0.17.tar.xz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "hicolor-icon-theme"
+    ]
+}

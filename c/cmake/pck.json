@@ -1,0 +1,11 @@
+{
+    "name": "cmake",
+    "version": "3.18.1",
+    "source": "https://cmake.org/files/v3.18/cmake-3.18.1.tar.gz",
+    "extras": [],
+    "deps": ["libuv", "curl", "libarchive", "nghttp2"],
+    "mkdeps": [],
+    "provides": [
+        "cmake"
+    ]
+}

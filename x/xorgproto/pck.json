@@ -1,0 +1,11 @@
+{
+    "name": "xorgproto",
+    "version": "2020.1",
+    "source": "https://xorg.freedesktop.org/archive/individual/proto/xorgproto-2020.1.tar.bz2",
+    "extras": [],
+    "deps": ["util-macros"],
+    "mkdeps": [],
+    "provides": [
+        "xorgproto"
+    ]
+}

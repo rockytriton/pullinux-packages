@@ -1,0 +1,11 @@
+{
+    "name": "adwaita-icon-theme",
+    "version": "3.36.1",
+    "source": "http://ftp.gnome.org/pub/gnome/sources/adwaita-icon-theme/3.36/adwaita-icon-theme-3.36.1.tar.xz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "adwaita-icon-theme"
+    ]
+}

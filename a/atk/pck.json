@@ -1,0 +1,11 @@
+{
+    "name": "atk",
+    "version": "2.36.0",
+    "source": "http://ftp.gnome.org/pub/gnome/sources/atk/2.36/atk-2.36.0.tar.xz",
+    "extras": [],
+    "deps": ["glib", "gobject-introspection"],
+    "mkdeps": [],
+    "provides": [
+        "atk"
+    ]
+}
