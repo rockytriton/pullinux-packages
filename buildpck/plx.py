@@ -126,9 +126,10 @@ def complete_install(pck, inst_path):
         return True
 
     if inst_path == "/":
-        inst_script = inst_path + "/_install/install.sh"
+        inst_script = "/_install/install.sh"
 
         if path.exists(inst_script):
+            print("Running install script")
             p = Popen("bash -e " + inst_script, shell=True)
 
             if p.wait() != 0:
@@ -136,7 +137,7 @@ def complete_install(pck, inst_path):
                 shutil.rmtree("/_install")
                 return False
 
-    shutil.rmtree("/_install")
+    shutil.rmtree(inst_path + "/_install")
     return True
 
 def install_deps(obj, inst_path):
