@@ -48,6 +48,7 @@ md5sum -c ../lib-7.md5
 
 for package in $(grep -v '^#' ../lib-7.md5 | awk '{print $2}')
 do
+  export X11_LIBS=$P/usr/lib
   packagedir=${package%.tar.bz2}
   tar -xf $package
   pushd $packagedir
