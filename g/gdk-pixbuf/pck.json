@@ -3,7 +3,7 @@
     "version": "2.40.0",
     "source": "http://ftp.gnome.org/pub/gnome/sources/gdk-pixbuf/2.40/gdk-pixbuf-2.40.0.tar.xz",
     "extras": [],
-    "deps": ["glib", "jpeg-turbo", "libpng", "shared-mime-info", "libtiff", "xorg-libs", "gobject-introspection"],
+    "deps": ["glib", "libjpeg-turbo", "libpng", "shared-mime-info", "libtiff", "xorg-libs", "gobject-introspection"],
     "mkdeps": [],
     "provides": [
         "gdk-pixbuf"
