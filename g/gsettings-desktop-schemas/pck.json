@@ -1,0 +1,11 @@
+{
+    "name": "gsettings-desktop-schemas",
+    "version": "3.36.1",
+    "source": "http://ftp.gnome.org/pub/gnome/sources/gsettings-desktop-schemas/3.36/gsettings-desktop-schemas-3.36.1.tar.xz",
+    "extras": [],
+    "deps": ["glib", "gobject-introspection"],
+    "mkdeps": [],
+    "provides": [
+        "gsettings-desktop-schemas"
+    ]
+}

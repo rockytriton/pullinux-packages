@@ -1,0 +1,11 @@
+{
+    "name": "xfce4-appfinder",
+    "version": "4.14.0",
+    "source": "http://archive.xfce.org/src/xfce/xfce4-appfinder/4.14/xfce4-appfinder-4.14.0.tar.bz2",
+    "extras": [],
+    "deps": ["libxfce4ui", "garcon"],
+    "mkdeps": [],
+    "provides": [
+        "xfce4-appfinder"
+    ]
+}

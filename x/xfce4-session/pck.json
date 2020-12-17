@@ -1,0 +1,11 @@
+{
+    "name": "xfce4-session",
+    "version": "4.14.2",
+    "source": "http://archive.xfce.org/src/xfce/xfce4-session/4.14/xfce4-session-4.14.2.tar.bz2",
+    "extras": [],
+    "deps": ["libwnck", "libxfce4ui", "which", "xorg-apps", "desktop-file-utils", "shared-mime-info", "polkit-gnome", "xfdesktop"],
+    "mkdeps": [],
+    "provides": [
+        "xfce4-session"
+    ]
+}

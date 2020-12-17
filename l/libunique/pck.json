@@ -1,0 +1,11 @@
+{
+    "name": "libunique",
+    "version": "1.1.6",
+    "source": "http://ftp.gnome.org/pub/gnome/sources/libunique/1.1/libunique-1.1.6.tar.bz2",
+    "extras": ["http://www.linuxfromscratch.org/patches/blfs/10.0/libunique-1.1.6-upstream_fixes-1.patch"],
+    "deps": ["gtk+2"],
+    "mkdeps": [],
+    "provides": [
+        "libunique"
+    ]
+}

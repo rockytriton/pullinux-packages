@@ -1,0 +1,11 @@
+{
+    "name": "xfdesktop",
+    "version": "4.14.2",
+    "source": "http://archive.xfce.org/src/xfce/xfdesktop/4.14/xfdesktop-4.14.2.tar.bz2",
+    "extras": [],
+    "deps": ["exo", "libwnck", "libxfce4ui", "libnotify", "startup-notification", "thunar"],
+    "mkdeps": [],
+    "provides": [
+        "xfdesktop"
+    ]
+}

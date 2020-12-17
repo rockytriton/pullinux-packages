@@ -1,0 +1,11 @@
+{
+    "name": "upower",
+    "version": "0.9911",
+    "source": "https://gitlab.freedesktop.org/upower/upower/uploads/93cfe7c8d66ed486001c4f3f55399b7a/upower-0.99.11.tar.xz",
+    "extras": [],
+    "deps": ["dbus-glib", "libgudev", "libusb", "polkit", "gobject-introspection"],
+    "mkdeps": [],
+    "provides": [
+        "upower"
+    ]
+}

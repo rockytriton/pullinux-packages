@@ -1,0 +1,11 @@
+{
+    "name": "lxsession",
+    "version": "0.5.5",
+    "source": "https://downloads.sourceforge.net/lxde/lxsession-0.5.5.tar.xz",
+    "extras": [],
+    "deps": ["dbus-glib", "libunique", "polkit", "vala"],
+    "mkdeps": [],
+    "provides": [
+        "lxsession"
+    ]
+}

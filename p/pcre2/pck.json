@@ -1,0 +1,11 @@
+{
+    "name": "pcre2",
+    "version": "10.35",
+    "source": "https://downloads.sourceforge.net/pcre/pcre2-10.35.tar.bz2",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "pcre2"
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "name": "xorg-apps",
+    "version": "1.1.1",
+    "source": "",
+    "extras": [],
+    "deps": ["libpng", "mesa", "xbitmaps", "xcb-util"],
+    "mkdeps": [],
+    "provides": [
+        "xorg-apps"
+    ]
+}

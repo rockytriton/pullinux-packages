@@ -1,0 +1,11 @@
+{
+    "name": "nettle",
+    "version": "3.6",
+    "source": "https://ftp.gnu.org/gnu/nettle/nettle-3.6.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "nettle"
+    ]
+}

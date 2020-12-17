@@ -1,0 +1,11 @@
+{
+    "name": "gstreamer",
+    "version": "1.16.2",
+    "source": "https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-1.16.2.tar.xz",
+    "extras": [],
+    "deps": ["glib"],
+    "mkdeps": [],
+    "provides": [
+        "gstreamer"
+    ]
+}

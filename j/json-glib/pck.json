@@ -1,0 +1,11 @@
+{
+    "name": "json-glib",
+    "version": "1.4.4",
+    "source": "http://ftp.gnome.org/pub/gnome/sources/json-glib/1.4/json-glib-1.4.4.tar.xz",
+    "extras": [],
+    "deps": ["glib"],
+    "mkdeps": [],
+    "provides": [
+        "json-glib"
+    ]
+}
