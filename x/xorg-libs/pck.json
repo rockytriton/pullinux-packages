@@ -3,7 +3,7 @@
     "version": "1.1.1",
     "source": "",
     "extras": [],
-    "deps": [],
+    "deps": ["fontconfig", "libxcb", "xmlto"],
     "mkdeps": [],
     "provides": [
         "xorg-libs"
