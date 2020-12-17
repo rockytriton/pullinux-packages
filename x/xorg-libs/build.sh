@@ -33,6 +33,13 @@ dd7e1e946def674e78c0efbc5c7d5b3b  libxkbfile-1.1.0.tar.bz2
 42dda8016943dc12aff2c03a036e0937  libxshmfence-1.3.tar.bz2
 EOF
 
+echo ""
+echo "XORG CONFIG INFO:"
+echo "$XORG_PREFIX"
+echo "$XORG_CONFIG"
+echo ""
+
+
 mkdir lib &&
 cd lib &&
 grep -v '^#' ../lib-7.md5 | awk '{print $2}' | wget -i- -c \
