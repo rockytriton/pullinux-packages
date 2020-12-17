@@ -101,7 +101,5 @@ do
     /etc/xml/catalog
 done
 
-this causes error...
-
 EOF
 
