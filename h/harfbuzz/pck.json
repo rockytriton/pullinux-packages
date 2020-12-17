@@ -3,7 +3,7 @@
     "version": "2.7.1",
     "source": "https://github.com/harfbuzz/harfbuzz/releases/download/2.7.1/harfbuzz-2.7.1.tar.xz",
     "extras": [],
-    "deps": [],
+    "deps": ["graphite2", "freetype", "icu", "glib"],
     "mkdeps": ["freetype-nohb"],
     "provides": [
         "harfbuzz"
