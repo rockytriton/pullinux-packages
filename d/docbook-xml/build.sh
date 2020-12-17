@@ -57,8 +57,6 @@ xmlcatalog --noout --add "rewriteURI" \
     "file:///usr/share/xml/docbook/xml-dtd-4.5" \
     /etc/xml/docbook
 
-Create (or update) and populate the /etc/xml/catalog catalog file by running the following commands as the root user:
-
 if [ ! -e /etc/xml/catalog ]; then
     xmlcatalog --noout --create /etc/xml/catalog
 fi &&
