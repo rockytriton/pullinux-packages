@@ -1,0 +1,11 @@
+{
+    "name": "libssh2",
+    "version": "1.9.0",
+    "source": "https://www.libssh2.org/download/libssh2-1.9.0.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "libssh2"
+    ]
+}

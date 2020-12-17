@@ -180,7 +180,15 @@ def install_package(pck, inst_path):
     tar = get_package(pck, obj["version"])
 
     if tar == None:
-        print("Package binaries not found")
+        print("Binary not found, let's build it...")
+        if not build_package(pck):
+            print("Building missing package failed")
+            return False
+
+        tar = get_package(pck, obj["version"])
+
+    if tar == None:
+        print("Package binaries not found after trying to build")
         return False
 
     os.chdir(inst_path)
@@ -190,7 +198,9 @@ def install_package(pck, inst_path):
         print("Failed to install")
         return False
 
-    complete_install(pck, inst_path)
+    if not complete_install(pck, inst_path):
+        print("Failed to install")
+        return False
 
     add_installed_version(pck, obj["version"], inst_path)
 
