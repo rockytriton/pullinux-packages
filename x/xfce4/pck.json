@@ -3,7 +3,7 @@
     "version": "4.14.4",
     "source": "",
     "extras": [],
-    "deps": ["xfce4-panel", "thunar", "thunar-volman", "tumbler", "xfce4-appfinder", "xfce4-power-manager", "xfce4-settings", "xfdesktop", "xfwm", "xfce4-session", "xfce4-terminal"],
+    "deps": ["xfce4-panel", "thunar", "thunar-volman", "tumbler", "xfce4-appfinder", "xfce4-power-manager", "xfce4-settings", "xfdesktop", "xfwm4", "xfce4-session", "xfce4-terminal"],
     "mkdeps": [],
     "provides": [
         "xfce4"
