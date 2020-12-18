@@ -6,6 +6,7 @@ autoreconf -fi &&
 ./configure --prefix=/usr --disable-static &&
 make
 make DESTDIR=$P install
+make install
 
 popd &&
 autoreconf -fi &&
