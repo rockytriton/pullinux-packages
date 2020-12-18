@@ -30,7 +30,7 @@ EOF
 make
 
 make DESTDIR=$P install
-imake install
+make install
 
 mkdir -p $P/usr/bin
 cp tests/src/lightdm-session $P/usr/bin                         &&
