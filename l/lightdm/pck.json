@@ -3,7 +3,7 @@
     "version": "1.30.0",
     "source": "https://github.com/CanonicalLtd/lightdm/releases/download/1.30.0/lightdm-1.30.0.tar.xz",
     "extras": ["https://launchpad.net/lightdm-gtk-greeter/2.0/2.0.6/+download/lightdm-gtk-greeter-2.0.6.tar.gz"],
-    "deps": ["exo", "libgcrypt", "itstool", "pcre", "gobject-introspection", "libxklavier", "vala"],
+    "deps": ["exo", "libgcrypt", "itstool", "pcre", "gobject-introspection", "libxklavier", "vala", "xorg-libinput"],
     "mkdeps": [],
     "provides": [
         "lightdm"

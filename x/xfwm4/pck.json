@@ -3,7 +3,7 @@
     "version": "4.14.5",
     "source": "http://archive.xfce.org/src/xfce/xfwm4/4.14/xfwm4-4.14.5.tar.bz2",
     "extras": [],
-    "deps": ["libwnck", "libxfce4ui", "libxfce4util", "startup-notification"],
+    "deps": ["libwnck", "libxfce4ui", "libxfce4util", "startup-notification", "xorg-libinput"],
     "mkdeps": [],
     "provides": [
         "xfwm4"

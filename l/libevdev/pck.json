@@ -1,0 +1,11 @@
+{
+    "name": "libevdev",
+    "version": "1.9.1",
+    "source": "https://www.freedesktop.org/software/libevdev/libevdev-1.9.1.tar.xz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "libevdev"
+    ]
+}

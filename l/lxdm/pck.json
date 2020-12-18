@@ -3,7 +3,7 @@
     "version": "0.5.3",
     "source": "https://downloads.sourceforge.net/lxdm/lxdm-0.5.3.tar.xz",
     "extras": [],
-    "deps": ["gtk+2", "iso-codes", "librsvg", "lxsession", "gtk+3", "libinput"],
+    "deps": ["gtk+2", "iso-codes", "librsvg", "lxsession", "gtk+3", "xorg-libinput"],
     "mkdeps": [],
     "provides": [
         "lxdm"
