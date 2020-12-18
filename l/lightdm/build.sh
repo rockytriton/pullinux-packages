@@ -30,6 +30,8 @@ EOF
 make
 
 make DESTDIR=$P install
+imake install
+
 mkdir -p $P/usr/bin
 cp tests/src/lightdm-session $P/usr/bin                         &&
 sed -i '1 s/sh/bash --login/' $P/usr/bin/lightdm-session        &&
@@ -53,6 +55,7 @@ cd lightdm-gtk-greeter-2.0.6 &&
 make
 
 make DESTDIR=$P install
+make install
 
 cat > $P/_install/lightdm.service << "EOF"
 [Unit]
