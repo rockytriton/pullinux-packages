@@ -1,5 +1,5 @@
 ./configure --prefix=/usr --sysconfdir=/etc &&
 make
 
-DESTDIR=$P install
+make DESTDIR=$P install
 
