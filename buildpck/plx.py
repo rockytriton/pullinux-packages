@@ -49,7 +49,7 @@ def store_pck_info_cache(pck, json, build):
 
 def check_pck_info_cache(pck, output_path, nobuild):
     get_json = base_pck_cache + "/" + pck[0] + "/" + pck + "/pck.json"
-    get_build = base_pck_cache + "/" + pck[0] + "/" + pck + "/build.sh"
+    get_build = base_pck_cachea + "/" + pck[0] + "/" + pck + "/build.sh"
 
     if not path.exists(get_json):
         return False
