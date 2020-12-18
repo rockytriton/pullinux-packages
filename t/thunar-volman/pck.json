@@ -3,7 +3,7 @@
     "version": "0.9.5",
     "source": "http://archive.xfce.org/src/xfce/thunar-volman/0.9/thunar-volman-0.9.5.tar.bz2",
     "extras": [],
-    "deps": ["exo", "libgudev", "libxfce4ui", "libnotify", "startup-notification", "polkit-gnome", "gvfs"],
+    "deps": ["exo", "libgudev", "libxfce4ui", "libnotify", "startup-notification", "polkit-gnome"],
     "mkdeps": [],
     "provides": [
         "thunar-volman"
