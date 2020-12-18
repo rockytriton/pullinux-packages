@@ -3,7 +3,7 @@
     "version": "1.1.1",
     "source": "",
     "extras": [],
-    "deps": ["libpng", "mesa", "xbitmaps", "xcb-util"],
+    "deps": ["libpng", "mesa", "xbitmaps", "xcb-util", "libva"],
     "mkdeps": [],
     "provides": [
         "xorg-apps"
