@@ -8,7 +8,7 @@ make
 make DESTDIR=$P install
 
 mkdir $P/_install
-cat $P/_install/install.sh << "EOF"
+cat > $P/_install/install.sh << "EOF"
 gtk-query-immodules-3.0 --update-cache
 
 glib-compile-schemas /usr/share/glib-2.0/schemas
