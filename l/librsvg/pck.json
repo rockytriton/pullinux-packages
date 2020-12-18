@@ -3,7 +3,7 @@
     "version": "2.48.8",
     "source": "http://ftp.gnome.org/pub/gnome/sources/librsvg/2.48/librsvg-2.48.8.tar.xz",
     "extras": [],
-    "deps": ["gdk-pixbuf", "cairo", "pango", "gobject-introspection"],
+    "deps": ["vala", "gdk-pixbuf", "cairo", "pango", "gobject-introspection"],
     "mkdeps": ["rustc"],
     "provides": [
         "librsvg"

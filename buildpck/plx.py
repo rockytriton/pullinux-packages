@@ -13,6 +13,7 @@ import shutil
 
 base_url = "https://raw.githubusercontent.com/rockytriton/pullinux-packages/main/"
 base_plx_pck = "/usr/share/pullinux"
+base_pck_cache = base_plx_pck + "/cache"
 base_packages = "/packages"
 
 class DownloadProgressBar(tqdm):
@@ -34,6 +35,38 @@ def download_url(url, output_path):
 
     return True
 
+def store_pck_info_cache(pck, json, build):
+    output_path = base_pck_cache + "/" + pck[0] + "/" + pck
+    os.makedirs(output_path, exist_ok=True)
+
+    shutil.copyfile(json, output_path + "/pck.json")
+
+    if build == None:
+        return
+
+    shutil.copyfile(build, output_path + "/build.sh")
+    
+
+def check_pck_info_cache(pck, output_path, nobuild):
+    get_json = base_pck_cache + "/" + pck[0] + "/" + pck + "/pck.json"
+    get_build = base_pck_cache + "/" + pck[0] + "/" + pck + "/build.sh"
+
+    if not path.exists(get_json):
+        return False
+    
+    shutil.copyfile(get_json, output_path + "/pck.json")
+    
+    if nobuild:
+        return True
+
+    if not path.exists(get_build):
+        return False
+    
+    shutil.copyfile(get_json, output_path + "/build.sh")
+
+    return True
+        
+
 def download_pck_info(pck, output_path, nobuild):
 
     get_json = base_url + pck[0] + "/" + pck + "/pck.json"
@@ -44,11 +77,14 @@ def download_pck_info(pck, output_path, nobuild):
         return False
 
     if nobuild:
+        store_pck_info_cache(pck, output_path + "/pck.json", None)
         return True
 
     if not download_url(get_build, output_path):
         print("Failed: " + get_build)
         return False
+
+    store_pck_info_cache(pck, output_path + "/pck.json", output_path + "/build.sh")
 
     return True
 
