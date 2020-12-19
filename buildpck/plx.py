@@ -163,6 +163,7 @@ def complete_install(pck, inst_path):
 
     if inst_path == "/":
         inst_script = "/_install/install.sh"
+        os.chdir("/_install")
 
         if path.exists(inst_script):
             print("Running install script")
