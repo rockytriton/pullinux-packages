@@ -18,7 +18,8 @@ Defaults secure_path="/usr/bin:/bin:/usr/sbin:/sbin"
 %wheel ALL=(ALL) ALL
 EOF
 
-cat > /etc/pam.d/sudo << "EOF"
+mkdir -p $P/etc/pam.d
+cat > $P/etc/pam.d/sudo << "EOF"
 # include the default auth settings
 auth      include     system-auth
 
@@ -32,5 +33,5 @@ session   required    pam_env.so
 session   include     system-session
 EOF
 
-chmod 644 /etc/pam.d/sudo
+chmod 644 $P/etc/pam.d/sudo
 

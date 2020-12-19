@@ -11,7 +11,7 @@ install -v -dm755 -o lightdm -g lightdm /var/lib/lightdm-data &&
 install -v -dm755 -o lightdm -g lightdm /var/cache/lightdm    &&
 install -v -dm770 -o lightdm -g lightdm /var/log/lightdm
 
-install -m 644 lightdm.service /lib/systemd/system
+install -m 644 _install/lightdm.service /lib/systemd/system
 systemctl enable lightdm.service
 
 EOF
