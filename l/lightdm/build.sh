@@ -57,6 +57,9 @@ make
 make DESTDIR=$P install
 make install
 
+cd ..
+
+mkdir -p $P/_install
 cat > $P/_install/lightdm.service << "EOF"
 [Unit]
 Description=Light Display Manager
