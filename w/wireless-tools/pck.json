@@ -1,0 +1,11 @@
+{
+    "name": "wireless-tools",
+    "version": "29",
+    "source": "https://hewlettpackard.github.io/wireless-tools/wireless_tools.29.tar.gz",
+    "extras": ["http://www.linuxfromscratch.org/patches/blfs/10.0/wireless_tools-29-fix_iwlist_scanning-1.patch"],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "wireless-tools"
+    ]
+}

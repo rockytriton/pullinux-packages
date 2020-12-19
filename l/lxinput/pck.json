@@ -1,0 +1,11 @@
+{
+    "name": "lxinput",
+    "version": "0.3.5",
+    "source": "https://downloads.sourceforge.net/lxde/lxinput-0.3.5.tar.xz",
+    "extras": [],
+    "deps": ["gtk+2"],
+    "mkdeps": [],
+    "provides": [
+        "lxinput"
+    ]
+}

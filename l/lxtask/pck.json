@@ -1,0 +1,11 @@
+{
+    "name": "lxtask",
+    "version": "0.1.9",
+    "source": "https://downloads.sourceforge.net/lxde/lxtask-0.1.9.tar.xz",
+    "extras": ["http://www.linuxfromscratch.org/patches/blfs/10.0/lxtask-0.1.9-gcc10_fix-1.patch"],
+    "deps": ["gtk+2"],
+    "mkdeps": [],
+    "provides": [
+        "lxtask"
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "name": "pcmanfm",
+    "version": "1.3.1",
+    "source": "https://downloads.sourceforge.net/pcmanfm/pcmanfm-1.3.1.tar.xz",
+    "extras": [],
+    "deps": ["libfm", "adwaita-icon-theme", "oxygen-icons5", "lxde-icon-theme", "fribidi"],
+    "mkdeps": [],
+    "provides": [
+        "pcmanfm"
+    ]
+}

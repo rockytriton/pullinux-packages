@@ -1,0 +1,12 @@
+{
+    "name": "lxde",
+    "version": "1.1.1",
+    "source": "",
+    "extras": [],
+    "deps": ["lxmenu-data", "libfm-extra", "menu-cache", "libfm", "pcmanfm", "libwnck", "lxpanel", "lxappearance", "lxsession",
+             "lxde-common", "gpicview", "lxappearance-obconf", "lxinput", "lxrandr", "lxtask", "libvte", "lxterminal"],
+    "mkdeps": [],
+    "provides": [
+        "lxde"
+    ]
+}

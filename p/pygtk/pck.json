@@ -1,0 +1,11 @@
+{
+    "name": "pygtk",
+    "version": "2.24.0",
+    "source": "http://ftp.gnome.org/pub/gnome/sources/pygtk/2.24/pygtk-2.24.0.tar.bz2",
+    "extras": [],
+    "deps": ["pygobject2", "atk", "pango", "pycairo2", "gtk+2", "libglade"],
+    "mkdeps": [],
+    "provides": [
+        "pygtk"
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "name": "xf86-video-intel",
+    "version": "20200817",
+    "source": "http://anduin.linuxfromscratch.org/BLFS/xf86-video-intel/xf86-video-intel-20200817.tar.xz",
+    "extras": [],
+    "deps": ["xcb-util", "xorg-server"],
+    "mkdeps": [],
+    "provides": [
+        "xf86-video-intel"
+    ]
+}

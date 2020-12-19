@@ -1,0 +1,11 @@
+{
+    "name": "lxrandr",
+    "version": "0.3.2",
+    "source": "https://downloads.sourceforge.net/lxde/lxrandr-0.3.2.tar.xz",
+    "extras": [],
+    "deps": ["gtk+2", "xorg-apps"],
+    "mkdeps": [],
+    "provides": [
+        "lxrandr"
+    ]
+}

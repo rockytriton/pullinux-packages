@@ -1,0 +1,11 @@
+{
+    "name": "pycairo2",
+    "version": "1.18.2",
+    "source": "https://github.com/pygobject/pycairo/releases/download/v1.18.2/pycairo-1.18.2.tar.gz",
+    "extras": [],
+    "deps": ["cairo"],
+    "mkdeps": [],
+    "provides": [
+        "pycairo2"
+    ]
+}

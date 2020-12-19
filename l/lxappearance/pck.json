@@ -1,0 +1,11 @@
+{
+    "name": "lxappearance",
+    "version": "0.6.3",
+    "source": "https://downloads.sourceforge.net/lxde/lxappearance-0.6.3.tar.xz",
+    "extras": [],
+    "deps": ["gtk+2", "dbus-glib"],
+    "mkdeps": [],
+    "provides": [
+        "lxappearance"
+    ]
+}

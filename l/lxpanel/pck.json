@@ -1,0 +1,11 @@
+{
+    "name": "lxpanel",
+    "version": "0.10.0",
+    "source": "https://downloads.sourceforge.net/lxde/lxpanel-0.10.0.tar.xz",
+    "extras": [],
+    "deps": ["keybinder", "libwnck", "lxmenu-data", "menu-cache", "alsa-lib", "libxml2", "wireless-tools"],
+    "mkdeps": [],
+    "provides": [
+        "lxpanel"
+    ]
+}
