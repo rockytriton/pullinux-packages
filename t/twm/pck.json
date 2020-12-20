@@ -1,0 +1,11 @@
+{
+    "name": "twm",
+    "version": "1.0.11",
+    "source": "https://www.x.org/pub/individual/app/twm-1.0.11.tar.xz",
+    "extras": [],
+    "deps": ["xorg-legacy-fonts", "xorg-server"],
+    "mkdeps": [],
+    "provides": [
+        "twm"
+    ]
+}

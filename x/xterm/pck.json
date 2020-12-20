@@ -1,0 +1,11 @@
+{
+    "name": "xterm",
+    "version": "359",
+    "source": "http://invisible-mirror.net/archives/xterm/xterm-359.tgz",
+    "extras": [],
+    "deps": ["xorg-apps", "fonts-dejavu"],
+    "mkdeps": [],
+    "provides": [
+        "xterm"
+    ]
+}
