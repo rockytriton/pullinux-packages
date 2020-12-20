@@ -1,0 +1,11 @@
+{
+    "name": "sdl",
+    "version": "1.2.15",
+    "source": "http://www.libsdl.org/release/SDL-1.2.15.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "sdl"
+    ]
+}
