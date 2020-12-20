@@ -3,7 +3,7 @@
     "version": "2.28.7",
     "source": "http://ftp.gnome.org/pub/gnome/sources/pygobject/2.28/pygobject-2.28.7.tar.xz",
     "extras": [],
-    "deps": ["glib", "pycairo", "python2", "gobject-introspection", "libxslt"],
+    "deps": ["glib", "pycairo2", "python2", "gobject-introspection", "libxslt"],
     "mkdeps": [],
     "provides": [
         "pygobject2"
