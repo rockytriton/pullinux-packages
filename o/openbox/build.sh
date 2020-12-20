@@ -1,6 +1,5 @@
-2to3-3.8 -w data/autostart/openbox-xdg-autostart &&
+2to3-3.8 -w data/autostart/openbox-xdg-autostart
 sed 's/python/python3/' -i data/autostart/openbox-xdg-autostart
-
 ./configure --prefix=/usr     \
             --sysconfdir=/etc \
             --disable-static  \
@@ -12,6 +11,3 @@ make DESTDIR=$P install
 mkdir -p $P/etc/skel/.config
 
 cp -rf $P/etc/xdg/openbox $P/etc/skel/.config
-
-
-
