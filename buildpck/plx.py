@@ -62,7 +62,7 @@ def check_pck_info_cache(pck, output_path, nobuild):
     if not path.exists(get_build):
         return False
     
-    shutil.copyfile(get_json, output_path + "/build.sh")
+    shutil.copyfile(get_build, output_path + "/build.sh")
 
     return True
         
@@ -87,7 +87,7 @@ def show_pck_info(pck):
     with open("/tmp/build.sh") as f:
         print(f.read())
 
-    store_pck_info_cache(pck, "/tmp" + "/pck.json", "/tmp" + "/build.sh")
+    store_pck_info_cache(pck, "/tmp/pck.json", "/tmp/build.sh")
 
     return True
 
