@@ -102,3 +102,24 @@ ln    -sfv ../../mozilla/plugins $P/usr/lib/firefox/browser/
 
 unset CC CXX MOZBUILD_STATE_PATH
 
+mkdir -pv $P/usr/share/applications &&
+mkdir -pv $P/usr/share/pixmaps &&
+
+cat > $P/usr/share/applications/firefox.desktop << "EOF" &&
+[Desktop Entry]
+Encoding=UTF-8
+Name=Firefox Web Browser
+Comment=Browse the World Wide Web
+GenericName=Web Browser
+Exec=firefox %u
+Terminal=false
+Type=Application
+Icon=firefox
+Categories=GNOME;GTK;Network;WebBrowser;
+MimeType=application/xhtml+xml;text/xml;application/xhtml+xml;application/vnd.mozilla.xul+xml;text/mml;x-scheme-handler/http;x-scheme-handler/https;
+StartupNotify=true
+EOF
+
+ln -sfv /usr/lib/firefox/browser/chrome/icons/default/default128.png \
+        $P/usr/share/pixmaps/firefox.png
+
