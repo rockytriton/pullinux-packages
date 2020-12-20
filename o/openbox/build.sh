@@ -11,7 +11,7 @@ make DESTDIR=$P install
 
 mkdir -p $P/etc/skel/.config
 
-cp -rf /etc/xdg/openbox $P/etc/skel/.config
+cp -rf $P/etc/xdg/openbox $P/etc/skel/.config
 
 
 
