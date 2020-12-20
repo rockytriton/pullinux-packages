@@ -13,3 +13,11 @@ ln -sfv pip3.8 $P/usr/bin/pip3
 
 python3 -m ensurepip --root $P
 
+mkdir -p $P/_install
+cat > $P/_install/install.sh << "EOF"
+
+pip3 install tqdm
+
+EOF
+
+
