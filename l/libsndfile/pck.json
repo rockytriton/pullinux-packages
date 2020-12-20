@@ -1,0 +1,11 @@
+{
+    "name": "libsndfile",
+    "version": "1.0.28",
+    "source": "http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.28.tar.gz",
+    "extras": [],
+    "deps": ["flac", "libogg", "libvorbis"],
+    "mkdeps": [],
+    "provides": [
+        "libsndfile"
+    ]
+}

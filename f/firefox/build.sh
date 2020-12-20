@@ -18,7 +18,7 @@ ac_add_options --disable-necko-wifi
 # Uncomment the following option if you have not installed PulseAudio
 #ac_add_options --disable-pulseaudio
 # or uncomment this if you installed alsa-lib instead of PulseAudio
-ac_add_options --enable-alsa
+#ac_add_options --enable-alsa
 
 # Comment out following options if you have not installed
 # recommended dependencies:

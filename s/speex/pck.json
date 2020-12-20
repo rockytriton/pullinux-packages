@@ -1,0 +1,11 @@
+{
+    "name": "speex",
+    "version": "1.2.0",
+    "source": "https://downloads.xiph.org/releases/speex/speex-1.2.0.tar.gz",
+    "extras": [],
+    "deps": ["libogg"],
+    "mkdeps": [],
+    "provides": [
+        "speex"
+    ]
+}
