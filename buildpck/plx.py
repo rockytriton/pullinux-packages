@@ -67,6 +67,29 @@ def check_pck_info_cache(pck, output_path, nobuild):
     return True
         
 
+def show_pck_info(pck):
+
+    get_json = base_url + pck[0] + "/" + pck + "/pck.json"
+    get_build = base_url + pck[0] + "/" + pck + "/build.sh"
+
+
+    if not download_url(get_json, "/tmp"):
+        print("Failed: " + get_json)
+        return False
+
+    with open("/tmp/pck.json") as f:
+        print(f.read())
+
+    if not download_url(get_build, "/tmp"):
+        print("Failed: " + get_build)
+        return False
+
+    with open("/tmp/build.sh") as f:
+        print(f.read())
+
+    return True
+
+
 def download_pck_info(pck, output_path, nobuild):
 
     get_json = base_url + pck[0] + "/" + pck + "/pck.json"
