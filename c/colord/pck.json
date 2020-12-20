@@ -1,0 +1,11 @@
+{
+    "name": "colord",
+    "version": "1.4.4",
+    "source": "https://www.freedesktop.org/software/colord/releases/colord-1.4.4.tar.xz",
+    "extras": [],
+    "deps": ["glib", "lcms2", "polkit", "sqlite", "gobject-introspection", "libgudev", "libgusb", "vala"],
+    "mkdeps": [],
+    "provides": [
+        "colord"
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "name": "xdg-utils",
+    "version": "1.1.3",
+    "source": "https://portland.freedesktop.org/download/xdg-utils-1.1.3.tar.gz",
+    "extras": [],
+    "deps": ["xmlto", "lynx", "xorg-apps"],
+    "mkdeps": [],
+    "provides": [
+        "xdg-utils"
+    ]
+}

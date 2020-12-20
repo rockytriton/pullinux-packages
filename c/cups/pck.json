@@ -1,0 +1,11 @@
+{
+    "name": "cups",
+    "version": "2.3.3",
+    "source": "https://github.com/apple/cups/releases/download/v2.3.3/cups-2.3.3-source.tar.gz",
+    "extras": [],
+    "deps": ["gnutls", "colord", "libusb", "xdg-utils"],
+    "mkdeps": [],
+    "provides": [
+        "cups"
+    ]
+}
