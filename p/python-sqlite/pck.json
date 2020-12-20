@@ -1,0 +1,11 @@
+{
+    "name": "python-sqlite",
+    "version": "3.8.5",
+    "source": "https://www.python.org/ftp/python/3.8.5/Python-3.8.5.tar.xz",
+    "extras": [],
+    "deps": ["sqlite"],
+    "mkdeps": [],
+    "provides": [
+        "python-sqlite"
+    ]
+}

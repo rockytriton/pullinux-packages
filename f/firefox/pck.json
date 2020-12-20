@@ -1,0 +1,11 @@
+{
+    "name": "firefox",
+    "version": "78.2.0",
+    "source": "https://archive.mozilla.org/pub/firefox/releases/78.2.0esr/source/firefox-78.2.0esr.source.tar.xz",
+    "extras": [],
+    "deps": ["cbindgen", "dbus-glib", "gtk+3", "gtk+2", "libnotify", "nss", "alsa-lib", "startup-notification", "icu", "libevent", "libwebp"],
+    "mkdeps": ["autoconf", "nasm", "yasm", "python-sqlite", "nodejs", "unzip", "zip"],
+    "provides": [
+        "firefox"
+    ]
+}

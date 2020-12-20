@@ -1,0 +1,11 @@
+{
+    "name": "zip",
+    "version": "3.0",
+    "source": "https://downloads.sourceforge.net/infozip/zip30.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "zip"
+    ]
+}

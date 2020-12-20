@@ -1,0 +1,11 @@
+{
+    "name": "cbindgen",
+    "version": "0.14.3",
+    "source": "https://github.com/eqrion/cbindgen/archive/v0.14.3/cbindgen-0.14.3.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": ["rustc"],
+    "provides": [
+        "cbindgen"
+    ]
+}

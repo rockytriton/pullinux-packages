@@ -1,0 +1,11 @@
+{
+    "name": "c-ares",
+    "version": "1.16.1",
+    "source": "https://c-ares.haxx.se/download/c-ares-1.16.1.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": ["cmake"],
+    "provides": [
+        "c-ares"
+    ]
+}
