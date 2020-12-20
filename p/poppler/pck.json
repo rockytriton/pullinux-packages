@@ -1,0 +1,11 @@
+{
+    "name": "poppler",
+    "version": "20.08.0",
+    "source": "https://poppler.freedesktop.org/poppler-20.08.0.tar.xz",
+    "extras": ["https://poppler.freedesktop.org/poppler-data-0.4.9.tar.gz"],
+    "deps": ["fontconfig", "cairo", "lcms2", "libjpeg-turbo", "libpng", "nss", "openjpeg"],
+    "mkdeps": ["cmake"],
+    "provides": [
+        "poppler"
+    ]
+}
