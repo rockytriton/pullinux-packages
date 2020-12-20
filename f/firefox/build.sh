@@ -84,6 +84,9 @@ unset MOZ_TELEMETRY_REPORTING
 mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/firefox-build-dir
 EOF
 
+mountpoint -q /dev/shm || mount -t tmpfs devshm /dev/shm
+export SHELL=/bin/sh
+
 sed -i -e 's/Disable/Enable/'      \
  -e '/^MOZ_REQUIRE_SIGNING/s/0/1/' \
  build/mozconfig.common
