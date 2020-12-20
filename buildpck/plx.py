@@ -22,11 +22,15 @@ class DownloadProgressBar(tqdm):
             self.total = tsize
         self.update(b * bsize - self.n)
 
-def download_url(url, output_path):
+def download_url(url, output_path, show_progress):
     try:
-        with DownloadProgressBar(unit='B', unit_scale=True,
-                             miniters=1, desc=url.split('/')[-1]) as t:
-            urllib.request.urlretrieve(url, filename=output_path + "/" + url.split('/')[-1], reporthook=t.update_to)
+        if show_progress:
+            with DownloadProgressBar(unit='B', unit_scale=True,
+                                miniters=1, desc=url.split('/')[-1]) as t:
+                urllib.request.urlretrieve(url, filename=output_path + "/" + url.split('/')[-1], reporthook=t.update_to)
+        else:
+            urllib.request.urlretrieve(url, filename=output_path + "/" + url.split('/')[-1])
+
     except Exception as err:
         print("Fetching URL error: {0}".format(err))
         return False
@@ -72,14 +76,14 @@ def show_pck_info(pck):
     get_json = base_url + pck[0] + "/" + pck + "/pck.json"
     get_build = base_url + pck[0] + "/" + pck + "/build.sh"
 
-    if not download_url(get_json, "/tmp"):
+    if not download_url(get_json, "/tmp", False):
         print("Failed: " + get_json)
         return False
 
     with open("/tmp/pck.json") as f:
         print(f.read())
 
-    if not download_url(get_build, "/tmp"):
+    if not download_url(get_build, "/tmp", False):
         store_pck_info_cache(pck, "/tmp" + "/pck.json", None)
         print("Failed: " + get_build)
         return False
@@ -100,7 +104,7 @@ def download_pck_info(pck, output_path, nobuild):
     get_json = base_url + pck[0] + "/" + pck + "/pck.json"
     get_build = base_url + pck[0] + "/" + pck + "/build.sh"
 
-    if not download_url(get_json, output_path):
+    if not download_url(get_json, output_path, False):
         print("Failed: " + get_json)
         return False
 
@@ -108,7 +112,7 @@ def download_pck_info(pck, output_path, nobuild):
         store_pck_info_cache(pck, output_path + "/pck.json", None)
         return True
 
-    if not download_url(get_build, output_path):
+    if not download_url(get_build, output_path, False):
         print("Failed: " + get_build)
         return False
 
@@ -328,13 +332,13 @@ def build_package(pck):
     nosource = obj["source"] == ""
 
     if not nosource:
-        if not download_url( obj["source"], build_path):
+        if not download_url( obj["source"], build_path, True):
             print("FAILED TO FETCH SOURCE: " + obj["source"])
             return False
 
     if "extras" in obj:
         for x in obj["extras"]:
-            if not download_url(x, build_path):
+            if not download_url(x, build_path, True):
                 print("FAILED TO FETCH EXTRA: " + x)
                 return False
 
