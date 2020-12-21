@@ -1,0 +1,11 @@
+{
+    "name": "cdparanoia-III",
+    "version": "10.2",
+    "source": "https://downloads.xiph.org/releases/cdparanoia/cdparanoia-III-10.2.src.tgz",
+    "extras": ["https://raw.githubusercontent.com/rockytriton/pullinux-packages/main/c/cdparanoia-III/cdparanoia-III-10.2-gcc_fixes-1.patch"],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "cdparanoia-III"
+    ]
+}

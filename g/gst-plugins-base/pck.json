@@ -1,0 +1,11 @@
+{
+    "name": "gst-plugins-base",
+    "version": "1.16.2",
+    "source": "https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.16.2.tar.xz",
+    "extras": [],
+    "deps": ["gstreamer", "alsa-lib", "cdparanoia-III", "gobject-introspection", "iso-codes", "libogg", "libtheora", "libvorbis", "xorg-libs"],
+    "mkdeps": [],
+    "provides": [
+        "gst-plugins-base"
+    ]
+}

@@ -324,7 +324,8 @@ def build_package(pck):
     os.environ["MAKEFLAGS"] = "-j8"
     os.environ["XORG_PREFIX"] = "/usr"
     os.environ["XORG_CONFIG"] = "--prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static"
-    
+    os.environ["QT5PREFIX"] = "/opt/qt5"
+
     os.chdir(build_path)
 
     print("Changed directory into: ", build_path)

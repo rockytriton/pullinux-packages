@@ -1,0 +1,11 @@
+{
+    "name": "jasper",
+    "version": "2.0.14",
+    "source": "http://www.ece.uvic.ca/~frodo/jasper/software/jasper-2.0.14.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": ["cmake", "libjpeg-turbo"],
+    "provides": [
+        "jasper"
+    ]
+}
