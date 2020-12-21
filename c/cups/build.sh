@@ -21,7 +21,7 @@ rm -rf /tmp/cupsinit
 rm -rf $P/tmp/cupsinit
 
 mkdir -p $P/etc/cups
-echo "ServerName /run/cups/cups.sock" > /etc/cups/client.conf
+echo "ServerName /run/cups/cups.sock" > $P/etc/cups/client.conf
 
 mkdir -p $P/usr/share/doc
 
@@ -30,12 +30,9 @@ ln -svnf ../cups/doc-2.3.3 $P/usr/share/doc/cups-2.3.3
 mkdir -p $P/etc/pam.d
 
 cat > $P/etc/pam.d/cups << "EOF"
-# Begin /etc/pam.d/cups
-
 auth    include system-auth
 account include system-account
 session include system-session
 
-# End /etc/pam.d/cups
 EOF
 
