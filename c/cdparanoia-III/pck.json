@@ -2,7 +2,8 @@
     "name": "cdparanoia-III",
     "version": "10.2",
     "source": "https://downloads.xiph.org/releases/cdparanoia/cdparanoia-III-10.2.src.tgz",
-    "extras": ["https://raw.githubusercontent.com/rockytriton/pullinux-packages/main/c/cdparanoia-III/cdparanoia-III-10.2-gcc_fixes-1.patch"],
+    "extras": ["https://raw.githubusercontent.com/rockytriton/pullinux-packages/main/c/cdparanoia-III/cdparanoia-III-10.2-gcc_fixes-1.patch",
+    "https://raw.githubusercontent.com/rockytriton/pullinux-packages/main/c/cdparanoia-III/0001-Use-DESTDIR-in-install-Makefile-rule.patch"],
     "deps": [],
     "mkdeps": [],
     "provides": [
