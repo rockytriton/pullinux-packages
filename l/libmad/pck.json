@@ -1,0 +1,11 @@
+{
+    "name": "libmad",
+    "version": "0.15.1b",
+    "source": "https://downloads.sourceforge.net/mad/libmad-0.15.1b.tar.gz",
+    "extras": ["https://raw.githubusercontent.com/rockytriton/pullinux-packages/main/l/libmad/libmad-0.15.1b-fixes-1.patch"],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "libmad"
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "name": "sdl2",
+    "version": "2.0.12",
+    "source": "http://www.libsdl.org/release/SDL2-2.0.12.tar.gz",
+    "extras": ["https://raw.githubusercontent.com/rockytriton/pullinux-packages/main/s/sdl2/SDL2-2.0.12-opengl_include_fix-1.patch"],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "sdl2"
+    ]
+}
