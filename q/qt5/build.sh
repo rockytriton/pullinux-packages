@@ -17,7 +17,7 @@ sed -i 's/python /python3 /' qtdeclarative/qtdeclarative.pro \
             -skip qtwebengine                         &&
 make
 
-make DESTDIR=$P install
+make INSTALL_DIR=$P DESTDIR=$P install
 
 find $P$QT5PREFIX/ -name \*.prl \
    -exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d' {} \;

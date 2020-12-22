@@ -325,6 +325,7 @@ def build_package(pck):
     os.environ["XORG_PREFIX"] = "/usr"
     os.environ["XORG_CONFIG"] = "--prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static"
     os.environ["QT5PREFIX"] = "/opt/qt5"
+    os.environ["KF5_PREFIX"] = "/opt/kf5"
 
     os.chdir(build_path)
 
