@@ -4,7 +4,7 @@ ln -sfnv qt-5.15.0 $P/opt/qt5
 sed -i 's/python /python3 /' qtdeclarative/qtdeclarative.pro \
                              qtdeclarative/src/3rdparty/masm/masm.pri &&
 
-./configure -prefix $P$QT5PREFIX                        \
+./configure -prefix $QT5PREFIX                        \
             -sysconfdir /etc/xdg                      \
             -confirm-license                          \
             -opensource                               \
@@ -17,7 +17,7 @@ sed -i 's/python /python3 /' qtdeclarative/qtdeclarative.pro \
             -skip qtwebengine                         &&
 make
 
-make INSTALL_DIR=$P install
+make INSTALL_ROOT=$P install
 
 find $P$QT5PREFIX/ -name \*.prl \
    -exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d' {} \;
