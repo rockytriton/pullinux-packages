@@ -1,0 +1,12 @@
+{
+    "name": "kf5",
+    "version": "5.73",
+    "source": "",
+    "extras": [],
+    "deps": ["boost", "docbook-xml", "docbook-xsl", "giflib", "libepoxy", "libgcrypt", "libjpeg-turbo", "libpng", "libxslt", "lmdb", "phonon-backend-vlc",
+             "plasma-wayland-protocols", "shared-mime-info", "uri"],
+    "mkdeps": ["extra-cmake-modules", "wget"],
+    "provides": [
+        "kf5"
+    ]
+}

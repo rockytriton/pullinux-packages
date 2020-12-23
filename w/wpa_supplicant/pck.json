@@ -1,0 +1,11 @@
+{
+    "name": "wpa_supplicant",
+    "version": "2.9",
+    "source": "https://w1.fi/releases/wpa_supplicant-2.9.tar.gz",
+    "extras": [],
+    "deps": ["libnl", "desktop-file-utils"],
+    "mkdeps": [],
+    "provides": [
+        "wpa_supplicant"
+    ]
+}

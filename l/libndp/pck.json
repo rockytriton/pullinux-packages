@@ -1,0 +1,11 @@
+{
+    "name": "libndp",
+    "version": "1.7",
+    "source": "http://libndp.org/files/libndp-1.7.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "libndp"
+    ]
+}

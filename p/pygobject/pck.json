@@ -1,0 +1,11 @@
+{
+    "name": "pygobject",
+    "version": "3.36.1",
+    "source": "http://ftp.gnome.org/pub/gnome/sources/pygobject/3.36/pygobject-3.36.1.tar.xz",
+    "extras": [],
+    "deps": ["gobject-introspection", "pycairo"],
+    "mkdeps": [],
+    "provides": [
+        "pygobject"
+    ]
+}

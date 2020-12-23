@@ -1,0 +1,11 @@
+{
+    "name": "boost",
+    "version": "1.74.0",
+    "source": "https://dl.bintray.com/boostorg/release/1.74.0/source/boost_1_74_0.tar.bz2",
+    "extras": [],
+    "deps": [],
+    "mkdeps": ["which"],
+    "provides": [
+        "boost"
+    ]
+}

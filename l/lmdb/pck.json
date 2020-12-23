@@ -1,0 +1,11 @@
+{
+    "name": "lmdb",
+    "version": "0.9.24",
+    "source": "https://github.com/LMDB/lmdb/archive/LMDB_0.9.24.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "lmdb"
+    ]
+}
