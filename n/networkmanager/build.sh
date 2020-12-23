@@ -16,7 +16,7 @@ meson --prefix /usr              \
       -Djson_validation=false    \
       -Dlibaudit=no              \
       -Dlibpsl=false             \
-      -Dnmtui=true               \
+      -Dnmtui=false               \
       -Dovs=false                \
       -Dppp=false                \
       -Dselinux=false            \
