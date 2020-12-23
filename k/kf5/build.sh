@@ -1,85 +1,5 @@
 
-cat > wget-list << "EOF"
-http://download.kde.org/stable/frameworks/5.73/attica-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kapidox-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/karchive-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kcodecs-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kconfig-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kcoreaddons-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kdbusaddons-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kdnssd-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kguiaddons-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/ki18n-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kidletime-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kimageformats-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kitemmodels-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kitemviews-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kplotting-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kwidgetsaddons-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kwindowsystem-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/networkmanager-qt-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/solid-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/sonnet-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/threadweaver-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kauth-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kcompletion-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kcrash-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kdoctools-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kpty-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kunitconversion-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kconfigwidgets-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kservice-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kglobalaccel-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kpackage-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kdesu-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kemoticons-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kiconthemes-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kjobwidgets-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/knotifications-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/ktextwidgets-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kxmlgui-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kbookmarks-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kwallet-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kded-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kio-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kdeclarative-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kcmutils-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kirigami2-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/knewstuff-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/frameworkintegration-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kinit-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/knotifyconfig-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kparts-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kactivities-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/syntax-highlighting-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/ktexteditor-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kdesignerplugin-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kwayland-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/plasma-framework-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kpeople-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kxmlrpcclient-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/bluez-qt-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kfilemetadata-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/baloo-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kactivities-stats-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/krunner-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/qqc2-desktop-style-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kjs-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kdelibs4support-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/khtml-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kjsembed-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kmediaplayer-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kross-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kholidays-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/purpose-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/syndication-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kcalendarcore-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kcontacts-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kquickcharts-5.73.0.tar.xz
-http://download.kde.org/stable/frameworks/5.73/kdav-5.73.0.tar.xz
-EOF
-
-wget -i wget-list
+echo "Preparing extract file"
 
 cat > frameworks-5.73.0.md5 << "EOF"
 c33040192815708c5f075b1dbd01a2be  attica-5.73.0.tar.xz
@@ -168,7 +88,7 @@ fdda5ee07fd893bca10b6e6c62ad4965  syndication-5.73.0.tar.xz
 EOF
 
 while read -r line; do
-
+    echo "Processing $line"
     # Get the file name, ignoring comments and blank lines
     if $(echo $line | grep -E -q '^ *$|^#' ); then continue; fi
     file=$(echo $line | cut -d" " -f2)
@@ -211,4 +131,5 @@ while read -r line; do
   /sbin/ldconfig
 
 done < frameworks-5.73.0.md5
+
 
