@@ -57,6 +57,7 @@ baea3312a026f6e7d0754b1d3c87d52c  kparts-5.73.0.tar.xz
 #7f77d7f55abc4ea9db3dd786b514ee58  kdewebkit-5.73.0.tar.xz
 171ec7fbb842a65bc8c0ef8832bc1b0a  syntax-highlighting-5.73.0.tar.xz
 0daa36a7e0440715bb9d028e3a6a79dd  ktexteditor-5.73.0.tar.xz
+da21560291ac5ca797807017b690526c  kdesignerplugin-5.73.0.tar.xz
 cce15d3618ccf85d66dd3ce00ef119bf  kwayland-5.73.0.tar.xz
 3fb4c9624ccf587b9692b9f18bf8e78e  plasma-framework-5.73.0.tar.xz
 #f05b39b8de0e8f17acdc52d266b39f95  modemmanager-qt-5.73.0.tar.xz
