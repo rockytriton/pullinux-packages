@@ -4,7 +4,7 @@
     "source": "",
     "extras": [],
     "deps": ["boost", "docbook-xml", "docbook-xsl", "giflib", "libepoxy", "libgcrypt", "libjpeg-turbo", "libpng", "libxslt", "lmdb", "phonon-backend-vlc",
-             "plasma-wayland-protocols", "shared-mime-info", "uri"],
+             "plasma-wayland-protocols", "shared-mime-info", "perl-uri"],
     "mkdeps": ["extra-cmake-modules", "wget"],
     "provides": [
         "kf5"
