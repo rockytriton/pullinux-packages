@@ -4,7 +4,7 @@ cat > $P/_install/install.sh << "EOF"
 useradd -c "Print Service User" -d /var/spool/cups -g lp -s /bin/false -u 9 lp
 groupadd -g 19 lpadmin
 
-gtk-update-icon-cache -qtf /usr/share/icons/hicolor
+#gtk-update-icon-cache -qtf /usr/share/icons/hicolor
 
 EOF
 
