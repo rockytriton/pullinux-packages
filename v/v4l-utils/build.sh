@@ -4,5 +4,6 @@
 make
 mkdir -p $P/usr/lib
 
+make install
 make DESTDIR=$P install
 
