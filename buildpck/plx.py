@@ -10,6 +10,7 @@ from os import path
 import tempfile
 from subprocess import Popen, PIPE, DEVNULL
 import shutil
+import time
 
 base_url = "https://raw.githubusercontent.com/rockytriton/pullinux-packages/main/"
 base_plx_pck = "/usr/share/pullinux"
@@ -37,7 +38,8 @@ def try_download_url(url, output_path, show_progress, tries):
 
         tries = tries + 1
 
-        if tries > 3:
+        if tries > 10:
+            time.sleep(1)
             return False
 
         print("Trying again...")
