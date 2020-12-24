@@ -3,7 +3,7 @@
     "version": "20.08.0",
     "source": "http://download.kde.org/stable/release-service/20.08.0/src/ark-20.08.0.tar.xz",
     "extras": ["https://raw.githubusercontent.com/rockytriton/pullinux-packages/main/a/ark/ark-20.08.0-upstream_fix-1.patch"],
-    "deps": ["kde5", "libarchive"],
+    "deps": ["kf5", "libarchive"],
     "mkdeps": [],
     "provides": [
         "ark"
