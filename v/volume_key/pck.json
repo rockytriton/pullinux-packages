@@ -3,7 +3,7 @@
     "version": "0.3.12",
     "source": "https://github.com/felixonmars/volume_key/archive/volume_key-0.3.12.tar.gz",
     "extras": [],
-    "deps": ["cryptsetup", "glib", "gpgme", "nss"],
+    "deps": ["cryptsetup", "glib", "gpgme", "nss", "swig"],
     "mkdeps": [],
     "provides": [
         "volume_key"
