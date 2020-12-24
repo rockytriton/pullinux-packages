@@ -14,7 +14,7 @@ make DESTDIR=$P docdir=/usr/share/doc/vlc-3.0.11.1 install
 
 mkdir $P/_install
 cat > $P/_install/install.sh << EOF
-gtk-update-icon-cache -qtf /usr/share/icons/hicolor &&
+#gtk-update-icon-cache -qtf /usr/share/icons/hicolor &&
 update-desktop-database -q
 
 EOF

@@ -81,7 +81,7 @@
 "http://download.kde.org/stable/frameworks/5.73/kdav-5.73.0.tar.xz",
 "https://download.kde.org/Attic/frameworks/5.73/portingAids/kdesignerplugin-5.73.0.tar.xz"
     ],
-    "deps": ["boost", "docbook-xml", "libical", "docbook-xsl", "giflib", "libepoxy", "libgcrypt", "libjpeg-turbo", "libpng", "libxslt", "lmdb", "phonon-backend-vlc",
+    "deps": ["gtk+2", "gtk+3", "xdg-utils", "colord", "extra-cmake-modules", "boost", "docbook-xml", "libical", "docbook-xsl", "giflib", "libepoxy", "libgcrypt", "libjpeg-turbo", "libpng", "libxslt", "lmdb", "phonon-backend-vlc",
              "plasma-wayland-protocols", "shared-mime-info", "perl-uri", "kf5-config", "aspell", "avahi", "libdbusmenu-qt", "networkmanager", "polkit-qt"],
     "mkdeps": ["extra-cmake-modules", "wget"],
     "provides": [
