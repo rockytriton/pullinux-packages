@@ -5,7 +5,7 @@
 make
 
 make DESTDIR=$P install                          &&
-mkdir $P/lib
+mkdir -p $P/lib
 mv -v $P/usr/lib/libpwquality.so.* $P/lib &&
 ln -sfv ../../lib/$(readlink $P/usr/lib/libpwquality.so) $P/usr/lib/libpwquality.so
 
