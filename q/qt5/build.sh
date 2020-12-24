@@ -104,7 +104,7 @@ Defaults env_keep += QT5DIR
 EOF
 
 mkdir -p $P/etc/ld.so.conf.d
-cat > /etc/ld.so.conf.d/qt5.conf << EOF
+cat > $P/etc/ld.so.conf.d/qt5.conf << EOF
 /opt/qt5/lib
 EOF
 
