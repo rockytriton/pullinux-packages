@@ -1,0 +1,11 @@
+{
+    "name": "libaio",
+    "version": "0.3.112",
+    "source": "http://ftp.de.debian.org/debian/pool/main/liba/libaio/libaio_0.3.112.orig.tar.xz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "libaio"
+    ]
+}

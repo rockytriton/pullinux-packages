@@ -1,0 +1,11 @@
+{
+    "name": "udisks",
+    "version": "2.9.1",
+    "source": "https://github.com/storaged-project/udisks/releases/download/udisks-2.9.1/udisks-2.9.1.tar.bz2",
+    "extras": [],
+    "deps": ["libatasmart", "libblockdev", "libgudev", "libxslt", "polkit", "btrfs-progs", "dosfstools", "gptfdisk", "mdadm", "xfsprogs"],
+    "mkdeps": [],
+    "provides": [
+        "udisks"
+    ]
+}

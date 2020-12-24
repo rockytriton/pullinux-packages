@@ -1,0 +1,11 @@
+{
+    "name": "gwenview",
+    "version": "20.08.0",
+    "source": "http://download.kde.org/stable/release-service/20.08.0/src/gwenview-20.08.0.tar.xz",
+    "extras": [],
+    "deps": ["exiv2", "kf5", "lcms2", "libkdcraw"],
+    "mkdeps": [],
+    "provides": [
+        "gwenview"
+    ]
+}

@@ -22,7 +22,8 @@ class DownloadProgressBar(tqdm):
             self.total = tsize
         self.update(b * bsize - self.n)
 
-def download_url(url, output_path, show_progress):
+
+def try_download_url(url, output_path, show_progress, tries):
     try:
         if show_progress:
             with DownloadProgressBar(unit='B', unit_scale=True,
@@ -33,11 +34,22 @@ def download_url(url, output_path, show_progress):
 
     except Exception as err:
         print("Fetching URL error: {0}".format(err))
-        return False
+
+        tries = tries + 1
+
+        if tries > 3:
+            return False
+
+        print("Trying again...")
+        return try_download_url(url, output_path, show_progress, tries)
+
     except:
         return False
 
     return True
+
+def download_url(url, output_path, show_progress):
+    return try_download_url(url, output_path, show_progress, 0)
 
 def store_pck_info_cache(pck, json, build):
     output_path = base_pck_cache + "/" + pck[0] + "/" + pck

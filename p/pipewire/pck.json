@@ -1,0 +1,11 @@
+{
+    "name": "pipewire",
+    "version": "0.3.9",
+    "source": "https://github.com/PipeWire/pipewire/archive/0.3.9/pipewire-0.3.9.tar.gz",
+    "extras": [],
+    "deps": ["bluez", "ffmpeg", "gstreamer", "gst-plugins-base", "libva", "pulseaudio", "sbc", "sdl2", "v4l-utils"],
+    "mkdeps": [],
+    "provides": [
+        "pipewire"
+    ]
+}

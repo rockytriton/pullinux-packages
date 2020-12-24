@@ -1,0 +1,11 @@
+{
+    "name": "libkdcraw",
+    "version": "20.08.0",
+    "source": "http://download.kde.org/stable/release-service/20.08.0/src/libkdcraw-20.08.0.tar.xz",
+    "extras": [],
+    "deps": ["kf5", "libraw"],
+    "mkdeps": [],
+    "provides": [
+        "libkdcraw"
+    ]
+}

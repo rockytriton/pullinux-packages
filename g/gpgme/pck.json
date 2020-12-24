@@ -1,0 +1,11 @@
+{
+    "name": "gpgme",
+    "version": "1.14.0",
+    "source": "https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.14.0.tar.bz2",
+    "extras": [],
+    "deps": ["libassuan"],
+    "mkdeps": [],
+    "provides": [
+        "gpgme"
+    ]
+}

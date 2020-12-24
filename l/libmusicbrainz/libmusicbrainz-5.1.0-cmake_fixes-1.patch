@@ -1,0 +1,21 @@
+Submitted By:            Douglas R. Reno <renodr at linuxfromscratch dot org>
+Date:                    2020-07-19
+Initial Package Version: 5.1.0
+Origin:                  Upstream PR (https://github.com/metabrainz/libmusicbrainz/pull/16/commits/36262d60fe92fe7a2c9bfb40e736bfcd29a6c3bd)
+Upstream Status:         Merged
+Description:             Fixes building with CMake-3.18, which removed support
+                         for wildcards in a CMakeLists.txt file.
+
+diff -Naurp libmusicbrainz-5.1.0.orig/src/CMakeLists.txt libmusicbrainz-5.1.0/src/CMakeLists.txt
+--- libmusicbrainz-5.1.0.orig/src/CMakeLists.txt	2014-11-13 07:12:24.000000000 -0600
++++ libmusicbrainz-5.1.0/src/CMakeLists.txt	2020-07-19 20:54:12.285015332 -0500
+@@ -36,7 +36,8 @@ ADD_CUSTOM_COMMAND(
+ 	OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/mb5_c.cc ${CMAKE_CURRENT_BINARY_DIR}/mb5_c.h ${CMAKE_CURRENT_BINARY_DIR}/../include/musicbrainz5/mb5_c.h
+ 	COMMAND make-c-interface ${CMAKE_CURRENT_SOURCE_DIR} cinterface.xml ${CMAKE_CURRENT_BINARY_DIR} mb5_c.cc mb5_c.h
+ 	COMMAND ${CMAKE_COMMAND} -E copy_if_different 	${CMAKE_CURRENT_BINARY_DIR}/mb5_c.h ${CMAKE_CURRENT_BINARY_DIR}/../include/musicbrainz5/mb5_c.h
+-	DEPENDS make-c-interface cinterface.xml *.inc
++	DEPENDS make-c-interface cinterface.xml c-int-medium-defines.inc c-int-query-source.inc c-int-source-funcs.inc
++           c-int-medium-source.inc c-int-release-defines.inc c-int-query-defines.inc c-int-release-source.inc
+ )
+ 
+ ADD_CUSTOM_TARGET(src_gen DEPENDS mb5_c.h)

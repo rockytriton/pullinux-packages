@@ -1,0 +1,11 @@
+{
+    "name": "bluez",
+    "version": "5.54",
+    "source": "https://www.kernel.org/pub/linux/bluetooth/bluez-5.54.tar.xz",
+    "extras": [],
+    "deps": ["glib", "libical"],
+    "mkdeps": [],
+    "provides": [
+        "bluez"
+    ]
+}

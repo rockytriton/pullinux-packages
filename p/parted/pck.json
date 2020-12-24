@@ -1,0 +1,11 @@
+{
+    "name": "parted",
+    "version": "3.3",
+    "source": "https://ftp.gnu.org/gnu/parted/parted-3.3.tar.xz",
+    "extras": [],
+    "deps": ["lvm2"],
+    "mkdeps": [],
+    "provides": [
+        "parted"
+    ]
+}

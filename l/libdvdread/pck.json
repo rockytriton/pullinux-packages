@@ -1,0 +1,11 @@
+{
+    "name": "libdvdread",
+    "version": "6.1.1",
+    "source": "https://get.videolan.org/libdvdread/6.1.1/libdvdread-6.1.1.tar.bz2",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "libdvdread"
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "name": "khelpcenter",
+    "version": "20.08.0",
+    "source": "http://download.kde.org/stable/release-service/20.08.0/src/khelpcenter-20.08.0.tar.xz",
+    "extras": [],
+    "deps": ["grantlee", "kf5", "libxml2", "xapian"],
+    "mkdeps": [],
+    "provides": [
+        "khelpcenter"
+    ]
+}

@@ -1,0 +1,35 @@
+Submitted By:            Bruce Dubbs <bdubbs_at_linuxfromscratch_dot_org>
+Date:                    2019-08-28
+Initial Package Version: 19.08.0
+Upstream Status:         Not submitted
+Origin:                  Self
+Description:             Optional patch to change the color of the konsole
+                         scroll bar and its handle.  Customizing the colors
+                         requires editing the patch.
+
+
+--- konsole-18.12.2/src/TerminalDisplay.cpp.orig	2019-02-24 13:51:30.814774887 -0600
++++ konsole-18.12.2/src/TerminalDisplay.cpp	2019-02-24 13:55:23.819802401 -0600
+@@ -142,7 +142,7 @@
+     // Mostly just fix the scrollbar
+     // this is a workaround to add some readability to old themes like Fusion
+     // changing the light value for button a bit makes themes like fusion, windows and oxygen way more readable and pleasing
+-
++/*
+     QPalette p = QApplication::palette();
+ 
+     QColor buttonTextColor = _colorTable[DEFAULT_FORE_COLOR];
+@@ -163,6 +163,13 @@
+     setPalette(p);
+ 
+     _scrollBar->setPalette(p);
++*/
++    _scrollBar->setStyleSheet( QLatin1String(
++      "QScrollBar:vertical {"
++          "background: #ccc; border-left: 2px solid white}"
++      "QScrollBar::handle:vertical {"
++          "background: #888; min-height: 30px; margin: 15px;}"
++    ) );
+ 
+     update();
+ }

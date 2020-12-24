@@ -1,0 +1,11 @@
+{
+    "name": "qca",
+    "version": "2.3.1",
+    "source": "http://download.kde.org/stable/qca/2.3.1/qca-2.3.1.tar.xz",
+    "extras": [],
+    "deps": ["qt5"],
+    "mkdeps": ["cmake", "which"],
+    "provides": [
+        "qca"
+    ]
+}

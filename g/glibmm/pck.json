@@ -1,0 +1,11 @@
+{
+    "name": "glibmm",
+    "version": "2.64.2",
+    "source": "http://ftp.gnome.org/pub/gnome/sources/glibmm/2.64/glibmm-2.64.2.tar.xz",
+    "extras": [],
+    "deps": ["glib", "libsigc++"],
+    "mkdeps": [],
+    "provides": [
+        "glibmm"
+    ]
+}

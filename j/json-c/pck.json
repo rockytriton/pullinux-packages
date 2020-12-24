@@ -1,0 +1,11 @@
+{
+    "name": "json-c",
+    "version": "0.15",
+    "source": "https://s3.amazonaws.com/json-c_releases/releases/json-c-0.15.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": ["cmake"],
+    "provides": [
+        "json-c"
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "name": "btrfs-progs",
+    "version": "5.7",
+    "source": "https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v5.7.tar.xz",
+    "extras": [],
+    "deps": ["lzo"],
+    "mkdeps": ["asciidoc", "xmlto"],
+    "provides": [
+        "btrfs-progs"
+    ]
+}

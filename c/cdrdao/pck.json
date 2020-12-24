@@ -1,0 +1,11 @@
+{
+    "name": "cdrdao",
+    "version": "1.2.4",
+    "source": "https://downloads.sourceforge.net/cdrdao/cdrdao-1.2.4.tar.bz2",
+    "extras": [],
+    "deps": ["gtkmm", "libao", "libvorbis", "libmad", "lame"],
+    "mkdeps": [],
+    "provides": [
+        "cdrdao"
+    ]
+}

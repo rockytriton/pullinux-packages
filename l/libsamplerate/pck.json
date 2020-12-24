@@ -1,0 +1,11 @@
+{
+    "name": "libsamplerate",
+    "version": "0.1.9",
+    "source": "http://www.mega-nerd.com/SRC/libsamplerate-0.1.9.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "libsamplerate"
+    ]
+}

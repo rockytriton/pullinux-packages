@@ -1,0 +1,11 @@
+{
+    "name": "dosfstools",
+    "version": "4.1",
+    "source": "https://github.com/dosfstools/dosfstools/releases/download/v4.1/dosfstools-4.1.tar.xz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "dosfstools"
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "name": "xfsprogs",
+    "version": "5.7.0",
+    "source": "https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/xfsprogs-5.7.0.tar.xz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "xfsprogs"
+    ]
+}

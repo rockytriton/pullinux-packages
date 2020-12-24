@@ -1,0 +1,11 @@
+{
+    "name": "lm-sensors",
+    "version": "3.6.0",
+    "source": "https://github.com/lm-sensors/lm-sensors/archive/V3-6-0/lm-sensors-3-6-0.tar.gz",
+    "extras": [],
+    "deps": [],
+    "mkdeps": ["which"],
+    "provides": [
+        "lm-sensors"
+    ]
+}
