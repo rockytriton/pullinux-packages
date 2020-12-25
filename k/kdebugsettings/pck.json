@@ -1,0 +1,11 @@
+{
+    "name": "kdebugsettings",
+    "version": "20.08.0",
+    "source": "https://download.kde.org/stable/release-service/20.08.0/src/kdebugsettings-20.08.0.tar.xz",
+    "extras": [],
+    "deps": ["kf5"],
+    "mkdeps": [],
+    "provides": [
+        "kdebugsettings"
+    ]
+}

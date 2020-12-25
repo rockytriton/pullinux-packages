@@ -1,0 +1,11 @@
+{
+    "name": "code",
+    "version": "latest",
+    "source": "https://vscode-update.azurewebsites.net/latest/linux-x64/stable",
+    "extras": [],
+    "deps": [],
+    "mkdeps": [],
+    "provides": [
+        "code"
+    ]
+}
