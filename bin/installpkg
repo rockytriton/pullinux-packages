@@ -114,7 +114,7 @@ if p.wait() != 0:
 
 print('Extracted tar: ' + pck_file)
 
-if os.path.exists(inst_dest + '/.install/install.sh') and inst_dest == '/' and pck_base == '/usr/share/plx':
+if os.path.exists(inst_dest + '/.install/install.sh') and inst_dest == '/' and plx_base == '/usr/share/plx':
 	os.chdir(inst_dest + '/.install')
 	print('Running post install...')
 

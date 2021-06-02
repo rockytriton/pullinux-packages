@@ -1,0 +1,9 @@
+tar -xf $filename
+cd make-ca-1.7
+
+make DESTDIR=$pckdir install
+
+install -vdm755 $pckdir/etc/ssl/local
+
+$pckdir/usr/sbin/make-ca -g --destdir $pckdir/
+

@@ -4,7 +4,8 @@ repo: core
 filename: glibc-2.33.tar.xz
 source: 
 deps: [
-  'iana-etc'
+  'iana-etc',
+  'linux-headers'
 ]
 mkdeps: []
 extras: [

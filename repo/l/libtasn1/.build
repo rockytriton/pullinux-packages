@@ -1,0 +1,7 @@
+tar -xf $filename
+cd libtasn1-4.16.0
+
+./configure --prefix=/usr --disable-static
+
+make && make DESTDIR=$pckdir install
+

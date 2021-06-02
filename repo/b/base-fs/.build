@@ -38,12 +38,161 @@ chmod -v 600  $pckdir/var/log/btmp
 
 ln -sf ../lib/ld-linux-x86-64.so.2 $pckdir/lib64
 ln -sf ../lib/ld-linux-x86-64.so.2 $pckdir/lib64/ld-lsb-x86-64.so.3
-ln -sf /bin/bash /bin/sh
 
 mkdir -p $pckdir/usr/share/plx/inst
 
 mknod -m 600 $pckdir/dev/console c 5 1
 mknod -m 666 $pckdir/dev/null c 1 3
 
-ln -sf /bin/true /usr/bin/xsltproc
+install --directory --mode=0755 --owner=root --group=root $pckdir/etc/bash_completion.d
+
+cat > $pckdir/etc/profile.d/bash_completion.sh << "EOF"
+# Begin /etc/profile.d/bash_completion.sh
+# Import bash completion scripts
+
+# If the bash-completion package is installed, use its configuration instead
+if [ -f /usr/share/bash-completion/bash_completion ]; then
+
+  # Check for interactive bash and that we haven't already been sourced.
+  if [ -n "${BASH_VERSION-}" -a -n "${PS1-}" -a -z "${BASH_COMPLETION_VERSINFO-}" ]; then
+
+    # Check for recent enough version of bash.
+    if [ ${BASH_VERSINFO[0]} -gt 4 ] || \
+       [ ${BASH_VERSINFO[0]} -eq 4 -a ${BASH_VERSINFO[1]} -ge 1 ]; then
+       [ -r "${XDG_CONFIG_HOME:-$HOME/.config}/bash_completion" ] && \
+            . "${XDG_CONFIG_HOME:-$HOME/.config}/bash_completion"
+       if shopt -q progcomp && [ -r /usr/share/bash-completion/bash_completion ]; then
+          # Source completion code.
+          . /usr/share/bash-completion/bash_completion
+       fi
+    fi
+  fi
+
+else
+
+  # bash-completions are not installed, use only bash completion directory
+  if shopt -q progcomp; then
+    for script in /etc/bash_completion.d/* ; do
+      if [ -r $script ] ; then
+        . $script
+      fi
+    done
+  fi
+fi
+
+# End /etc/profile.d/bash_completion.sh
+EOF
+
+cat > $pckdir/etc/profile.d/dircolors.sh << "EOF"
+# Setup for /bin/ls and /bin/grep to support color, the alias is in /etc/bashrc.
+if [ -f "/etc/dircolors" ] ; then
+        eval $(dircolors -b /etc/dircolors)
+fi
+
+if [ -f "$HOME/.dircolors" ] ; then
+        eval $(dircolors -b $HOME/.dircolors)
+fi
+
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+EOF
+
+cat > $pckdir/etc/profile.d/extrapaths.sh << "EOF"
+if [ -d /usr/local/lib/pkgconfig ] ; then
+        pathappend /usr/local/lib/pkgconfig PKG_CONFIG_PATH
+fi
+if [ -d /usr/local/bin ]; then
+        pathprepend /usr/local/bin
+fi
+if [ -d /usr/local/sbin -a $EUID -eq 0 ]; then
+        pathprepend /usr/local/sbin
+fi
+
+# Set some defaults before other applications add to these paths.
+pathappend /usr/share/man  MANPATH
+pathappend /usr/share/info INFOPATH
+EOF
+
+cat > $pckdir/etc/profile.d/umask.sh << "EOF"
+# By default, the umask should be set.
+if [ "$(id -gn)" = "$(id -un)" -a $EUID -gt 99 ] ; then
+  umask 002
+else
+  umask 022
+fi
+EOF
+
+cat > $pckdir/etc/profile.d/i18n.sh << "EOF"
+# Set up i18n variables
+. /etc/locale.conf
+export LANG
+EOF
+
+cat > $pckdir/etc/skel/.bash_profile << "EOF"
+# Begin ~/.bash_profile
+# Written for Beyond Linux From Scratch
+# by James Robertson <jameswrobertson@earthlink.net>
+# updated by Bruce Dubbs <bdubbs@linuxfromscratch.org>
+
+# Personal environment variables and startup programs.
+
+# Personal aliases and functions should go in ~/.bashrc.  System wide
+# environment variables and startup programs are in /etc/profile.
+# System wide aliases and functions are in /etc/bashrc.
+
+if [ -f "$HOME/.bashrc" ] ; then
+  source $HOME/.bashrc
+fi
+
+if [ -d "$HOME/bin" ] ; then
+  pathprepend $HOME/bin
+fi
+
+# Having . in the PATH is dangerous
+#if [ $EUID -gt 99 ]; then
+#  pathappend .
+#fi
+
+# End ~/.bash_profile
+EOF
+
+cat > $pckdir/etc/skel/.profile << "EOF"
+# Begin ~/.profile
+# Personal environment variables and startup programs.
+
+if [ -d "$HOME/bin" ] ; then
+  pathprepend $HOME/bin
+fi
+
+# Set up user specific i18n variables
+export LANG=en_US.UTF-8
+
+# End ~/.profile
+EOF
+
+cat > $pckdir/etc/skel/.bashrc << "EOF"
+# Begin ~/.bashrc
+# Written for Beyond Linux From Scratch
+# by James Robertson <jameswrobertson@earthlink.net>
+
+# Personal aliases and functions.
+
+# Personal environment variables and startup programs should go in
+# ~/.bash_profile.  System wide environment variables and startup
+# programs are in /etc/profile.  System wide aliases and functions are
+# in /etc/bashrc.
+
+if [ -f "/etc/bashrc" ] ; then
+  source /etc/bashrc
+fi
+
+# Set up user specific i18n variables
+export LANG=en_US.UTF-8
+
+# End ~/.bashrc
+EOF
+
+dircolors -p > $pckdir/etc/dircolors
+
+dircolors -p > $pckdir/etc/skel/.dircolors
 

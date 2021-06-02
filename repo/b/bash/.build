@@ -14,4 +14,4 @@ make DESTDIR=$pckdir install
 mkdir $pckdir/bin
 mv -vf $pckdir/usr/bin/bash $pckdir/bin
 
-
+ln -sfv /bin/bash $pckdir/bin/sh

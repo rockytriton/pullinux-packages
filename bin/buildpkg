@@ -3,6 +3,7 @@ import sys
 import os
 from subprocess import Popen, PIPE, DEVNULL
 import shutil
+import requests
 
 plx_base='/usr/share/plx'
 
@@ -31,8 +32,13 @@ data = yaml.safe_load(open(full_path, 'r'))
 print('checking for file: ', data['filename'])
 
 if not data['filename'] == None and not os.path.exists(dl_cache + data['filename']):
-	print('File not in cache')
-	sys.exit(1)
+	url = data['source']
+	r = requests.get(url)
+
+	with open(dl_cache + data['filename'], 'wb') as f:
+		f.write(r.content)
+	
+	print('downloaded file')
 
 tmpdir = '/tmp/build_' + data['name']
 
@@ -53,7 +59,7 @@ if 'extras' in data:
 			shutil.copy2(file, tmpdir + '/' + e)
 
 if os.path.exists(base_repo + l0 + '/' + pck + '/.install'):
-	shutil.copytree(base_repo + l0 + '/' + pck + '/.install', tmpdir + '/.install')
+	shutil.copytree(base_repo + l0 + '/' + pck + '/.install', tmpdir + '/pckdir/.install')
 
 if data['filename'] != None:
 	shutil.copyfile(dl_cache + data['filename'], tmpdir + '/' + data['filename'])

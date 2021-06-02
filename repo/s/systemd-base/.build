@@ -9,6 +9,13 @@ sed '181,$ d' -i src/resolve/meson.build
 
 sed -i 's/GROUP="render"/GROUP="video"/' rules.d/50-udev-default.rules.in
 
+if test -f "/usr/bin/xsltproc"; then
+	ls -ls /usr/bin/xsltproc
+else
+	ln -sfv /bin/true /usr/bin/xsltproc
+	MADE_XSLT=1
+fi
+
 mkdir -p build
 cd       build
 
@@ -45,3 +52,6 @@ DESTDIR=$pckdir LANG=en_US.UTF-8 ninja install
 
 rm -rf $pckdir/usr/lib/pam.d
 
+if [ "$MADE_XSLT" == "1" ]; then
+	rm /usr/bin/xsltproc
+fi

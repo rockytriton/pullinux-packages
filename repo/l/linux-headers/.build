@@ -1,0 +1,9 @@
+tar -xf $filename
+cd linux-5.10.17
+make mrproper
+make headers
+find usr/include -name '.*' -delete
+rm usr/include/Makefile
+mkdir $pckdir/usr
+cp -rv usr/include $pckdir/usr/
+

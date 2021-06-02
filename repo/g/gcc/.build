@@ -35,3 +35,5 @@ ln -sfv ../../libexec/gcc/$(gcc -dumpmachine)/10.2.0/liblto_plugin.so \
 mkdir -pv $pckdir/usr/share/gdb/auto-load/usr/lib
 mv -v $pckdir/usr/lib/*gdb.py $pckdir/usr/share/gdb/auto-load/usr/lib
 
+ln -sv /usr/bin/gcc $pckdir/usr/bin/cc
+
