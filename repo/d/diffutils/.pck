@@ -1,8 +1,7 @@
 name: diffutils
 version: 3.7
 repo: core
-filename: diffutils-3.7.tar.xz
-source: 
+source: http://ftp.gnu.org/gnu/diffutils/diffutils-3.7.tar.xz
 deps: [
   'check',
 ]

@@ -1,8 +1,7 @@
 name: kbd
 version: 2.4.0
 repo: core
-filename: kbd-2.4.0.tar.xz
-source: 
+source: https://www.kernel.org/pub/linux/utils/kbd/kbd-2.4.0.tar.xz
 deps: [
   'gzip',
 ]

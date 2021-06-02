@@ -1,8 +1,7 @@
 name: meson
 version: 0.57.1
 repo: core
-filename: meson-0.57.1.tar.gz
-source: 
+source: https://github.com/mesonbuild/meson/releases/download/0.57.1/meson-0.57.1.tar.gz
 deps: [
   'ninja',
 ]

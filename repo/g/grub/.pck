@@ -1,8 +1,7 @@
 name: grub
 version: 2.04
 repo: core
-filename: grub-2.04.tar.xz
-source: 
+source: https://ftp.gnu.org/gnu/grub/grub-2.04.tar.xz
 deps: [
   'groff',
 ]

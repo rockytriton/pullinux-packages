@@ -1,8 +1,7 @@
 name: inetutils
 version: 2.0
 repo: core
-filename: inetutils-2.0.tar.xz
-source: 
+source: http://ftp.gnu.org/gnu/inetutils/inetutils-2.0.tar.xz
 deps: [
   'expat',
 ]

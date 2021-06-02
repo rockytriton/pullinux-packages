@@ -1,8 +1,7 @@
 name: bison
 version: 3.7.5
 repo: core
-filename: bison-3.7.5.tar.xz
-source: 
+source: http://ftp.gnu.org/gnu/bison/bison-3.7.5.tar.xz
 deps: [
   'gettext',
 ]

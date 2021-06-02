@@ -1,8 +1,7 @@
 name: ninja
 version: 1.10.2
 repo: core
-filename: ninja-1.10.2.tar.gz
-source: 
+source: https://github.com/ninja-build/ninja/archive/v1.10.2/ninja-1.10.2.tar.gz
 deps: [
   'python',
 ]

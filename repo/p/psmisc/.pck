@@ -1,8 +1,7 @@
 name: psmisc
 version: 23.4
 repo: core
-filename: psmisc-23.4.tar.xz
-source: 
+source: https://sourceforge.net/projects/psmisc/files/psmisc/psmisc-23.4.tar.xz
 deps: [
   'sed',
 ]

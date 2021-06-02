@@ -1,8 +1,7 @@
 name: autoconf
 version: 2.71
 repo: core
-filename: autoconf-2.71.tar.xz
-source: 
+source: http://ftp.gnu.org/gnu/autoconf/autoconf-2.71.tar.xz
 deps: [
   'intltool',
 ]

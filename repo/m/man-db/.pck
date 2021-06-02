@@ -1,8 +1,7 @@
 name: man-db
 version: 2.9.4
 repo: core
-filename: man-db-2.9.4.tar.xz
-source: 
+source: http://download.savannah.gnu.org/releases/man-db/man-db-2.9.4.tar.xz
 deps: [
   'patch',
 ]

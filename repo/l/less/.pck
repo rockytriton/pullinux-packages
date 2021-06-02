@@ -1,8 +1,7 @@
 name: less
 version: 563
 repo: core
-filename: less-563.tar.gz
-source: 
+source: http://www.greenwoodsoftware.com/less/less-563.tar.gz
 deps: [
   'groff',
 ]

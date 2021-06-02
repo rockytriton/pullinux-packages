@@ -1,8 +1,7 @@
 name: file
 version: 5.39
 repo: core
-filename: file-5.39.tar.gz
-source: 
+source: http://ftp.astron.com/pub/file/file-5.39.tar.gz
 deps: [
   'zstd',
 ]

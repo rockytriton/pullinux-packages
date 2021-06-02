@@ -1,8 +1,7 @@
 name: procps
 version: 3.3.17
 repo: core
-filename: procps-ng-3.3.17.tar.xz
-source: 
+source: https://sourceforge.net/projects/procps-ng/files/Production/procps-ng-3.3.17.tar.xz
 deps: [
   'dbus-base',
 ]

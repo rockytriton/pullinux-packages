@@ -1,8 +1,7 @@
 name: gettext
 version: 0.21
 repo: core
-filename: gettext-0.21.tar.xz
-source: 
+source: http://ftp.gnu.org/gnu/gettext/gettext-0.21.tar.xz
 deps: [
   'psmisc',
 ]

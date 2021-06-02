@@ -1,12 +1,11 @@
 name: tcl
 version: 8.6.11
 repo: core
-filename: tcl8.6.11-src.tar.gz
-source: 
+source: https://downloads.sourceforge.net/tcl/tcl8.6.11-src.tar.gz
 deps: [
   'flex',
 ]
 mkdeps: []
 extras: [
-  'tcl8.6.11-html.tar.gz'
+  'https://downloads.sourceforge.net/tcl/tcl8.6.11-html.tar.gz'
 ]

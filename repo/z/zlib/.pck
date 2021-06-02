@@ -1,8 +1,7 @@
 name: zlib
 version: 1.2.11
 repo: core
-filename: zlib-1.2.11.tar.xz
-source: 
+source: https://zlib.net/zlib-1.2.11.tar.xz
 deps: [
   'glibc',
 ]

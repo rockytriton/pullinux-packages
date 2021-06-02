@@ -1,8 +1,7 @@
 name: libcap
 version: 2.48
 repo: core
-filename: libcap-2.48.tar.xz
-source: 
+source: https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.48.tar.xz
 deps: [
   'acl',
 ]

@@ -1,8 +1,7 @@
 name: openssl
 version: 1.1.1j
 repo: core
-filename: openssl-1.1.1j.tar.gz
-source: 
+source: https://www.openssl.org/source/openssl-1.1.1j.tar.gz
 deps: [
   'libffi',
 ]

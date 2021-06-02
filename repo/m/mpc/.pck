@@ -1,8 +1,7 @@
 name: mpc
 version: 1.2.1
 repo: core
-filename: mpc-1.2.1.tar.gz
-source: 
+source: https://ftp.gnu.org/gnu/mpc/mpc-1.2.1.tar.gz
 deps: [
   'mpfr',
 ]

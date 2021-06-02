@@ -1,8 +1,7 @@
 name: grep
 version: 3.6
 repo: core
-filename: grep-3.6.tar.xz
-source: 
+source: http://ftp.gnu.org/gnu/grep/grep-3.6.tar.xz
 deps: [
   'bison',
 ]

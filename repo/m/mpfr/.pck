@@ -1,8 +1,7 @@
 name: mpfr
 version: 4.1.0
 repo: core
-filename: mpfr-4.1.0.tar.xz
-source: 
+source: http://www.mpfr.org/mpfr-4.1.0/mpfr-4.1.0.tar.xz
 deps: [
   'gmp',
 ]

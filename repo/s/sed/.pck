@@ -1,8 +1,7 @@
 name: sed
 version: 4.8
 repo: core
-filename: sed-4.8.tar.xz
-source: 
+source: http://ftp.gnu.org/gnu/sed/sed-4.8.tar.xz
 deps: [
   'ncurses',
 ]

@@ -1,8 +1,7 @@
 name: perl
 version: 5.32.1
 repo: core
-filename: perl-5.32.1.tar.xz
-source: 
+source: https://www.cpan.org/src/5.0/perl-5.32.1.tar.xz
 deps: [
   'inetutils',
 ]

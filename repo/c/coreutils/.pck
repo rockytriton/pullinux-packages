@@ -1,8 +1,7 @@
 name: coreutils
 version: 8.32
 repo: core
-filename: coreutils-8.32.tar.xz
-source: 
+source: http://ftp.gnu.org/gnu/coreutils/coreutils-8.32.tar.xz
 deps: [
   'meson',
 ]

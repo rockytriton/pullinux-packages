@@ -1,8 +1,7 @@
 name: libelf
 version: 0.183
 repo: core
-filename: elfutils-0.183.tar.bz2
-source: 
+source: https://sourceware.org/ftp/elfutils/0.183/elfutils-0.183.tar.bz2
 deps: [
   'kmod',
 ]

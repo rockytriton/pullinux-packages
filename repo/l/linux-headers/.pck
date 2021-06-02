@@ -1,8 +1,7 @@
 name: linux-headers 
 version: 5.10.17
 repo: core
-filename: linux-5.10.17.tar.xz
-source: 
+source: https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.10.17.tar.xz
 deps: [
 ]
 mkdeps: []

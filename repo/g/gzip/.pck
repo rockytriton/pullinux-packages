@@ -1,8 +1,7 @@
 name: gzip
 version: 1.10
 repo: core
-filename: gzip-1.10.tar.xz
-source: 
+source: http://ftp.gnu.org/gnu/gzip/gzip-1.10.tar.xz
 deps: [
   'less',
 ]

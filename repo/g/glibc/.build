@@ -30,3 +30,5 @@ mkdir -pv $pckdir/var/cache/nscd
 install -v -Dm644 ../nscd/nscd.tmpfiles $pckdir/usr/lib/tmpfiles.d/nscd.conf
 install -v -Dm644 ../nscd/nscd.service $pckdir/lib/systemd/system/nscd.service
 
+cp ../../tzdata2021a.tar.gz $pckdir/.install
+
