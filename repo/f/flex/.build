@@ -1,0 +1,11 @@
+tar -xf $filename
+cd flex-2.6.4
+
+./configure --prefix=/usr \
+            --docdir=/usr/share/doc/flex-2.6.4 \
+            --disable-static
+
+make
+make DESTDIR=$pckdir install
+
+ln -sv flex $pckdir/usr/bin/lex

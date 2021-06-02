@@ -1,0 +1,3 @@
+tar -xf $filename
+cd man-pages-5.10
+make DESTDIR=$pckdir install

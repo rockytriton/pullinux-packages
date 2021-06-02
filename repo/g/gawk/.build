@@ -1,0 +1,9 @@
+tar -xf $filename
+cd gawk-5.1.0
+sed -i 's/extras//' Makefile.in
+
+./configure --prefix=/usr
+
+make && make DESTDIR=$pckdir install
+
+

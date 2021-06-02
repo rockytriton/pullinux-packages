@@ -1,0 +1,7 @@
+tar -xf $filename
+cd file-5.39
+
+./configure --prefix=/usr
+make
+make DESTDIR=$pckdir install
+

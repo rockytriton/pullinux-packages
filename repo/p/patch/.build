@@ -1,0 +1,5 @@
+tar -xf $filename
+cd patch-2.7.6
+./configure --prefix=/usr
+make && make DESTDIR=$pckdir install
+

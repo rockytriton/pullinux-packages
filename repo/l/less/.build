@@ -1,0 +1,5 @@
+tar -xf $filename
+cd less-563
+./configure --prefix=/usr --sysconfdir=/etc
+make && make DESTDIR=$pckdir install
+

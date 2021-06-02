@@ -1,0 +1,12 @@
+tar -xf $filename
+cd zstd-1.4.8
+
+make
+make prefix=$pckdir/usr install
+
+mkdir -p $pckdir/lib
+
+rm -v $pckdir/usr/lib/libzstd.a
+mv -v $pckdir/usr/lib/libzstd.so.* $pckdir/lib
+ln -sfv ../../lib/$(readlink $pckdir/usr/lib/libzstd.so) $pckdir/usr/lib/libzstd.so
+

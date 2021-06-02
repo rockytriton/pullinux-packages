@@ -1,0 +1,19 @@
+tar -xf $filename
+cd procps-3.3.17
+
+./configure --prefix=/usr                            \
+            --exec-prefix=                           \
+            --libdir=/usr/lib                        \
+            --docdir=/usr/share/doc/procps-ng-3.3.17 \
+            --disable-static                         \
+            --disable-kill                           \
+            --with-systemd
+
+make && make DESTDIR=$pckdir install
+
+mkdir -p $pckdir/lib
+
+mv -v $pckdir/usr/lib/libprocps.so.* $pckdir/lib
+
+ln -sfv ../../lib/$(readlink $pckdir/usr/lib/libprocps.so) $pckdir/usr/lib/libprocps.so
+

@@ -1,0 +1,17 @@
+tar -xf $filename
+cd grub-2.04
+
+sed "s/gold-version/& -R .note.gnu.property/" \
+    -i Makefile.in grub-core/Makefile.in
+
+./configure --prefix=/usr          \
+            --sbindir=/sbin        \
+            --sysconfdir=/etc      \
+            --disable-efiemu       \
+            --disable-werror
+
+make && make DESTDIR=$pckdir install
+
+mkdir -p $pckdir/usr/share/bash-completion/completions
+mv -v $pckdir/etc/bash_completion.d/grub $pckdir/usr/share/bash-completion/completions
+

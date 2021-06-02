@@ -1,0 +1,19 @@
+tar -xf $filename
+cd 1.1.1j-openssl-1.1.1j.tar.gz
+./config --prefix=/usr         \
+         --openssldir=/etc/ssl \
+         --libdir=lib          \
+         shared                \
+         zlib-dynamic
+
+make
+
+sed -i '/INSTALL_LIBS/s/libcrypto.a libssl.a//' Makefile
+
+make DESTDIR=$pckdir MANSUFFIX=ssl install
+
+mkdir -p $pckdir/usr/share/doc
+mv -v $pckdir/usr/share/doc/openssl $pckdir/usr/share/doc/openssl-1.1.1j
+
+cp -vfr doc/* $pckdir/usr/share/doc/openssl-1.1.1j
+

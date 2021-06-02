@@ -1,0 +1,16 @@
+tar -xf $filename
+cd acl-2.2.53
+
+./configure --prefix=/usr         \
+            --disable-static      \
+            --libexecdir=/usr/lib \
+            --docdir=/usr/share/doc/acl-2.2.53
+
+make
+
+make DESTDIR=$pckdir install
+
+mkdir $pckdir/lib
+mv -v $pckdir/usr/lib/libacl.so.* $pckdir/lib
+ln -sfv ../../lib/$(readlink $pckdir/usr/lib/libacl.so) $pckdir/usr/lib/libacl.so
+

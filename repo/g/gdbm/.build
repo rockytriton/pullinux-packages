@@ -1,0 +1,9 @@
+tar -xf $filename
+cd gdbm-1.19
+
+./configure --prefix=/usr    \
+            --disable-static \
+            --enable-libgdbm-compat
+
+make && make DESTDIR=$pckdir install
+

@@ -1,0 +1,19 @@
+tar -xf $filename
+cd xz-5.2.5
+
+./configure --prefix=/usr    \
+            --disable-static \
+            --docdir=/usr/share/doc/xz-5.2.5
+
+make
+
+make DESTDIR=$pckdir install
+
+mkdir $pckdir/bin
+mkdir $pckdir/lib
+
+mv -v  $pckdir/usr/bin/{lzma,unlzma,lzcat,xz,unxz,xzcat} $pckdir/bin
+
+mv -v $pckdir/usr/lib/liblzma.so.* $pckdir/lib
+ln -svf ../../lib/$(readlink $pckdir/usr/lib/liblzma.so) $pckdir/usr/lib/liblzma.so
+

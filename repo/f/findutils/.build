@@ -1,0 +1,10 @@
+tar -xf $filename
+cd findutils-4.8.0
+./configure --prefix=/usr --localstatedir=/var/lib/locate
+
+make && make DESTDIR=$pckdir install
+
+mkdir $pckdir/bin
+mv -v $pckdir/usr/bin/find $pckdir/bin
+sed -i 's|find:=${BINDIR}|find:=/bin|' $pckdir/usr/bin/updatedb
+

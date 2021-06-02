@@ -1,0 +1,7 @@
+tar -xf $filename
+cd bison-3.7.5
+
+./configure --prefix=/usr --docdir=/usr/share/doc/bison-3.7.5
+make
+make DESTDIR=$pckdir install
+

@@ -1,0 +1,6 @@
+tar -xf $filename
+cd gzip-1.10
+./configure --prefix=/usr --sysconfdir=/etc
+make && make DESTDIR=$pckdir install
+mkdir $pckdir/bin
+mv -v $pckdir/usr/bin/gzip $pckdir/bin

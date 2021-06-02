@@ -1,0 +1,5 @@
+tar -xf $filename
+cd libffi-3.3
+./configure --prefix=/usr --disable-static --with-gcc-arch=native
+make && make DESTDIR=$pckdir install
+

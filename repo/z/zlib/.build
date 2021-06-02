@@ -1,0 +1,12 @@
+tar -xf $filename
+cd zlib-1.2.11
+./configure --prefix=/usr
+make
+make DESTDIR=$pckdir install
+
+mkdir $pckdir/lib
+mv -v $pckdir/usr/lib/libz.so.* $pckdir/lib
+ln -sfv ../../lib/$(readlink $pckdir/usr/lib/libz.so) $pckdir/usr/lib/libz.so
+
+rm -fv $pckdir/usr/lib/libz.a
+

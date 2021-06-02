@@ -1,0 +1,12 @@
+tar -xf $filename
+cd psmisc-23.4
+
+./configure --prefix=/usr
+make
+make DESTDIR=$pckdir install
+
+mkdir $pckdir/bin
+
+mv -v $pckdir/usr/bin/fuser   $pckdir/bin
+mv -v $pckdir/usr/bin/killall $pckdir/bin
+

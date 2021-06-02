@@ -1,0 +1,37 @@
+tar -xf $filename
+cd gcc-10.2.0
+
+case $(uname -m) in
+  x86_64)
+    sed -e '/m64=/s/lib64/lib/' \
+        -i.orig gcc/config/i386/t-linux64
+  ;;
+esac
+
+mkdir -v build
+cd       build
+
+../configure --prefix=/usr            \
+             LD=ld                    \
+             --enable-languages=c,c++ \
+             --disable-multilib       \
+             --disable-bootstrap      \
+             --with-system-zlib
+
+make
+
+make DESTDIR=$pckdir install
+
+rm -rf $pckdir/usr/lib/gcc/$(gcc -dumpmachine)/10.2.0/include-fixed/bits/
+
+mkdir $pckdir/lib
+ln -sv ../usr/bin/cpp $pckdir/lib
+
+mkdir -p $pckdir/usr/lib/bfd-plugins
+
+ln -sfv ../../libexec/gcc/$(gcc -dumpmachine)/10.2.0/liblto_plugin.so \
+        $pckdir/usr/lib/bfd-plugins/
+
+mkdir -pv $pckdir/usr/share/gdb/auto-load/usr/lib
+mv -v $pckdir/usr/lib/*gdb.py $pckdir/usr/share/gdb/auto-load/usr/lib
+

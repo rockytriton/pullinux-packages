@@ -1,0 +1,18 @@
+tar -xf $filename
+cd attr-2.4.48
+
+./configure --prefix=/usr     \
+            --disable-static  \
+            --sysconfdir=/etc \
+            --docdir=/usr/share/doc/attr-2.4.48
+
+make
+
+make check
+
+make DESTDIR=$pckdir install
+
+mkdir $pckdir/lib
+mv -v $pckdir/usr/lib/libattr.so.* $pckdir/lib
+ln -sfv ../../lib/$(readlink $pckdir/usr/lib/libattr.so) $pckdir/usr/lib/libattr.so
+

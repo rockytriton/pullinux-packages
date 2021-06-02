@@ -1,0 +1,7 @@
+tar -xf $filename
+cd grep-3.6
+
+./configure --prefix=/usr --bindir=/bin
+make
+make DESTDIR=$pckdir install
+

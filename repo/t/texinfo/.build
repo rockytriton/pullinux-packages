@@ -1,0 +1,6 @@
+tar -xf $filename
+cd texinfo-6.7
+./configure --prefix=/usr
+
+make && make DESTDIR=$pckdir install
+

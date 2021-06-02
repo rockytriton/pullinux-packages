@@ -1,0 +1,12 @@
+tar -xf $filename
+cd Python-3.9.2
+
+./configure --prefix=/usr       \
+            --enable-shared     \
+            --with-system-expat \
+            --with-system-ffi   \
+            --with-ensurepip=yes
+
+make && make DESTDIR=$pckdir install
+
+

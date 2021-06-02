@@ -1,0 +1,5 @@
+tar -xf $filename
+cd diffutils-3.7
+./configure --prefix=/usr
+make && make DESTDIR=$pckdir install
+

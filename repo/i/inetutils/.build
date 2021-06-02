@@ -1,0 +1,19 @@
+tar -xf $filename
+cd inetutils-2.0
+./configure --prefix=/usr        \
+            --localstatedir=/var \
+            --disable-logger     \
+            --disable-whois      \
+            --disable-rcp        \
+            --disable-rexec      \
+            --disable-rlogin     \
+            --disable-rsh        \
+            --disable-servers
+make && make DESTDIR=$pckdir install
+
+mkdir $pckdir/sbin
+mkdir $pckdir/bin
+
+mv -v $pckdir/usr/bin/{hostname,ping,ping6,traceroute} $pckdir/bin
+mv -v $pckdir/usr/bin/ifconfig $pckdir/sbin
+

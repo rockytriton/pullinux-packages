@@ -1,0 +1,8 @@
+tar -xf $filename
+cd bc-3.3.0
+
+PREFIX=/usr CC=gcc ./configure.sh -G -O3
+make
+make DESTDIR=$pckdir install
+
+

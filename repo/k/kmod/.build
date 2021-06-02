@@ -1,0 +1,19 @@
+tar -xf $filename
+cd kmod-28
+./configure --prefix=/usr          \
+            --bindir=/bin          \
+            --sysconfdir=/etc      \
+            --with-rootlibdir=/lib \
+            --with-xz              \
+            --with-zstd            \
+            --with-zlib
+
+make && make DESTDIR=$pckdir install
+
+mkdir -p $pckdir/sbin
+for target in depmod insmod lsmod modinfo modprobe rmmod; do
+  ln -sfv ../bin/kmod $pckdir/sbin/$target
+done
+
+ln -sfv kmod $pckdir/bin/lsmod
+

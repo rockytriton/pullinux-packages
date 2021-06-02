@@ -1,0 +1,26 @@
+tar -xf $filename
+cd coreutils-8.32
+
+patch -Np1 -i ../coreutils-8.32-i18n-1.patch
+
+sed -i '/test.lock/s/^/#/' gnulib-tests/gnulib.mk
+
+autoreconf -fiv
+FORCE_UNSAFE_CONFIGURE=1 ./configure \
+            --prefix=/usr            \
+            --enable-no-install-program=kill,uptime
+
+make && make DESTDIR=$pckdir install
+
+mkdir -p $pckdir/bin
+mkdir -p $pckdir/usr/sbin
+mkdir -p $pckdir/usr/share/man/man8
+
+mv -v $pckdir/usr/bin/{cat,chgrp,chmod,chown,cp,date,dd,df,echo} $pckdir/bin
+mv -v $pckdir/usr/bin/{false,ln,ls,mkdir,mknod,mv,pwd,rm} $pckdir/bin
+mv -v $pckdir/usr/bin/{rmdir,stty,sync,true,uname} $pckdir/bin
+mv -v $pckdir/usr/bin/chroot $pckdir/usr/sbin
+mv -v $pckdir/usr/share/man/man1/chroot.1 $pckdir/usr/share/man/man8/chroot.8
+sed -i 's/"1"/"8"/' $pckdir/usr/share/man/man8/chroot.8
+mv -v $pckdir/usr/bin/{head,nice,sleep,touch} $pckdir/bin
+

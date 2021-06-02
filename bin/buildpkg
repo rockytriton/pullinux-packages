@@ -1,0 +1,94 @@
+import yaml
+import sys
+import os
+from subprocess import Popen, PIPE, DEVNULL
+import shutil
+
+plx_base='/usr/share/plx'
+
+if len(sys.argv) > 2:
+	plx_base = sys.argv[2]
+
+base_repo = plx_base + '/repo/'
+dl_cache = plx_base + '/dl-cache/'
+cwd = os.getcwd()
+
+pck = sys.argv[1]
+l0 = pck[0]
+
+full_path = base_repo + l0 + '/' + pck + '/.pck'
+
+print('checking: ', full_path)
+
+if not os.path.exists(full_path):
+	print('Package', pck, 'Does not exist')
+	sys.exit(1)
+
+print('Loading package details..')
+
+data = yaml.safe_load(open(full_path, 'r'))
+
+print('checking for file: ', data['filename'])
+
+if not data['filename'] == None and not os.path.exists(dl_cache + data['filename']):
+	print('File not in cache')
+	sys.exit(1)
+
+tmpdir = '/tmp/build_' + data['name']
+
+shutil.rmtree(tmpdir, ignore_errors=True)
+
+os.mkdir(tmpdir)
+os.mkdir(tmpdir + '/pckdir')
+
+os.chdir(tmpdir)
+
+if 'extras' in data:
+	for e in data['extras']:
+		file = base_repo + l0 + '/' + pck + '/' + e
+
+		if os.path.isdir(e):
+			shutil.copytree(file, tmpdir + '/' + e)
+		else:
+			shutil.copy2(file, tmpdir + '/' + e)
+
+if os.path.exists(base_repo + l0 + '/' + pck + '/.install'):
+	shutil.copytree(base_repo + l0 + '/' + pck + '/.install', tmpdir + '/.install')
+
+if data['filename'] != None:
+	shutil.copyfile(dl_cache + data['filename'], tmpdir + '/' + data['filename'])
+	os.environ["filename"] = data['filename']
+
+os.environ['tmpdir'] = tmpdir
+os.environ['pckdir'] = tmpdir + '/pckdir'
+os.environ['MAKEFLAGS'] = '-j' + str(os.cpu_count())
+
+shutil.copyfile(full_path, tmpdir + '/pckdir/.pck')
+
+print('building...')
+
+p = Popen('bash -e ' + base_repo + l0 + '/' + pck + '/.build', universal_newlines=True, shell=True)
+
+if p.wait() != 0:
+	print('Failed to install')
+	sys.exit(-2)
+
+p = Popen('chmod 755 ' + tmpdir + '/pckdir', shell=True, stderr=DEVNULL)
+p.wait()
+
+print('packaging...')
+
+pckfile = cwd + '/' + data['name'] + '-' + str(data['version']) + '-pullinux-1.2.0.txz'
+
+p = Popen('tar -cJpf ' + pckfile + ' -C ' + tmpdir + '/pckdir .', shell=True)
+
+if p.wait() != 0:
+	print('failed to create package file: ' + pckfile)
+	sys.exit(-3)
+
+print('cleaning up...')
+shutil.rmtree(tmpdir)
+
+print(' ')
+print('build complete')
+

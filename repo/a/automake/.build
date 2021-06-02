@@ -1,0 +1,8 @@
+tar -xf $filename
+cd automake-1.16.3
+sed -i "s/''/etags/" t/tags-lisp-space.sh
+
+./configure --prefix=/usr --docdir=/usr/share/doc/automake-1.16.3
+
+make && make DESTDIR=$pckdir install
+

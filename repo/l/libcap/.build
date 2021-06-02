@@ -1,0 +1,16 @@
+tar -xf $filename
+cd libcap-2.48
+
+sed -i '/install -m.*STA/d' libcap/Makefile
+
+mkdir -p $pckdir/lib
+
+make prefix=/usr lib=lib
+
+make prefix=$pckdir/usr lib=lib install
+for libname in cap psx; do
+    mv -v $pckdir/usr/lib/lib${libname}.so.* $pckdir/lib
+    ln -sfv ../../lib/lib${libname}.so.2 $pckdir/usr/lib/lib${libname}.so
+    chmod -v 755 $pckdir/lib/lib${libname}.so.2.48
+done
+

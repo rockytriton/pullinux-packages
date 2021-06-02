@@ -1,0 +1,5 @@
+tar -xf $filename
+cd iana-etc-20210202
+mkdir $pckdir/etc
+cp services protocols $pckdir/etc
+

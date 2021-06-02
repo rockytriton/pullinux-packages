@@ -1,0 +1,17 @@
+tar -xf $filename
+cd bash-5.1
+
+sed -i  '/^bashline.o:.*shmbchar.h/a bashline.o: ${DEFDIR}/builtext.h' Makefile.in
+
+./configure --prefix=/usr                    \
+            --docdir=/usr/share/doc/bash-5.1 \
+            --without-bash-malloc            \
+            --with-installed-readline
+
+make
+
+make DESTDIR=$pckdir install
+mkdir $pckdir/bin
+mv -vf $pckdir/usr/bin/bash $pckdir/bin
+
+

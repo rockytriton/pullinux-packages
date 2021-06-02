@@ -1,0 +1,145 @@
+import yaml
+import sys
+import os
+from subprocess import Popen, PIPE, DEVNULL
+import shutil
+import optparse
+
+opp = optparse.OptionParser()
+opp.add_option('-b', '--plx-base', dest='plx_base', help='plx base')
+opp.add_option('-p', '--package', dest='pck', help='package name')
+opp.add_option('-d', '--dest', dest='inst_dest', help='install destination')
+opp.add_option('-n', '--nodeps', dest='no_deps', help='no dependencies: 1 or 0')
+
+(options, args) = opp.parse_args()
+
+plx_base = '/usr/share/plx'
+
+if options.plx_base != None:
+	plx_base = options.plx_base
+
+base_repo = plx_base + '/repo/'
+dl_cache = plx_base + '/dl-cache/'
+
+if not os.path.exists('/tmp/plxinst'):
+	os.mkdir('/tmp/plxinst')
+
+os.chdir('/tmp/plxinst')
+
+cwd = os.getcwd()
+
+pck = options.pck
+l0 = pck[0]
+
+inst_dest = '/'
+
+if options.inst_dest != None:
+	inst_dest = options.inst_dest
+
+base_inst = inst_dest + '/usr/share/plx/inst/'
+
+if not os.path.exists(inst_dest):
+	print('destination path does not exist:', inst_dest)
+	sys.exit(-1)
+
+repo_path = base_repo + l0 + '/' + pck + '/.pck'
+inst_path = base_inst + l0 + '/' + pck + '/.pck'
+
+if os.path.exists(inst_path) and inst_dest == '/':
+	print('Package', pck, 'already installed.')
+	sys.exit(0)
+
+print('checking: ', repo_path)
+
+if not os.path.exists(repo_path):
+	print('Package', pck, 'Does not exist')
+	sys.exit(1)
+
+print('Installing package: ' + pck)
+
+data = yaml.safe_load(open(repo_path, 'r'))
+
+if 'deps' in data and options.no_deps != '1':
+	for d in data['deps']:
+		d0 = d[0]
+		if not os.path.exists(base_inst + d0 + '/' + d + '/.pck'):
+			
+			print('Installing dependency:', d)
+			cmd_args = '-p ' + d + ' -d ' + inst_dest + ' -b ' + plx_base
+
+			if 'nosubdeps' in data and str(data['nosubdeps']) == '1':
+				cmd_args = cmd_args + ' -n 1'
+				print('no sub deps')
+					
+			p = Popen('python3 ' + plx_base + '/bin/installpkg ' + cmd_args, shell=True)
+
+			if p.wait() != 0:
+				print('Failed to install dependency:', d)
+				sys.exit(-4)
+
+pck_file = os.environ["PLX_BIN"] + '/' + pck + '-' + str(data['version']) + '-pullinux-1.2.0.txz'
+
+if data['filename'] == None and not os.path.exists(pck_file):
+	print('Finished installing group: ' + pck)
+	sys.exit(0)
+
+if not os.path.exists(pck_file):
+	if plx_base != '/usr/share/plx':
+		print('Package binaries not found: ' + pck_file)
+		sys.exit(-4)
+
+	p = Popen('python3 ' + plx_base + '/bin/buildpkg ' + pck, shell=True)
+
+	if p.wait() != 0:
+		print('Cannot install, build failed')
+		sys.exit(-1)
+
+	pck_file = cwd + '/' + pck + '-' + str(data['version']) + '-pullinux-1.2.0.txz'
+
+	if not os.path.exists(pck_file):
+		print('Build succeeded but cannot find package binaries')
+		sys.exit(-2)
+
+os.chdir(inst_dest)
+shutil.rmtree(inst_dest + '/.install', ignore_errors = True)
+
+if os.path.exists(inst_dest + '/.pck'):
+	os.remove(inst_dest + '/.pck')
+
+p = Popen('tar -xhf ' + pck_file, shell=True)
+
+if p.wait() != 0:
+	print('Failed to extract package')
+	sys.exit(-3)
+
+print('Extracted tar: ' + pck_file)
+
+if os.path.exists(inst_dest + '/.install/install.sh') and inst_dest == '/' and pck_base == '/usr/share/plx':
+	os.chdir(inst_dest + '/.install')
+	print('Running post install...')
+
+	p = Popen('bash -e ' + inst_dest + '/.install/install.sh', shell=True)
+	
+	if p.wait() != 0:
+		print('WARNING: post install failed')
+
+shutil.rmtree(inst_dest + '/.install', ignore_errors = True)
+
+if not os.path.exists(base_inst + l0):
+	print('path doesnt exist, creating: ' + base_inst + l0)
+	os.mkdir(base_inst + l0)
+
+pth = base_inst + l0 + '/' + pck
+
+if pth == '/src/pullinux-1.2.0/chroot/usr/share/plx/inst/c/check':
+	print('\n\n\nCREATING PATH: ' + pth + '\n\n\n')
+
+os.mkdir(base_inst + l0 + '/' + pck)
+shutil.copyfile(inst_dest + '/.pck', base_inst + l0 + '/' + pck + '/.pck')
+
+print('copied file: ' + base_inst + l0 + '/' + pck + '/.pck')
+os.remove(inst_dest + '/.pck')
+
+print('Completed install for package', pck, str(data['version']))
+
+
