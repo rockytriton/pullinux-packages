@@ -4,21 +4,27 @@
 #include <dirent.h>
 #include <stdlib.h>
 #include <unistd.h>
-
-typedef struct package_list_entry_ {
-    plx_package *pck;
-    struct package_list_entry_ *prev;
-    struct package_list_entry_ *next;
-} package_list_entry;
-
-typedef struct {
-    package_list_entry *head;
-    package_list_entry *tail;
-
-} package_list;
+#include <argp.h>
 
 char *repo_base = "/src/pullinux-1.2.0/git/pullinux-packages/repo/";
 char *inst_base = "/src/pullinux-1.2.0/plx/inst/";
+
+plx_context *plx_context_load(char *base) {
+    plx_context *ctx = malloc(sizeof(plx_context));
+    ctx->plx_base = strdup(base);
+
+    if (!ctx->plx_base) {
+        ctx->plx_base = strdup("/");
+    }
+
+    return ctx;
+}
+
+void plx_context_free(plx_context *ctx) {
+    free(ctx->plx_base);
+    free(ctx);
+}
+
 
 bool is_package_installed(char *name) {
     char full_path[1024];
@@ -76,50 +82,6 @@ void print_list(package_list *needed) {
 
     printf("\n");
 }
-
-
-/*
-
-needed->head = base
-needed->tail = base;
-
-base->next = base-fs
-base-fs->prev = base
-needed->tail = base-fs
-
-base->base-fs->vim->texinfo->tar->man-db->dbus->systemd->other
-
-needed->head = base
-needed->tail = other
-
-texinfo
-
-base->base-fs->vim->
-    existing = texinfo->tar->man-db->dbus->
-    pcke = systemd->other->
-
-base->base-fs->vim->tar->man-db->dbus->systemd->other->texinfo
-
-
-
-
-
-
-
-
-base->base-fs->vim->
-    existing = texinfo->tar->man-db->dbus->
-    pcke = systemd->other->
-    
-base->base-fs->vim->pcke
-tail->next = existing
-
-needed->head = base
-needed->tail = dbus
-
-base->base-fs->vim->systemd->other->texinfo->tar->man-db->dbus->
-
-*/
 
 package_list_entry *package_list_add(package_list *list, package_list_entry *parent, plx_package *pck, bool add_deps) {
     if (!pck) {
@@ -213,7 +175,52 @@ void add_dependencies(package_list *global_list, package_list *needed, package_l
     }
 }
 
-int main() {
+static char doc[] = "pullit package manager";
+static char args_doc[] = "[PACKAGE_NAME]";
+
+static struct argp_option options[] = {
+    { "root", 'r', "path", 0, "Alternative root filesystem"},
+    {0}
+};
+
+struct arguments {
+    char *root;
+    char *package;
+};
+
+static error_t parse_opt(int key, char *arg, struct argp_state *state) {
+    struct arguments *arguments = state->input;
+
+    switch(key) {
+        case 'r': 
+            arguments->root = arg;
+            break;
+        case ARGP_KEY_ARG: 
+            arguments->package = arg;
+            return 0;
+        default:
+            return ARGP_ERR_UNKNOWN;
+    }
+
+    return 0;
+}
+
+static struct argp argp = { options, parse_opt, args_doc, doc, 0, 0, 0 };
+
+int main(int argc, char **argv) {
+
+    struct arguments arguments;
+    arguments.root = "/";
+
+    argp_parse(&argp, argc, argv, 0, 0, &arguments);
+
+    printf("ROOT: %s\n", arguments.root);
+    printf("PCK : %s\n", arguments.package);
+
+    if (argc > 0) {
+        return 0;
+    }
+
     package_list pcklist = {0};
     load_all_packages(&pcklist);
 

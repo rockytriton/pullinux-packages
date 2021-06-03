@@ -6,6 +6,130 @@ typedef enum {
     INIT, KEY, VALUE, DEP, MKDEP, EXTRA
 } parser_state;
 
+
+bool plx_package_is_installed(plx_context *ctx, char *name) {
+    char full_path[1024];
+    snprintf(full_path, sizeof(full_path) - 1, "%s/repo/%c/%s/.pck", ctx->plx_base, *name, name);
+
+    return access(full_path, F_OK) == 0;
+}
+
+plx_package *plx_package_load(plx_context *ctx, char *name) {
+    char full_path[1024];
+    snprintf(full_path, sizeof(full_path) - 1, "%s/repo/%c/%s/.pck", ctx->plx_base, *name, name);
+
+    plx_package *pck = plx_parse_package(full_path);
+    pck->installed = is_package_installed(name);
+
+    return pck;
+}
+
+package_list_entry *plx_package_list_find(package_list *list, char *name) {
+    package_list_entry *e = list->head;
+
+    while(e) {
+        if (!strcmp(e->pck->name, name)) {
+            return e;
+        }
+
+        e = e->next;
+    }
+
+    return 0;
+}
+
+package_list_entry *plx_package_list_add(package_list *list, package_list_entry *parent, plx_package *pck, bool add_deps) {
+    if (!pck) {
+        fprintf(stderr, "Invalid Package!\n");
+        exit(-1);
+    }
+
+    package_list_entry *child = malloc(sizeof(package_list_entry));
+    memset(child, 0, sizeof(package_list_entry));
+
+    if (!parent && !list->head) {
+        list->head = list->tail = child;
+    }
+
+    child->next = parent;
+    child->pck = pck;
+    
+    if (list->tail != child) {
+        list->tail->next = child;
+        child->prev = list->tail;
+        list->tail = child;
+    }
+
+    return child;
+}
+
+void plx_package_load_all(package_list *list) {
+    char *base_dirs = "abcdefghijklmnopqrstuvwxyz1234567890";
+
+    char *b = base_dirs;
+
+    while(*b) {
+        char full_path[1024];
+        snprintf(full_path, sizeof(full_path) - 1, "%s%c", repo_base, *b);
+
+        struct dirent *entry;
+        DIR *dp = opendir(full_path);
+
+        if (dp) {
+            while((entry = readdir(dp))) {
+                if (entry->d_name[0] == '.') {
+                    continue;
+                }
+
+                plx_package_list_add(list, 0, plx_package_load(entry->d_name), false);
+            }
+
+            closedir(dp);
+        }
+
+        b++;
+    }
+}
+
+void plx_package_list_add_dependencies(package_list *global_list, package_list *needed, package_list_entry *pcke) {
+    if (pcke->pck->deps.str) {
+        str_list *l = &pcke->pck->deps;
+
+        while(l) {
+            package_list_entry *e = plx_package_list_find(global_list, l->str);
+
+            if (!e) {
+                printf("Unable to find package...\n");
+                l = l->next;
+                continue;
+            }
+
+            plx_package *dep = e->pck;
+
+            package_list_entry *existing = plx_package_list_find(needed, dep->name);
+
+            if (existing) {
+                if (existing->prev) {
+                    existing->prev->next = existing->next;
+                    existing->next->prev = existing->prev;
+                    needed->tail->next = existing;
+                    existing->prev = needed->tail;
+                    existing->next = 0;
+                    needed->tail = existing;
+
+                    plx_package_list_add_dependencies(global_list, needed, existing);
+                }
+
+            } else {
+                package_list_entry *depe = plx_package_list_add(needed, 0, dep, false);
+                plx_package_list_add_dependencies(global_list, needed, depe);
+            }
+
+            l = l->next;
+        }
+    }
+}
+
 void str_list_append(str_list *l, char *s) {
     if (!l->str) {
         l->str = strdup(s);
