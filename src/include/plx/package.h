@@ -32,6 +32,7 @@ typedef struct {
     str_list extras;
 
     bool installed;
+    char *repo_path;
 } plx_package;
 
 typedef struct package_list_entry_ {

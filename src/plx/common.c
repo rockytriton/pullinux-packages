@@ -6,19 +6,18 @@
 #include <unistd.h>
 #include <argp.h>
 
-plx_context *plx_context_load(char *base) {
+plx_context *plx_context_load(plx_args *args) {
     plx_context *ctx = malloc(sizeof(plx_context));
-    ctx->plx_base = strdup(base);
-
-    if (!ctx->plx_base) {
-        ctx->plx_base = strdup("/");
-    }
+    ctx->plx_base = strdup(args->root);
+    ctx->rebuild = args->rebuild;
+    ctx->plx_repo_url = strdup("https://github.com/rockytriton/pullinux-packages/releases/download/1.2.0.2/");
 
     return ctx;
 }
 
 void plx_context_free(plx_context *ctx) {
     free(ctx->plx_base);
+    free(ctx->plx_repo_url);
     free(ctx);
 }
 

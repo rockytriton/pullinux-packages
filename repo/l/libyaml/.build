@@ -1,0 +1,8 @@
+tar -xf $filename
+cd libyaml-0.2.4
+
+./bootstrap                                &&
+./configure --prefix=/usr --disable-static
+
+make && make DESTDIR=$pckdir install
+

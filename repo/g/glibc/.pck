@@ -9,5 +9,5 @@ deps: [
 mkdeps: []
 extras: [
   'glibc-2.33-fhs-1.patch',
-  'https://www.iana.org/time-zones/repository/releases/tzdata2021a.tar.gz'
+  'https://github.com/rockytriton/pullinux-packages/releases/download/1.2.0.2/tzdata2021a.tar.gz'
 ]

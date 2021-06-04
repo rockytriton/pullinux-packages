@@ -15,18 +15,21 @@ typedef enum {
 
 bool plx_package_is_installed(plx_context *ctx, char *name) {
     char full_path[1024];
-    snprintf(full_path, sizeof(full_path) - 1, "%s/inst/%c/%s/.pck", ctx->plx_base, *name, name);
+    snprintf(full_path, sizeof(full_path) - 1, "%s/usr/share/plx/inst/%c/%s/.pck", ctx->plx_base, *name, name);
 
     return access(full_path, F_OK) == 0;
 }
 
 plx_package *plx_package_load(plx_context *ctx, char *name) {
     char full_path[1024];
-    snprintf(full_path, sizeof(full_path) - 1, "%s/repo/%c/%s/.pck", ctx->plx_base, *name, name);
+    snprintf(full_path, sizeof(full_path) - 1, "%s/usr/share/plx/repo/%c/%s/.pck", ctx->plx_base, *name, name);
 
     plx_package *pck = plx_parse_package(full_path);
     pck->installed = plx_package_is_installed(ctx, name);
 
+    snprintf(full_path, sizeof(full_path) - 1, "%s/usr/share/plx/repo/%c/%s", ctx->plx_base, *name, name);
+    pck->repo_path = strdup(full_path);
+    
     return pck;
 }
 
@@ -76,8 +79,8 @@ void plx_package_load_all(plx_context *ctx, package_list *list) {
 
     while(*b) {
         char full_path[1024];
-        snprintf(full_path, sizeof(full_path) - 1, "%s/repo/%c", ctx->plx_base, *b);
-        
+        snprintf(full_path, sizeof(full_path) - 1, "%s/usr/share/plx/repo/%c", ctx->plx_base, *b);
+
         struct dirent *entry;
         DIR *dp = opendir(full_path);
 
@@ -111,6 +114,11 @@ void plx_package_list_add_dependencies(package_list *global_list, package_list *
             }
 
             plx_package *dep = e->pck;
+
+            if (dep->installed) {
+                l = l->next;
+                continue;
+            }
 
             package_list_entry *existing = plx_package_list_find(needed, dep->name);
 

@@ -1,0 +1,11 @@
+tar -xf $filename
+cd libcap-2.48
+
+make -C pam_cap
+
+mkdir -p $pckdir/lib/security
+mkdir -p $pckdir/etc/security
+
+install -v -m755 pam_cap/pam_cap.so $pckdir/lib/security &&
+install -v -m644 pam_cap/capability.conf $pckdir/etc/security
+

@@ -1,9 +1,9 @@
 tar -xf $filename
-cd expat-2.2.10
+cd expat-2.4.1
 ./configure --prefix=/usr    \
             --disable-static \
-            --docdir=/usr/share/doc/expat-2.2.10
+            --docdir=/usr/share/doc/expat-2.4.1
 
 make && make DESTDIR=$pckdir install
-install -v -m644 doc/*.{html,png,css} $pckdir/usr/share/doc/expat-2.2.10
+install -v -m644 doc/*.{html,png,css} $pckdir/usr/share/doc/expat-2.4.1
 

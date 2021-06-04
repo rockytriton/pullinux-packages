@@ -1,0 +1,35 @@
+tar -xf $filename
+cd systemd-247
+
+patch -Np1 -i ../systemd-247-upstream_fixes-1.patch
+
+sed -i 's/GROUP="render"/GROUP="video"/' rules.d/50-udev-default.rules.in
+
+mkdir build &&
+cd    build &&
+
+meson --prefix=/usr                 \
+      -Dblkid=true                  \
+      -Dbuildtype=release           \
+      -Ddefault-dnssec=no           \
+      -Dfirstboot=false             \
+      -Dinstall-tests=false         \
+      -Dldconfig=false              \
+      -Dman=auto                    \
+      -Drootprefix=                 \
+      -Drootlibdir=/lib             \
+      -Dsplit-usr=true              \
+      -Dsysusers=false              \
+      -Drpmmacrosdir=no             \
+      -Db_lto=false                 \
+      -Dhomed=false                 \
+      -Duserdb=false                \
+      -Dmode=release                \
+      -Dpamconfdir=/etc/pam.d       \
+      -Ddocdir=/usr/share/doc/systemd-247 \
+      ..                            &&
+
+ninja
+
+DESTDIR=$pckdir ninja install
+

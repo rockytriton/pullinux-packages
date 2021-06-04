@@ -1,4 +1,5 @@
 #include <plx/package.h>
+#include <plx/install.h>
 #include <stdio.h>
 #include <string.h>
 #include <dirent.h>
@@ -11,20 +12,23 @@ static char args_doc[] = "[PACKAGE_NAME]";
 
 static struct argp_option options[] = {
     { "root", 'r', "path", 0, "Alternative root filesystem"},
+    { "rebuild", 'b', 0, 0, "Rebuild the package"},
+    { "no-deps", 'n', 0, 0, "No dependencies"},
     {0}
 };
 
-struct arguments {
-    char *root;
-    char *package;
-};
-
 static error_t parse_opt(int key, char *arg, struct argp_state *state) {
-    struct arguments *arguments = state->input;
+    plx_args *arguments = state->input;
 
     switch(key) {
         case 'r': 
             arguments->root = arg;
+            break;
+        case 'b': 
+            arguments->rebuild = true;
+            break;
+        case 'n': 
+            arguments->nodeps = true;
             break;
         case ARGP_KEY_ARG: 
             arguments->package = arg;
@@ -40,9 +44,13 @@ static struct argp argp = { options, parse_opt, args_doc, doc, 0, 0, 0 };
 
 int main(int argc, char **argv) {
 
-    struct arguments arguments;
+    plx_args arguments;
     arguments.root = "/";
     arguments.package = "";
+    arguments.rebuild = false;
+    arguments.nodeps = false;
+
+    printf("Pullinux - Pullit Package Manager v 1.2.0\n\n");
 
     argp_parse(&argp, argc, argv, 0, 0, &arguments);
 
@@ -51,7 +59,7 @@ int main(int argc, char **argv) {
         return -1;
     }
 
-    plx_context *ctx = plx_context_load(arguments.root);
+    plx_context *ctx = plx_context_load(&arguments);
 
     package_list pcklist = {0};
     plx_package_load_all(ctx, &pcklist);
@@ -64,8 +72,16 @@ int main(int argc, char **argv) {
         return -2;
     }
 
+    if (pck->installed && !ctx->rebuild) {
+        printf("Package already installed!\n");
+        return 0;
+    }
+
     package_list_entry *pcke = plx_package_list_add(&needed, 0, pck, false);
-    plx_package_list_add_dependencies(&pcklist, &needed, pcke);
+
+    if (!arguments.nodeps) {
+        plx_package_list_add_dependencies(&pcklist, &needed, pcke);
+    }
 
 #ifdef DBG_LIST
     printf("List Head: %s\n", needed.head->pck->name);
@@ -95,9 +111,28 @@ int main(int argc, char **argv) {
     printf("\n");
 #endif
 
-    if (pck->installed) {
-        printf("Package already installed.\n");
-        return 0;
+    printf("The following packages will be %s:\n\n    ", ctx->rebuild ? "rebuilt" : "installed");
+
+    package_list_entry *l = needed.head;
+
+    while(l) {
+        printf("%s%s", l->pck->name, l->next ? ", " : "\n\n");
+
+        l = l->next;
     }
 
+    printf("Continue? Y/n: ");
+    fflush(stdout);
+
+    char sz[32];
+    fgets(sz, sizeof(sz) - 1, stdin);
+
+    sz[strlen(sz) - 1] = 0;
+
+    if (!strcmp(sz, "Y") || !strlen(sz)) {
+        return plx_install(ctx, &needed);
+    } 
+    
+    printf("Cancelled\n");
+    return 1;
 }

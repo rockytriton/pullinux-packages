@@ -9,7 +9,16 @@ typedef uint8_t u8;
 
 typedef struct {
     char *plx_base;
+    char *plx_repo_url;
+    bool rebuild;
 } plx_context;
 
-plx_context *plx_context_load(char *base);
+typedef struct {
+    char *root;
+    char *package;
+    bool rebuild;
+    bool nodeps;
+} plx_args;
+
+plx_context *plx_context_load(plx_args *args);
 void plx_context_free(plx_context *ctx);
