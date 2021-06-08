@@ -1,0 +1,19 @@
+tar -xf $filename
+cd pcre-8.44
+
+./configure --prefix=/usr                     \
+            --docdir=/usr/share/doc/pcre-8.44 \
+            --enable-unicode-properties       \
+            --enable-pcre16                   \
+            --enable-pcre32                   \
+            --enable-pcregrep-libz            \
+            --enable-pcregrep-libbz2          \
+            --enable-pcretest-libreadline     \
+            --disable-static
+
+make && make DESTDIR=$pckdir install
+
+mkdir -p $pckdir/lib
+mv -v $pckdir/usr/lib/libpcre.so.* $pckdir/lib &&
+ln -sfv ../../lib/$(readlink $pckdir/usr/lib/libpcre.so) $pckdir/usr/lib/libpcre.so
+

@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd pango-1.48.2 || cd $pckname
+
+mkdir build && cd build
+meson --prefix=/usr ..
+ninja && DESTDIR=$pckdir ninja install
+

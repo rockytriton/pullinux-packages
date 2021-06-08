@@ -5,6 +5,8 @@
 #include <libgen.h>
 #include <unistd.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <stdlib.h>
 
 int plx_install_package(plx_context *ctx, plx_package *pck) {
     if (pck->is_group) {
@@ -32,6 +34,8 @@ int plx_install_package(plx_context *ctx, plx_package *pck) {
         }
     }
 
+    system("rm -rf /.install");
+
     char command[2048];
     sprintf(command, "tar -xhf \"%s\" -C %s", full_path, ctx->plx_base);
 
@@ -49,12 +53,14 @@ int plx_install_package(plx_context *ctx, plx_package *pck) {
     if (on_root) {
         if (access(full_path, F_OK) == 0) {
             printf("Running installer...\n");
-            snprintf(command, sizeof(command) - 1, "bash -e %s/.install/install.sh", ctx->plx_base);
+            snprintf(command, sizeof(command) - 1, "cd %s/.install/ && bash -e %s/.install/install.sh", ctx->plx_base, ctx->plx_base);
             ret = system(command);
 
             if (ret) {
                 return ret;
             }
+
+            system("ldconfig");
         }
     } else if (access(full_path, F_OK) == 0) {
         printf("Appending post install...\n");
@@ -124,19 +130,21 @@ int plx_install(plx_context *ctx, package_list *list) {
                 return -3;
             }
 
-            printf("Install new build? Y/n: ");
-            fflush(stdout);
+            if (!ctx->install_rebuild) {
+                printf("Install new build? Y/n: ");
+                fflush(stdout);
 
-            char sz[32];
-            fgets(sz, sizeof(sz) - 1, stdin);
+                char sz[32];
+                fgets(sz, sizeof(sz) - 1, stdin);
 
-            sz[strlen(sz) - 1] = 0;
+                sz[strlen(sz) - 1] = 0;
 
-            if (!strcmp(sz, "Y") || !strlen(sz)) {
-                printf("Installing...\n");
-            } else {
-                e = e->prev;
-                continue;
+                if (!strcmp(sz, "Y") || !strlen(sz)) {
+                    printf("Installing...\n");
+                } else {
+                    e = e->prev;
+                    continue;
+                }
             }
         }
 

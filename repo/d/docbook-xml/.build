@@ -1,0 +1,5 @@
+mv $filename $pckdir/.install/
+cd $pckdir/.install
+unzip $filename
+
+

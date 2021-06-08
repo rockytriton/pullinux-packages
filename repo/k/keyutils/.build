@@ -1,0 +1,7 @@
+tar -xf $filename
+cd keyutils-1.6.1
+
+sed -i 's:$(LIBDIR)/$(PKGCONFIG_DIR):/usr/lib/pkgconfig:' Makefile
+
+make && make DESTDIR=$pckdir NO_ARLIB=1 install
+

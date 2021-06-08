@@ -10,6 +10,7 @@ plx_context *plx_context_load(plx_args *args) {
     plx_context *ctx = malloc(sizeof(plx_context));
     ctx->plx_base = strdup(args->root);
     ctx->rebuild = args->rebuild;
+    ctx->install_rebuild = args->install_rebuild;
     ctx->plx_repo_url = strdup("https://github.com/rockytriton/pullinux-packages/releases/download/1.2.0.2/");
 
     return ctx;

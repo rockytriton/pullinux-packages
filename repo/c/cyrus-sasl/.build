@@ -1,0 +1,17 @@
+tar -xf $filename
+cd cyrus-sasl-2.1.27
+
+patch -Np1 -i ../cyrus-sasl-2.1.27-doc_fixes-1.patch
+
+./configure --prefix=/usr --sysconfdir=/etc    \
+            --enable-auth-sasldb \
+            --with-dbpath=/var/lib/sasl/sasldb2 \
+            --with-saslauthd=/var/run/saslauthd
+
+make -j1 && make DESTDIR=$pckdir install
+
+install -v -dm755                          $pckdir/usr/share/doc/cyrus-sasl-2.1.27/html &&
+install -v -m644  saslauthd/LDAP_SASLAUTHD $pckdir/usr/share/doc/cyrus-sasl-2.1.27      &&
+install -v -m644  doc/legacy/*.html        $pckdir/usr/share/doc/cyrus-sasl-2.1.27/html &&
+install -v -dm700 $pckdir/var/lib/sasl
+

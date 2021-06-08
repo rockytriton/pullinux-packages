@@ -1,0 +1,8 @@
+tar -xf $filename
+cd nghttp2-1.43.0
+
+./configure --prefix=/usr --disable-static --enable-lib-only \
+            --docdir=/usr/share/doc/nghttp2-1.43.0
+
+make && make DESTDIR=$pckdir install
+

@@ -1,0 +1,34 @@
+tar -xf $filename
+cd openssh-8.4p1
+
+if ! id -u sshd ; then
+        groupadd -g 50 sshd
+        useradd  -c 'sshd PrivSep' \
+         -d /var/lib/sshd  \
+         -g sshd           \
+         -s /bin/false     \
+         -u 50 sshd
+fi
+
+sed -e '/INSTALLKEYS_SH/s/)//' -e '260a\  )' -i contrib/ssh-copy-id
+
+install  -v -m700 -d $pckdir/var/lib/sshd &&
+chown    -v root:sys $pckdir/var/lib/sshd &&
+
+
+./configure --prefix=/usr                     \
+            --sysconfdir=/etc/ssh             \
+            --with-md5-passwords              \
+            --with-privsep-path=/var/lib/sshd
+
+make && make DESTDIR=$pckdir install
+
+install -v -m755    contrib/ssh-copy-id $pckdir/usr/bin     &&
+
+install -v -m644    contrib/ssh-copy-id.1 \
+                    $pckdir/usr/share/man/man1              &&
+install -v -m755 -d $pckdir/usr/share/doc/openssh-8.4p1     &&
+install -v -m644    INSTALL LICENCE OVERVIEW README* \
+                    $pckdir/usr/share/doc/openssh-8.4p1
+
+

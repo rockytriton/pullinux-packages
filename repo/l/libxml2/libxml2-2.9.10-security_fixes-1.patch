@@ -1,0 +1,183 @@
+Submitted By: Ken Moffat <ken at linuxfromscratch dot org>
+Date: 2020-11-21
+Initial Package Version: 2.9.10
+Upstream Status: Applied
+Origin: Found at fedora.
+Description: Various fixes, including CVE-2019-20388, CVE-2020-7595,
+CVE-2020-24977.  I think that worst case these are DOS vulnerabilities.
+
+From 0815302dee2b78139832c2080348086a0564836b Mon Sep 17 00:00:00 2001
+From: Nick Wellnhofer <wellnhofer@aevum.de>
+Date: Fri, 6 Dec 2019 12:27:29 +0100
+Subject: [PATCH] Fix freeing of nested documents
+
+Apparently, some libxslt RVTs can contain nested document nodes, see
+issue #132. I'm not sure how this happens exactly but it can cause a
+segfault in xmlFreeNodeList after the changes in commit 0762c9b6.
+
+Make sure not to touch the (nonexistent) `content` member of xmlDocs.
+---
+ tree.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/tree.c b/tree.c
+index 070670f1..0d7fc98c 100644
+--- a/tree.c
++++ b/tree.c
+@@ -3708,6 +3708,11 @@ xmlFreeNodeList(xmlNodePtr cur) {
+ 		(cur->type != XML_XINCLUDE_START) &&
+ 		(cur->type != XML_XINCLUDE_END) &&
+ 		(cur->type != XML_ENTITY_REF_NODE) &&
++		(cur->type != XML_DOCUMENT_NODE) &&
++#ifdef LIBXML_DOCB_ENABLED
++		(cur->type != XML_DOCB_DOCUMENT_NODE) &&
++#endif
++		(cur->type != XML_HTML_DOCUMENT_NODE) &&
+ 		(cur->content != (xmlChar *) &(cur->properties))) {
+ 		DICT_FREE(cur->content)
+ 	    }
+-- 
+2.22.0
+
+From 6088a74bcf7d0c42e24cff4594d804e1d3c9fbca Mon Sep 17 00:00:00 2001
+From: Zhipeng Xie <xiezhipeng1@huawei.com>
+Date: Tue, 20 Aug 2019 16:33:06 +0800
+Subject: [PATCH] Fix memory leak in xmlSchemaValidateStream
+
+When ctxt->schema is NULL, xmlSchemaSAXPlug->xmlSchemaPreRun
+alloc a new schema for ctxt->schema and set vctxt->xsiAssemble
+to 1. Then xmlSchemaVStart->xmlSchemaPreRun initialize
+vctxt->xsiAssemble to 0 again which cause the alloced schema
+can not be freed anymore.
+
+Found with libFuzzer.
+
+Signed-off-by: Zhipeng Xie <xiezhipeng1@huawei.com>
+---
+ xmlschemas.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/xmlschemas.c b/xmlschemas.c
+index 301c8449..39d92182 100644
+--- a/xmlschemas.c
++++ b/xmlschemas.c
+@@ -28090,7 +28090,6 @@ xmlSchemaPreRun(xmlSchemaValidCtxtPtr vctxt) {
+     vctxt->nberrors = 0;
+     vctxt->depth = -1;
+     vctxt->skipDepth = -1;
+-    vctxt->xsiAssemble = 0;
+     vctxt->hasKeyrefs = 0;
+ #ifdef ENABLE_IDC_NODE_TABLES_TEST
+     vctxt->createIDCNodeTables = 1;
+-- 
+2.24.1
+
+From 0e1a49c8907645d2e155f0d89d4d9895ac5112b5 Mon Sep 17 00:00:00 2001
+From: Zhipeng Xie <xiezhipeng1@huawei.com>
+Date: Thu, 12 Dec 2019 17:30:55 +0800
+Subject: [PATCH] Fix infinite loop in xmlStringLenDecodeEntities
+
+When ctxt->instate == XML_PARSER_EOF,xmlParseStringEntityRef
+return NULL which cause a infinite loop in xmlStringLenDecodeEntities
+
+Found with libFuzzer.
+
+Signed-off-by: Zhipeng Xie <xiezhipeng1@huawei.com>
+---
+ parser.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/parser.c b/parser.c
+index d1c31963..a34bb6cd 100644
+--- a/parser.c
++++ b/parser.c
+@@ -2646,7 +2646,8 @@ xmlStringLenDecodeEntities(xmlParserCtxtPtr ctxt, const xmlChar *str, int len,
+     else
+         c = 0;
+     while ((c != 0) && (c != end) && /* non input consuming loop */
+-	   (c != end2) && (c != end3)) {
++           (c != end2) && (c != end3) &&
++           (ctxt->instate != XML_PARSER_EOF)) {
+ 
+ 	if (c == 0) break;
+         if ((c == '&') && (str[1] == '#')) {
+-- 
+2.24.1
+
+From 8e7c20a1af8776677d7890f30b7a180567701a49 Mon Sep 17 00:00:00 2001
+From: Nick Wellnhofer <wellnhofer@aevum.de>
+Date: Mon, 3 Aug 2020 17:30:41 +0200
+Subject: [PATCH] Fix integer overflow when comparing schema dates
+
+Found by OSS-Fuzz.
+---
+ xmlschemastypes.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/xmlschemastypes.c b/xmlschemastypes.c
+index 4249d700..d6b9f924 100644
+--- a/xmlschemastypes.c
++++ b/xmlschemastypes.c
+@@ -3691,6 +3691,8 @@ xmlSchemaCompareDurations(xmlSchemaValPtr x, xmlSchemaValPtr y)
+ 	minday = 0;
+ 	maxday = 0;
+     } else {
++        if (myear > LONG_MAX / 366)
++            return -2;
+         /* FIXME: This doesn't take leap year exceptions every 100/400 years
+            into account. */
+ 	maxday = 365 * myear + (myear + 3) / 4;
+@@ -4079,6 +4081,14 @@ xmlSchemaCompareDates (xmlSchemaValPtr x, xmlSchemaValPtr y)
+     if ((x == NULL) || (y == NULL))
+         return -2;
+ 
++    if ((x->value.date.year > LONG_MAX / 366) ||
++        (x->value.date.year < LONG_MIN / 366) ||
++        (y->value.date.year > LONG_MAX / 366) ||
++        (y->value.date.year < LONG_MIN / 366)) {
++        /* Possible overflow when converting to days. */
++        return -2;
++    }
++
+     if (x->value.date.tz_flag) {
+ 
+         if (!y->value.date.tz_flag) {
+-- 
+2.28.0.rc2
+
+From 50f06b3efb638efb0abd95dc62dca05ae67882c2 Mon Sep 17 00:00:00 2001
+From: Nick Wellnhofer <wellnhofer@aevum.de>
+Date: Fri, 7 Aug 2020 21:54:27 +0200
+Subject: [PATCH] Fix out-of-bounds read with 'xmllint --htmlout'
+
+Make sure that truncated UTF-8 sequences don't cause an out-of-bounds
+array access.
+
+Thanks to @SuhwanSong and the Agency for Defense Development (ADD) for
+the report.
+
+Fixes #178.
+---
+ xmllint.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/xmllint.c b/xmllint.c
+index f6a8e463..c647486f 100644
+--- a/xmllint.c
++++ b/xmllint.c
+@@ -528,6 +528,12 @@ static void
+ xmlHTMLEncodeSend(void) {
+     char *result;
+ 
++    /*
++     * xmlEncodeEntitiesReentrant assumes valid UTF-8, but the buffer might
++     * end with a truncated UTF-8 sequence. This is a hack to at least avoid
++     * an out-of-bounds read.
++     */
++    memset(&buffer[sizeof(buffer)-4], 0, 4);
+     result = (char *) xmlEncodeEntitiesReentrant(NULL, BAD_CAST buffer);
+     if (result) {
+ 	xmlGenericError(xmlGenericErrorContext, "%s", result);
+-- 
+2.28.0.rc2
+

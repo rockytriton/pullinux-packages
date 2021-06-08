@@ -1,0 +1,21 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd fontconfig-2.13.1 || cd $pckname
+
+./configure --prefix=/usr --sysconfdir=/etc    \
+            --localstatedir=/var \
+            --disable-docs       \
+            --docdir=/usr/share/doc/fontconfig-2.13.1 
+
+make && make DESTDIR=$pckdir install
+
+install -v -dm755 \
+        $pckdir/usr/share/{man/man{1,3,5},doc/fontconfig-2.13.1/fontconfig-devel} &&
+install -v -m644 fc-*/*.1         $pckdir/usr/share/man/man1 &&
+install -v -m644 doc/*.3          $pckdir/usr/share/man/man3 &&
+install -v -m644 doc/fonts-conf.5 $pckdir/usr/share/man/man5 &&
+install -v -m644 doc/fontconfig-devel/* \
+                                  $pckdir/usr/share/doc/fontconfig-2.13.1/fontconfig-devel &&
+install -v -m644 doc/*.{pdf,sgml,txt,html} \
+                                  $pckdir/usr/share/doc/fontconfig-2.13.1
+

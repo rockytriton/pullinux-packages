@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libXdamage-1.1.5 || cd $pckname
+
+./configure $XORG_CONFIG --docdir=/usr/share/doc/libXdamage-1.1.5 
+
+make && make DESTDIR=$pckdir install
+

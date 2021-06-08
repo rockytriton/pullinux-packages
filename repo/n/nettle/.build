@@ -1,0 +1,11 @@
+tar -xf $filename
+cd nettle-3.7.1
+
+./configure --prefix=/usr --disable-static
+
+make && make DESTDIR=$pckdir install
+
+chmod   -v   755 $pckdir/usr/lib/lib{hogweed,nettle}.so &&
+install -v -m755 -d $pckdir/usr/share/doc/nettle-3.7.1 &&
+install -v -m644 nettle.html $pckdir/usr/share/doc/nettle-3.7.1
+

@@ -1,0 +1,7 @@
+tar -xf $filename
+cd libevent-2.1.12-stable
+
+./configure --prefix=/usr --disable-static 
+
+make && make DESTDIR=$pckdir install
+

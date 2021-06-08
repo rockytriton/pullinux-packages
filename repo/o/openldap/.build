@@ -1,0 +1,45 @@
+tar -xf $filename
+cd openldap-2.4.57
+
+if ! id -u ldap ; then
+        groupadd -g 83 ldap &&
+        useradd  -c "OpenLDAP Daemon Owner" \
+         -d /var/lib/openldap -u 83 \
+         -g ldap -s /bin/false ldap
+
+fi
+
+patch -Np1 -i ../openldap-2.4.57-consolidated-1.patch &&
+autoconf
+
+./configure --prefix=/usr         \
+            --sysconfdir=/etc     \
+            --localstatedir=/var  \
+            --libexecdir=/usr/lib \
+            --disable-static      \
+            --disable-debug       \
+            --with-tls=openssl    \
+            --with-cyrus-sasl     \
+            --enable-dynamic      \
+            --enable-crypt        \
+            --enable-spasswd      \
+            --enable-slapd        \
+            --enable-modules      \
+            --enable-rlookups     \
+            --enable-backends=mod \
+            --disable-ndb         \
+            --disable-sql         \
+            --disable-shell       \
+            --disable-bdb         \
+            --disable-hdb         \
+            --enable-overlays=mod
+
+make depend
+
+make && make DESTDIR=$pckdir install
+
+install -v -dm755 $pckdir/usr/share/doc/openldap-2.4.57 &&
+cp      -vfr      doc/{drafts,rfc,guide} \
+                  $pckdir/usr/share/doc/openldap-2.4.57
+
+

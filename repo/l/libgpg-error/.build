@@ -1,0 +1,9 @@
+tar -xf $filename
+cd libgpg-error-1.41
+
+./configure --prefix=/usr 
+
+make && make DESTDIR=$pckdir install
+
+install -v -m644 -D README $pckdir/usr/share/doc/libgpg-error-1.41/README
+

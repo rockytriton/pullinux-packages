@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd itstool-2.0.6 || cd $pckname
+
+PYTHON=/usr/bin/python3 ./configure --prefix=/usr
+
+make && make DESTDIR=$pckdir install
+

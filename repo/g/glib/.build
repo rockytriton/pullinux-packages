@@ -1,0 +1,17 @@
+tar -xf $filename
+cd glib-2.66.7
+
+mkdir build &&
+cd    build &&
+
+meson --prefix=/usr      \
+      -Dman=true         \
+      -Dselinux=disabled \
+      ..                 &&
+ninja
+
+DESTDIR=$pckdir ninja install
+
+mkdir -p $pckdir/usr/share/doc/glib-2.66.7 &&
+cp -r ../docs/reference/{NEWS,gio,glib,gobject} $pckdir/usr/share/doc/glib-2.66.7
+

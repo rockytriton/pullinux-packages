@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd usbutils-013 || cd $pckname
+
+./configure --prefix=/usr --datadir=/usr/share/hwdata 
+
+make && make DESTDIR=$pckdir install
+

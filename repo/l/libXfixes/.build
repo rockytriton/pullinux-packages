@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libXfixes-5.0.3 || cd $pckname
+
+./configure $XORG_CONFIG --docdir=/usr/share/doc/libXfixes-5.0.3 
+
+make && make DESTDIR=$pckdir install
+

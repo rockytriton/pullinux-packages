@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libXScrnSaver-1.2.3 || cd $pckname
+
+./configure $XORG_CONFIG --docdir=/usr/share/doc/libXScrnSaver-1.2.3 
+
+make && make DESTDIR=$pckdir install
+

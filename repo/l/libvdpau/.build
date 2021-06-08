@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libvdpau-1.4 || cd $pckname
+
+mkdir build && cd build
+meson --prefix=$XORG_PREFIX ..
+ninja && DESTDIR=$pckdir ninja install
+

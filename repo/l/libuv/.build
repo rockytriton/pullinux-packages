@@ -1,0 +1,9 @@
+tar -xf $filename
+cd libuv-v1.41.0
+
+sh autogen.sh
+
+./configure --prefix=/usr --disable-static 
+
+make && make DESTDIR=$pckdir install
+

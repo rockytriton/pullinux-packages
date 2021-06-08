@@ -1,0 +1,7 @@
+tar -xf $filename
+cd gpgme-1.15.1
+
+./configure --prefix=/usr --disable-gpg-test 
+
+make && make DESTDIR=$pckdir install
+

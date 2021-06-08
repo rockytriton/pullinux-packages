@@ -13,6 +13,7 @@ static char args_doc[] = "[PACKAGE_NAME]";
 static struct argp_option options[] = {
     { "root", 'r', "path", 0, "Alternative root filesystem"},
     { "rebuild", 'b', 0, 0, "Rebuild the package"},
+    { "rebuild-install", 'i', 0, 0, "Install Rebuilt the package"},
     { "no-deps", 'n', 0, 0, "No dependencies"},
     {0}
 };
@@ -26,6 +27,9 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state) {
             break;
         case 'b': 
             arguments->rebuild = true;
+            break;
+        case 'i': 
+            arguments->install_rebuild = true;
             break;
         case 'n': 
             arguments->nodeps = true;
@@ -48,6 +52,7 @@ int main(int argc, char **argv) {
     arguments.root = "/";
     arguments.package = "";
     arguments.rebuild = false;
+    arguments.install_rebuild = false;
     arguments.nodeps = false;
 
     printf("Pullinux - Pullit Package Manager v 1.2.0\n\n");
@@ -80,7 +85,7 @@ int main(int argc, char **argv) {
     package_list_entry *pcke = plx_package_list_add(&needed, 0, pck, false);
 
     if (!arguments.nodeps) {
-        plx_package_list_add_dependencies(&pcklist, &needed, pcke);
+        plx_package_list_add_dependencies(ctx, &pcklist, &needed, pcke);
     }
 
 #ifdef DBG_LIST

@@ -1,0 +1,12 @@
+tar -xf $filename
+cd lmdb-LMDB_0.9.28 
+
+cd libraries/liblmdb &&
+make                 &&
+sed -i 's| liblmdb.a||' Makefile
+
+mkdir $pckdir/usr
+
+make prefix=$pckdir/usr install
+
+

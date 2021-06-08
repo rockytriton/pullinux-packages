@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libXpm-3.5.13 || cd $pckname
+
+./configure $XORG_CONFIG --docdir=/usr/share/doc/libXpm-3.5.13 
+
+make && make DESTDIR=$pckdir install
+

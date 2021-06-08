@@ -100,17 +100,44 @@ void plx_package_load_all(plx_context *ctx, package_list *list) {
     }
 }
 
-void plx_package_list_add_dependencies(package_list *global_list, package_list *needed, package_list_entry *pcke) {
-    if (pcke->pck->deps.str) {
-        str_list *l = &pcke->pck->deps;
+void print_list2(package_list *plst) {
+    printf("\n\n\nLIST: %p\n", plst->head);
 
-        while(l) {
+    package_list_entry *l = plst->head;
+
+    while(l) {
+        printf("%s(", l->pck->name);
+
+        if (l->pck->deps.str) {
+            str_list *sl = &l->pck->deps;
+
+            while(sl) {
+                printf("%s,", sl->str);
+                sl = sl->next;
+            }
+        }
+
+        printf(")->");
+
+        l = l->next;
+    }
+
+    printf("\n\n");
+}
+
+void plx_package_list_add_dependencies_from_list(plx_context *ctx, package_list *global_list, package_list *needed, package_list_entry *pcke, str_list *list) {
+    if (list && list->str) {
+        str_list *l = list;
+
+        while(l && l->str) {
             package_list_entry *e = plx_package_list_find(global_list, l->str);
 
             if (!e) {
-                printf("Unable to find package...\n");
-                l = l->next;
-                continue;
+                printf("Unable to find package: %s...\n", l->str);
+                fflush(stdout);
+                exit(-6);
+                //l = l->next;
+                //continue;
             }
 
             plx_package *dep = e->pck;
@@ -123,25 +150,41 @@ void plx_package_list_add_dependencies(package_list *global_list, package_list *
             package_list_entry *existing = plx_package_list_find(needed, dep->name);
 
             if (existing) {
-                if (existing->prev) {
+                if (existing->prev && existing->next) {
+                    //printf("\t  - moving: %s\n", dep->name);
+
+                    //print_list2(needed);
+
                     existing->prev->next = existing->next;
                     existing->next->prev = existing->prev;
                     needed->tail->next = existing;
                     existing->prev = needed->tail;
                     existing->next = 0;
                     needed->tail = existing;
+                    //printf("\t  - moved: %s\n", dep->name);
 
-                    plx_package_list_add_dependencies(global_list, needed, existing);
+                    plx_package_list_add_dependencies(ctx, global_list, needed, existing);
                 }
 
             } else {
                 package_list_entry *depe = plx_package_list_add(needed, 0, dep, false);
-                plx_package_list_add_dependencies(global_list, needed, depe);
+                plx_package_list_add_dependencies(ctx, global_list, needed, depe);
             }
 
             l = l->next;
         }
+
     }
+}
+
+void plx_package_list_add_dependencies(plx_context *ctx, package_list *global_list, package_list *needed, package_list_entry *pcke) {
+    //printf("Adding deps for %s\n", pcke->pck->name);
+    plx_package_list_add_dependencies_from_list(ctx, global_list, needed, pcke, &pcke->pck->deps);
+
+    if (ctx->rebuild) {
+        plx_package_list_add_dependencies_from_list(ctx, global_list, needed, pcke, &pcke->pck->mkdeps);
+    }
+    //printf("Added deps for %s\n", pcke->pck->name);
 }
 
 void str_list_append(str_list *l, char *s) {

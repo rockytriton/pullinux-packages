@@ -1,0 +1,11 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libmng-2.0.3 || cd $pckname
+
+./configure --prefix=/usr --disable-static 
+
+make && make DESTDIR=$pckdir install
+
+install -v -m755 -d        $pckdir/usr/share/doc/libmng-2.0.3 &&
+install -v -m644 doc/*.txt $pckdir/usr/share/doc/libmng-2.0.3
+

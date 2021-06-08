@@ -1,0 +1,11 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libtheora-1.1.1 || cd $pckname
+
+sed -i 's/png_\(sizeof\)/\1/g' examples/png2theora.c
+
+./configure --prefix=/usr --disable-static 
+
+make && make DESTDIR=$pckdir install
+
+

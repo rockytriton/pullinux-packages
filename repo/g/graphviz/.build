@@ -1,0 +1,13 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd graphviz-2.44.1 || cd $pckname
+
+sed -i '/LIBPOSTFIX="64"/s/64//' configure.ac &&
+
+autoreconf                &&
+./configure --prefix=/usr \
+            --disable-php \
+            PS2PDF=true
+
+make && make DESTDIR=$pckdir install
+

@@ -6,6 +6,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/sysinfo.h>
+#include <sys/stat.h>
+#include <stdlib.h>
 
 int plx_build_package(plx_context *ctx, plx_package *pck) {
     if (pck->is_group) {
@@ -112,13 +114,16 @@ int plx_build_package(plx_context *ctx, plx_package *pck) {
         }
     }
 
-    setenv("tmpdir", build_base);
-    setenv("filename", fn);
-    setenv("pckdir", pck_base);
+    setenv("tmpdir", build_base, 1);
+    setenv("filename", fn, 1);
+    setenv("pckdir", pck_base, 1);
+    setenv("XORG_PREFIX", "/usr", 1);
+    setenv("XORG_CONFIG", "--prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static", 1);
+    setenv("QT5PREFIX", "/opt/qt", 1);
 
     char sz[64];
     sprintf(sz, "-j%d", get_nprocs());
-    setenv("MAKEFLAGS", sz);
+    setenv("MAKEFLAGS", sz, 1);
 
     snprintf(command, sizeof(command) - 1, "cd %s && bash -e ./.build", build_base);
 

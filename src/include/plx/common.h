@@ -11,6 +11,7 @@ typedef struct {
     char *plx_base;
     char *plx_repo_url;
     bool rebuild;
+    bool install_rebuild;
 } plx_context;
 
 typedef struct {
@@ -18,6 +19,7 @@ typedef struct {
     char *package;
     bool rebuild;
     bool nodeps;
+    bool install_rebuild;
 } plx_args;
 
 plx_context *plx_context_load(plx_args *args);

@@ -1,0 +1,49 @@
+tar -xf $filename
+cd fuse-3.10.2
+
+sed -i '/^udev/,$ s/^/#/' util/meson.build &&
+
+mkdir build &&
+cd    build &&
+
+meson --prefix=/usr .. &&
+ninja
+
+DESTDIR=$pckdir ninja install
+
+mkdir -p $pckdir/lib
+mkdir -p $pckdir/bin
+mkdir -p $pckdir/sbin
+
+mv -vf   $pckdir/usr/lib/libfuse3.so.3*    $pckdir/lib                 &&
+ln -sfvn ../../lib/libfuse3.so.3.10.2 $pckdir/usr/lib/libfuse3.so &&
+
+mv -vf $pckdir/usr/bin/fusermount3  $pckdir/bin         &&
+mv -vf $pckdir/usr/sbin/mount.fuse3 $pckdir/sbin        &&
+chmod u+s $pckdir/bin/fusermount3                &&
+
+install -v -m755 -d $pckdir/usr/share/doc/fuse-3.10.2      &&
+install -v -m644    ../doc/{README.NFS,kernel.txt} \
+                    $pckdir/usr/share/doc/fuse-3.10.2      &&
+cp -Rv ../doc/html  $pckdir/usr/share/doc/fuse-3.10.2
+
+mkdir -p $pckdir/etc
+
+cat > $pckdir/etc/fuse.conf << "EOF"
+# Set the maximum number of FUSE mounts allowed to non-root users.
+# The default is 1000.
+#
+#mount_max = 1000
+
+# Allow non-root users to specify the 'allow_other' or 'allow_root'
+# mount options.
+#
+#user_allow_other
+EOF
+
+
+#KMOD
+#File systems  --->
+#  <*/M> FUSE (Filesystem in Userspace) support  [CONFIG_FUSE_FS]
+#  <*/M>   Character device in Userspace support [CONFIG_CUSE]
+

@@ -55,4 +55,4 @@ plx_package *plx_package_load(plx_context *ctx, char *name);
 package_list_entry *plx_package_list_find(package_list *list, char *name);
 package_list_entry *plx_package_list_add(package_list *list, package_list_entry *parent, plx_package *pck, bool add_deps);
 void plx_package_load_all(plx_context *ctx, package_list *list);
-void plx_package_list_add_dependencies(package_list *global_list, package_list *needed, package_list_entry *pcke);
+void plx_package_list_add_dependencies(plx_context *ctx, package_list *global_list, package_list *needed, package_list_entry *pcke);

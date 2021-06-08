@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd xkeyboard-config-2.32 || cd $pckname
+
+./configure $XORG_CONFIG --with-xkb-rules-symlink=xorg
+
+make && make DESTDIR=$pckdir install
+

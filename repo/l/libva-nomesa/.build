@@ -1,0 +1,15 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libva-nomesa-2.10.0 || cd $pckname
+
+./configure $XORG_CONFIG
+
+make && make DESTDIR=$pckdir install
+
+tar -xvf ../intel-vaapi-driver-2.4.1.tar.bz2 &&
+cd intel-vaapi-driver-2.4.1
+
+./configure $XORG_CONFIG
+
+make && make DESTDIR=$pckdir install
+

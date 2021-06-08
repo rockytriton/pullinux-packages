@@ -1,0 +1,12 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libusb-1.0.24 || cd $pckname
+
+./configure --prefix=/usr --disable-static 
+
+make && make DESTDIR=$pckdir install
+
+#KMOD
+#CONFIG_USB_SUPPORT
+#CONFIG_USB
+

@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libXft-2.3.3 || cd $pckname
+
+./configure $XORG_CONFIG --docdir=/usr/share/doc/libXft-2.3.3 
+
+make && make DESTDIR=$pckdir install
+

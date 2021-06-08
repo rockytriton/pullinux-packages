@@ -1,0 +1,31 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd cups-2.3.3-source || cd $pckname
+
+if ! test $(id -u lp)
+	useradd -c "Print Service User" -d /var/spool/cups -g lp -s /bin/false -u 9 lp
+	groupadd -g 19 lpadmin
+fi
+
+sed -i '/stat.h/a #include <asm-generic/ioctls.h>' tools/ipptool.c   &&
+
+CC=gcc CXX=g++ \
+./configure --libdir=/usr/lib            \
+            --with-rcdir=/tmp/cupsinit   \
+            --with-system-groups=lpadmin \
+            --with-docdir=/usr/share/cups/doc-2.3.3
+
+make && make DESTDIR=$pckdir install
+
+rm -rf $pckdir/tmp/cupsinit &&
+ln -svnf ../cups/doc-2.3.3 $pckdir/usr/share/doc/cups-2.3.3
+
+
+#KMOD
+#Device Drivers  --->
+#  [*] USB support  --->                          [CONFIG_USB_SUPPORT]
+#    <*/M>  OHCI HCD (USB 1.1) support            [CONFIG_USB_OHCI_HCD]
+#    <*/M>  UHCI HCD (most Intel and VIA) support [CONFIG_USB_UHCI_HCD]
+#    <*/M>  USB Printer support                   [CONFIG_USB_PRINTER]
+
+

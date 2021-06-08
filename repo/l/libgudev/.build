@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libgudev-234 || cd $pckname
+
+./configure --prefix=/usr --disable-umockdev 
+
+make && make DESTDIR=$pckdir install
+

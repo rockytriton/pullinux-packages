@@ -1,0 +1,7 @@
+tar -xf $filename
+cd libarchive-3.5.1
+
+./configure --prefix=/usr --disable-static 
+
+make && make DESTDIR=$pckdir install
+

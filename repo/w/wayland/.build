@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd wayland-1.19.0 || cd $pckname
+
+./configure --prefix=/usr --disable-static --disable-documentation
+
+make && make DESTDIR=$pckdir install
+

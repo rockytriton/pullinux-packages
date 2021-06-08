@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libxkbcommon-1.0.3 || cd $pckname
+
+mkdir build && cd build
+meson --prefix=/usr -Denable-docs=false ..
+ninja && DESTDIR=$pckdir ninja install
+

@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libXaw-1.0.13 || cd $pckname
+
+./configure $XORG_CONFIG --docdir=/usr/share/doc/libXaw-1.0.13 
+
+make && make DESTDIR=$pckdir install
+

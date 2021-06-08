@@ -1,0 +1,29 @@
+tar -xf $filename
+cd llvm-11.1.0.src 
+
+tar -xf ../clang-11.1.0.src.tar.xz -C tools &&
+mv tools/clang-11.1.0.src tools/clang
+
+tar -xf ../compiler-rt-11.1.0.src.tar.xz -C projects &&
+mv projects/compiler-rt-11.1.0.src projects/compiler-rt
+
+grep -rl '#!.*python' | xargs sed -i '1s/python$/python3/'
+
+mkdir -v build &&
+cd       build &&
+
+CC=gcc CXX=g++                                  \
+cmake -DCMAKE_INSTALL_PREFIX=/usr               \
+      -DLLVM_ENABLE_FFI=ON                      \
+      -DCMAKE_BUILD_TYPE=Release                \
+      -DLLVM_BUILD_LLVM_DYLIB=ON                \
+      -DLLVM_LINK_LLVM_DYLIB=ON                 \
+      -DLLVM_ENABLE_RTTI=ON                     \
+      -DLLVM_TARGETS_TO_BUILD="host;AMDGPU;BPF" \
+      -DLLVM_BUILD_TESTS=ON                     \
+      -DLLVM_BINUTILS_INCDIR=/usr/include       \
+      -Wno-dev -G Ninja ..                      &&
+ninja
+
+DESTDIR=$pckdir ninja install
+

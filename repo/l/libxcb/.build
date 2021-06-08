@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libxcb-1.14 || cd $pckname
+
+CFLAGS="${CFLAGS:--O2 -g} -Wno-error=format-extra-args" ./configure --without-doxygen $XORG_CONFIG --docdir=/usr/share/doc/libxcb-1.14 
+
+make && make DESTDIR=$pckdir install
+

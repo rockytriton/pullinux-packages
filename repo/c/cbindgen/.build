@@ -1,0 +1,12 @@
+tar -xf $filename
+cd cbindgen-0.17.0
+
+source /etc/profile.d/rustc.sh
+ldconfig
+
+cargo build --release
+
+mkdir -p $pckdir/usr/bin
+
+install -Dm755 target/release/cbindgen $pckdir/usr/bin/
+

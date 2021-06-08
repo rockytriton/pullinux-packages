@@ -1,0 +1,10 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd gtk-doc-1.33.2 || cd $pckname
+
+autoreconf -fiv 
+
+./configure --prefix=/usr 
+
+make && make DESTDIR=$pckdir install
+

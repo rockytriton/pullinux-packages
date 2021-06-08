@@ -1,0 +1,19 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd polkit-0.118 || cd $pckname
+
+if ! test $(id -u polkitd) ; then
+	groupadd -fg 27 polkitd &&
+	useradd -c "PolicyKit Daemon Owner" -d /etc/polkit-1 -u 27 \
+        	-g polkitd -s /bin/false polkitd
+fi
+
+sed -i "s:/sys/fs/cgroup/systemd/:/sys:g" configure
+
+./configure --prefix=/usr --sysconfdir=/etc    \
+            --localstatedir=/var \
+            --disable-static     \
+            --with-os-type=Pullinux
+
+make && make DESTDIR=$pckdir install
+

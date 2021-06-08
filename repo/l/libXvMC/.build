@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libXvMC-1.0.12 || cd $pckname
+
+./configure $XORG_CONFIG --docdir=/usr/share/doc/libXvMC-1.0.12 
+
+make && make DESTDIR=$pckdir install
+

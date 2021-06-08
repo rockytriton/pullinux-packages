@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libXrender-0.9.10 || cd $pckname
+
+./configure $XORG_CONFIG --docdir=/usr/share/doc/libXrender-0.9.10 
+
+make && make DESTDIR=$pckdir install
+

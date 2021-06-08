@@ -1,0 +1,17 @@
+tar -xf $filename
+cd Python-2.7.18
+
+sed -i '/2to3/d' ./setup.py
+
+./configure --prefix=/usr --enable-shared     \
+            --with-system-expat \
+            --with-system-ffi   \
+            --enable-unicode=ucs4
+
+make && make DESTDIR=$pckdir altinstall
+
+ln -s python2.7        $pckdir/usr/bin/python2        &&
+ln -s python2.7-config $pckdir/usr/bin/python2-config &&
+chmod -v 755 $pckdir/usr/lib/libpython2.7.so.1.0
+
+

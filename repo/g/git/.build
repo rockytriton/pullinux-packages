@@ -1,0 +1,14 @@
+tar -xf $filename
+cd git-2.30.1
+
+./configure --prefix=/usr \
+            --with-gitconfig=/etc/gitconfig \
+            --with-python=python3
+
+make && make DESTDIR=$pckdir perllibdir=/usr/lib/perl5/5.32/site_perl install
+
+mkdir -p $pckdir/usr/share/man
+
+tar -xf ../git-manpages-2.30.1.tar.xz \
+    -C $pckdir/usr/share/man --no-same-owner --no-overwrite-dir
+

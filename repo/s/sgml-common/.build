@@ -1,0 +1,10 @@
+tar -xf $filename
+cd sgml-common-0.6.3
+
+patch -Np1 -i ../sgml-common-0.6.3-manpage-1.patch &&
+autoreconf -f -i
+
+./configure --prefix=/usr --disable-static 
+
+make && make DESTDIR=$pckdir docdir=/usr/share/doc install
+

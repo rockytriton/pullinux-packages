@@ -1,0 +1,10 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd librsvg-2.50.3 || cd $pckname
+
+./configure --prefix=/usr --enable-vala    \
+            --disable-static \
+            --docdir=/usr/share/doc/librsvg-2.50.3 
+
+make && make DESTDIR=$pckdir install
+

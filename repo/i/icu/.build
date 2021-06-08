@@ -1,0 +1,9 @@
+tar -xf $filename
+cd icu
+
+cd source
+
+./configure --prefix=/usr 
+
+make && make DESTDIR=$pckdir install
+

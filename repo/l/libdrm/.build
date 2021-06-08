@@ -1,0 +1,10 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libdrm-2.4.104 || cd $pckname
+
+mkdir build && cd build
+
+meson --prefix=$XORG_PREFIX -Dudev=true
+
+ninja && DESTDIR=$pckdir ninja install
+
