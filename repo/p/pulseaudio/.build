@@ -1,0 +1,10 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd pulseaudio-14.2 || cd $pckname
+
+mkdir build && cd build
+meson --prefix=/usr -Ddatabase=gdbm -Dbluez5=false ..
+ninja && DESTDIR=$pckdir ninja install
+
+rm -fv $pckdir/etc/dbus-1/system.d/pulseaudio-system.conf
+

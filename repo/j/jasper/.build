@@ -1,8 +1,8 @@
 tar -xf $filename
 pckname=${filename%.t*}
-cd jasper-2.0.25 || cd $pckname
+cd jasper-version-2.0.25
 
-mkdir build && cd build
+mkdir _build && cd _build
 
 cmake -DCMAKE_INSTALL_PREFIX=/usr    \
       -DCMAKE_BUILD_TYPE=Release     \

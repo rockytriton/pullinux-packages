@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd x264-20210211 || cd $pckname
+
+./configure --prefix=/usr --enable-shared --disable-cli
+
+make && make DESTDIR=$pckdir install
+

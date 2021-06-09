@@ -5,6 +5,9 @@ cd mesa-20.3.4 || cd $pckname
 patch -Np1 -i ../mesa-20.3.4-add_xdemos-1.patch
 sed '1s/python/&3/' -i bin/symbols-check.py
 
+GALLIUM_DRV="i915,iris,nouveau,r600,radeonsi,svga,swrast,virgl"
+DRI_DRIVERS="i965,nouveau"
+
 mkdir build && cd build
 
 meson --prefix=$XORG_PREFIX          \

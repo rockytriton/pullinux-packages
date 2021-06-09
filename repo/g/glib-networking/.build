@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd glib-networking-2.66.0 || cd $pckname
+
+mkdir build && cd build
+meson --prefix=/usr -Dlibproxy=disabled ..
+ninja && DESTDIR=$pckdir ninja install
+

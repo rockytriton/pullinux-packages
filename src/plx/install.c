@@ -10,7 +10,12 @@
 
 int plx_install_package(plx_context *ctx, plx_package *pck) {
     if (pck->is_group) {
-        return 0;
+        char command[1024];
+        snprintf(command, sizeof(command) - 1, 
+            "mkdir -p %s/usr/share/plx/inst/%c/%s && cp %s/usr/share/plx/repo/%c/%s/.pck %s/usr/share/plx/inst/%c/%s/.pck", 
+            ctx->plx_base, *pck->name, pck->name, ctx->plx_base, *pck->name, pck->name, ctx->plx_base, *pck->name, pck->name);
+    
+        return system(command);
     }
 
     char fn[1024];
@@ -53,6 +58,11 @@ int plx_install_package(plx_context *ctx, plx_package *pck) {
     if (on_root) {
         if (access(full_path, F_OK) == 0) {
             printf("Running installer...\n");
+
+            setenv("XORG_PREFIX", "/usr", 1);
+            setenv("QT5PREFIX", "/opt/qt5", 1);
+            setenv("KF5_PREFIX", "/opt/kf5", 1);
+
             snprintf(command, sizeof(command) - 1, "cd %s/.install/ && bash -e %s/.install/install.sh", ctx->plx_base, ctx->plx_base);
             ret = system(command);
 

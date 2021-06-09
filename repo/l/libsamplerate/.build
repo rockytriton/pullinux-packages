@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libsamplerate-0.2.1 || cd $pckname
+
+./configure --prefix=/usr --disable-static --docdir=/usr/share/doc/libsamplerate-0.2.1
+
+make && make DESTDIR=$pckdir install
+

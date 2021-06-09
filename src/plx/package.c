@@ -178,13 +178,13 @@ void plx_package_list_add_dependencies_from_list(plx_context *ctx, package_list 
 }
 
 void plx_package_list_add_dependencies(plx_context *ctx, package_list *global_list, package_list *needed, package_list_entry *pcke) {
-    //printf("Adding deps for %s\n", pcke->pck->name);
+    if (DEBUG) printf("Adding deps for %s\n", pcke->pck->name);
     plx_package_list_add_dependencies_from_list(ctx, global_list, needed, pcke, &pcke->pck->deps);
 
     if (ctx->rebuild) {
         plx_package_list_add_dependencies_from_list(ctx, global_list, needed, pcke, &pcke->pck->mkdeps);
     }
-    //printf("Added deps for %s\n", pcke->pck->name);
+    if (DEBUG) printf("Added deps for %s\n", pcke->pck->name);
 }
 
 void str_list_append(str_list *l, char *s) {

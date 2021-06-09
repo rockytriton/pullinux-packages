@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd lame-3.100 || cd $pckname
+
+./configure --prefix=/usr --disable-static --enable-mp3rtp
+
+make && make DESTDIR=$pckdir pkghtmldir=/usr/share/doc/lame-3.100 install
+

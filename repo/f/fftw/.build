@@ -1,0 +1,34 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd fftw-3.3.9 || cd $pckname
+
+./configure --prefix=/usr    \
+            --enable-shared  \
+            --disable-static \
+            --enable-threads \
+            --enable-sse2    \
+            --enable-avx
+
+make && make DESTDIR=$pckdir install
+
+make clean &&
+
+./configure --prefix=/usr    \
+            --enable-shared  \
+            --disable-static \
+            --enable-threads \
+            --enable-sse2    \
+            --enable-avx     \
+            --enable-float
+
+make && make DESTDIR=$pckdir install
+
+make clean &&
+
+./configure --prefix=/usr    \
+            --enable-shared  \
+            --disable-static \
+            --enable-threads \
+            --enable-long-double
+
+make && make DESTDIR=$pckdir install

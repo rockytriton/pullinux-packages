@@ -7,6 +7,7 @@ deps: [
   'libdrm',
   'mako',
   'libva-nomesa',
+  'intel-vaapi-driver-nomesa',
   'libvdpau',
   'llvm',
   'wayland-protocols',

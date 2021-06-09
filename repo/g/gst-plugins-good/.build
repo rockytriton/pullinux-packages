@@ -1,0 +1,15 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd gst-plugins-good-1.18.3 || cd $pckname
+
+mkdir build &&
+cd    build &&
+
+meson  --prefix=/usr       \
+       -Dbuildtype=release \
+       -Dpackage-origin=http://pullinux.org/ \
+       -Dpackage-name="GStreamer 1.18.3 Pullinux" &&
+ninja
+
+DESTDIR=$pckdir ninja install
+

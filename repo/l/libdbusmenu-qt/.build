@@ -1,0 +1,13 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libdbusmenu-qt-0.9.3+16.04.20160218
+
+mkdir build && cd build
+
+cmake -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_BUILD_TYPE=Release  \
+      -DWITH_DOC=OFF              \
+      -Wno-dev ..
+
+make && make DESTDIR=$pckdir install
+

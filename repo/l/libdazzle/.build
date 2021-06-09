@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libdazzle-3.38.0 || cd $pckname
+
+mkdir build && cd build
+meson --prefix=/usr ..
+ninja && DESTDIR=$pckdir ninja install
+

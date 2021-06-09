@@ -24,3 +24,5 @@ typedef struct {
 
 plx_context *plx_context_load(plx_args *args);
 void plx_context_free(plx_context *ctx);
+
+#define DEBUG 0

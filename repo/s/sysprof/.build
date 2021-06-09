@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd sysprof-3.38.1 || cd $pckname
+
+mkdir build && cd build
+meson --prefix=/usr ..
+ninja && DESTDIR=$pckdir ninja install
+

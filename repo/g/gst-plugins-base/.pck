@@ -14,6 +14,7 @@ deps: [
   'libvorbis',
   'libva',
   'wayland-protocols',
+  'intel-vaapi-driver'
 ]
 mkdeps: []
 extras: [

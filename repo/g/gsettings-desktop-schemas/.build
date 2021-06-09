@@ -1,0 +1,13 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd gsettings-desktop-schemas-3.38.0 || cd $pckname
+
+sed -i -r 's:"(/system):"/org/gnome\1:g' schemas/*.in &&
+
+mkdir build &&
+cd    build &&
+
+meson --prefix=/usr .. &&
+ninja
+DESTDIR=$pckdir ninja install
+

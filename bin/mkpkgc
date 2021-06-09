@@ -44,7 +44,7 @@ with open(repo_path + '/.pck', 'w') as out:
 		out.write('  \'' + sys.argv[n] + '\',\n')
 
 	out.write(']\n')
-	out.write('mkdeps: []\n')
+	out.write('mkdeps: [\n  \'cmake\'\n]\n')
 	out.write('extras: [\n]\n')
 
 print('Created: ' + repo_path + '/.pck')

@@ -1,0 +1,12 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd polkit-qt-1-0.113.0 || cd $pckname
+
+mkdir build && cd build
+
+cmake -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_BUILD_TYPE=Release  \
+      -Wno-dev .. 
+
+make && make DESTDIR=$pckdir install
+

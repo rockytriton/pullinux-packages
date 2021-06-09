@@ -14,7 +14,6 @@ int plx_build_package(plx_context *ctx, plx_package *pck) {
         return 0;
     }
 
-    char *fn = basename(pck->source);
 
     char full_path[1024];
 
@@ -25,24 +24,26 @@ int plx_build_package(plx_context *ctx, plx_package *pck) {
         return 0;
     } 
 
-    snprintf(full_path, sizeof(full_path) - 1, "%s/usr/share/plx/dl-cache/%s", ctx->plx_base, fn);
+    char *fn = 0;
+    if (pck->source) {
+        fn = basename(pck->source);
+        snprintf(full_path, sizeof(full_path) - 1, "%s/usr/share/plx/dl-cache/%s", ctx->plx_base, fn);
 
-    printf("Downloading %s \n", pck->source);
+        printf("Downloading %s \n", pck->source);
 
-    if (pck->source && !plx_download_file(pck->source, full_path)) {
-        remove(full_path);
+        if (pck->source && !plx_download_file(pck->source, full_path)) {
+            remove(full_path);
 
-        printf("Download failed!\n");
+            printf("Download failed!\n");
 
-        return -1;
+            return -1;
+        }
     }
 
     char build_base[1024];
     char pck_base[1024];
     snprintf(build_base, sizeof(build_base) - 1, "/tmp/build_%s", pck->name);
     snprintf(pck_base, sizeof(pck_base) - 1, "/tmp/build_%s/pckdir", pck->name);
-
-
 
     char command[2048];
     snprintf(command, sizeof(command) - 1, "rm -rf %s && mkdir -p %s && mkdir -p %s", build_base, build_base, pck_base);
@@ -115,11 +116,16 @@ int plx_build_package(plx_context *ctx, plx_package *pck) {
     }
 
     setenv("tmpdir", build_base, 1);
-    setenv("filename", fn, 1);
+
+    if (pck->source) {
+        setenv("filename", fn, 1);
+    }
+
     setenv("pckdir", pck_base, 1);
     setenv("XORG_PREFIX", "/usr", 1);
     setenv("XORG_CONFIG", "--prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static", 1);
-    setenv("QT5PREFIX", "/opt/qt", 1);
+    setenv("QT5PREFIX", "/opt/qt5", 1);
+    setenv("KF5_PREFIX", "/opt/kf5", 1);
 
     char sz[64];
     sprintf(sz, "-j%d", get_nprocs());

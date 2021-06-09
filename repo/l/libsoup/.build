@@ -1,0 +1,14 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libsoup-2.72.0 || cd $pckname
+
+patch -Np1 -i ../libsoup-2.72.0-testsuite_fix-1.patch
+
+mkdir build &&
+cd    build &&
+
+meson --prefix=/usr -Dvapi=enabled -Dgssapi=disabled .. &&
+ninja
+
+DESTDIR=$pckdir ninja install
+

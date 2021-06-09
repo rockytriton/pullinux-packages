@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd at-spi2-core-2.38.0 || cd $pckname
+
+mkdir build && cd build
+meson --prefix=/usr ..
+ninja && DESTDIR=$pckdir ninja install
+
