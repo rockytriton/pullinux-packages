@@ -70,7 +70,7 @@ int plx_install_package(plx_context *ctx, plx_package *pck) {
                 return ret;
             }
 
-            system("ldconfig");
+            system("/sbin/ldconfig");
         }
     } else if (access(full_path, F_OK) == 0) {
         printf("Appending post install...\n");

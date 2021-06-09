@@ -1,0 +1,9 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd kitemmodels-5.79.0 || cd $pckname
+
+mkdir build && cd build
+cmake -DCMAKE_INSTALL_PREFIX=$KF5_PREFIX -DCMAKE_PREFIX_PATH=$QT5DIR \ 
+      -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -Wno-dev ..
+make && make DESTDIR=$pckdir install
+

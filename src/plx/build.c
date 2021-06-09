@@ -125,6 +125,7 @@ int plx_build_package(plx_context *ctx, plx_package *pck) {
     setenv("XORG_PREFIX", "/usr", 1);
     setenv("XORG_CONFIG", "--prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static", 1);
     setenv("QT5PREFIX", "/opt/qt5", 1);
+    setenv("QT5DIR", "/opt/qt5", 1);
     setenv("KF5_PREFIX", "/opt/kf5", 1);
 
     char sz[64];

@@ -7,7 +7,17 @@ deps: [
   'phonon-backend-gstreamer',
   'polkit-qt',
   'libdbusmenu-qt',
-  'plasma-wayland-protocols'
+  'plasma-wayland-protocols',
+  'boost',
+  'giflib',
+  'libepoxy',
+  'libgcrypt',
+  'libical',
+  'lmdb',
+  'perl-uri',
+  'aspell',
+  'avahi',
+  'jasper'
 ]
 mkdeps: []
 extras: [

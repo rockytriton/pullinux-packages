@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libdaemon-0.14 || cd $pckname
+
+./configure --prefix=/usr --disable-static 
+
+make && make DESTDIR=$pckdir docdir=/usr/share/doc/libdaemon-0.14 install
+
