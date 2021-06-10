@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd xrdb-1.2.0 || cd $pckname
+
+./configure $XORG_CONFIG --docdir=/usr/share/doc/xrdb-1.2.0 
+
+make && make DESTDIR=$pckdir install
+

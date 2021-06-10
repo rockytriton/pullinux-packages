@@ -3,10 +3,10 @@ version: 5.79.0
 repo: core
 source: https://download.kde.org/stable/frameworks/5.79/kactivities-stats-5.79.0.tar.xz
 deps: [
-  'kde-base',
+  'baloo', 'kde-base',
 ]
 mkdeps: [
-  'cmake'
+  'baloo',
 ]
 extras: [
 ]

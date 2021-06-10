@@ -38,8 +38,19 @@ bool plx_download_file(char *url, char *filename) {
 
         curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, &status);
         
-        if (curl_easy_perform(curl_handle)) {
-            success = false;
+        for (int i=0; i<5; i++) {
+            if (curl_easy_perform(curl_handle)) {
+                success = false;
+                printf("failure %d\n", (i+1));
+            } else {
+                success = true;
+            }
+
+            if (success) {
+                break;
+            }
+
+            sleep(1);
         }
         
         fclose(pagefile);

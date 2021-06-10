@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd xinput-1.6.3 || cd $pckname
+
+./configure $XORG_CONFIG --docdir=/usr/share/doc/xinput-1.6.3 
+
+make && make DESTDIR=$pckdir install
+

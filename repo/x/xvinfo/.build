@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd xvinfo-1.1.4 || cd $pckname
+
+./configure $XORG_CONFIG --docdir=/usr/share/doc/xvinfo-1.1.4 
+
+make && make DESTDIR=$pckdir install
+

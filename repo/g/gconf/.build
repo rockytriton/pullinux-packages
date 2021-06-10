@@ -1,0 +1,14 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd gconf-3.2.6 || cd $pckname
+
+./configure --prefix=/usr \
+            --sysconfdir=/etc \
+            --disable-orbit \
+            --disable-static
+
+make && make DESTDIR=$pckdir install
+
+mkdir -p $pckdir/etc/gconf
+ln -s gconf.xml.defaults $pckdir/etc/gconf/gconf.xml.system
+

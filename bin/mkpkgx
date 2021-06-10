@@ -53,7 +53,7 @@ with open(repo_path + '/.build', 'w') as out:
     out.write('tar -xf $filename\n')
     out.write('pckname=${filename%.t*}\n')
     out.write('cd ' + pck + '-' + ver + ' || cd $pckname\n\n')
-    out.write('./configure $XORG_CONFIG --docdir=/usr/share/doc/' + pck + '-' + ver + ' \n\n')
+    out.write('./configure $XORG_CONFIG \n\n')
     out.write('make && make DESTDIR=$pckdir install\n\n')
 
 print('Created: ' + repo_path + '/.build')

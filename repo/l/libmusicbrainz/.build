@@ -1,0 +1,12 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libmusicbrainz-5.1.0 || cd $pckname
+
+patch -Np1 -i ../libmusicbrainz-5.1.0-cmake_fixes-1.patch
+
+mkdir build && cd build
+
+cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release ..
+
+make && make DESTDIR=$pckdir install
+

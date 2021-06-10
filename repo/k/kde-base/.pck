@@ -17,7 +17,8 @@ deps: [
   'perl-uri',
   'aspell',
   'avahi',
-  'jasper'
+  'jasper',
+  'qrencode'
 ]
 mkdeps: []
 extras: [

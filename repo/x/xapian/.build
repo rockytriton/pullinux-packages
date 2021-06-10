@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd xapian-core-1.4.18 || cd $pckname
+
+./configure --prefix=/usr --disable-static --docdir=/usr/share/doc/xapian-core-1.4.18
+
+make && make DESTDIR=$pckdir install
+

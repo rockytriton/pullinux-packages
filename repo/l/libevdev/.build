@@ -1,0 +1,16 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libevdev-1.11.0 || cd $pckname
+
+./configure $XORG_CONFIG
+
+make && make DESTDIR=$pckdir install
+
+#KMOD
+#Device Drivers  --->
+##  Input device support --->
+#    <*> Generic input layer (needed for keyboard, mouse, ...) [CONFIG_INPUT]
+#    <*>   Event interface                   [CONFIG_INPUT_EVDEV]
+#    [*]   Miscellaneous devices  --->       [CONFIG_INPUT_MISC]
+#      <*>    User level driver support      [CONFIG_INPUT_UINPUT]
+

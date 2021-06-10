@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd v4l-utils-1.20.0 || cd $pckname
+
+./configure --prefix=/usr --disable-static --sysconfdir=/etc 
+
+make && make DESTDIR=$pckdir install
+

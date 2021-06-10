@@ -1,0 +1,14 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd pciutils-3.7.0 || cd $pckname
+
+make PREFIX=/usr                \
+     SHAREDIR=/usr/share/hwdata \
+     SHARED=yes
+
+make DESTDIR=$pckdir PREFIX=/usr                \
+     SHAREDIR=/usr/share/hwdata \
+     SHARED=yes                 \
+     install install-lib        &&
+
+chmod -v 755 $pckdir/usr/lib/libpci.so

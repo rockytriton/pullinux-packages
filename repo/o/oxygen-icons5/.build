@@ -1,0 +1,10 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd oxygen-icons5-5.79.0 || cd $pckname
+
+sed -i '/( oxygen/ s/)/scalable )/' CMakeLists.txt
+
+mkdir build && cd build
+cmake -DCMAKE_INSTALL_PREFIX=/usr -Wno-dev ..
+make && make DESTDIR=$pckdir install
+

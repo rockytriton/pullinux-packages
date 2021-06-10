@@ -1,0 +1,11 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd neon-0.31.2 || cd $pckname
+
+./configure --prefix=/usr    \
+            --with-ssl       \
+            --enable-shared  \
+            --disable-static
+
+make && make DESTDIR=$pckdir install
+

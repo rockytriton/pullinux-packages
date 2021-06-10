@@ -1,0 +1,14 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd LibRaw-0.20.2 || cd $pckname
+
+autoreconf -fiv              &&
+./configure --prefix=/usr    \
+            --enable-jpeg    \
+            --enable-jasper  \
+            --enable-lcms    \
+            --disable-static \
+            --docdir=/usr/share/doc/libraw-0.20.2
+
+make && make DESTDIR=$pckdir install
+

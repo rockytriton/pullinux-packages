@@ -1,0 +1,10 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd zip30-zip30 || cd $pckname
+
+make -f unix/Makefile generic_gcc
+
+mkdir -p $pckdir/usr/share/man/man1
+
+make prefix=$pckdir/usr MANDIR=$pckdir/usr/share/man/man1 -f unix/Makefile install
+

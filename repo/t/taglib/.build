@@ -1,0 +1,10 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd taglib-1.12 || cd $pckname
+
+mkdir build && cd build
+cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release  \
+      -DBUILD_SHARED_LIBS=ON \
+      ..
+make && make DESTDIR=$pckdir install
+

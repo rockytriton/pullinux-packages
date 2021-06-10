@@ -1,0 +1,20 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd poppler-21.02.0 || cd $pckname
+
+mkdir build && cd build
+
+cmake  -DCMAKE_BUILD_TYPE=Release   \
+       -DCMAKE_INSTALL_PREFIX=/usr  \
+       -DTESTDATADIR=$PWD/testfiles \
+       -DENABLE_UNSTABLE_API_ABI_HEADERS=ON \
+       ..
+
+make && make DESTDIR=$pckdir install
+
+tar -xf ../../poppler-data-0.4.10.tar.gz &&
+cd poppler-data-0.4.10
+mkdir -p $pckdir/usr
+
+make prefix=$pckdir/usr install
+

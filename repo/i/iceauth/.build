@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd iceauth-1.0.8 || cd $pckname
+
+./configure $XORG_CONFIG --docdir=/usr/share/doc/iceauth-1.0.8 
+
+make && make DESTDIR=$pckdir install
+

@@ -1,0 +1,14 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd pipewire-0.3.22 || cd $pckname
+
+mkdir build && cd build
+
+meson --prefix=/usr           \
+      -Djack=false            \
+      -Dpipewire-jack=false   \
+      -Dvulkan=false          \
+      ..
+
+ninja && DESTDIR=$pckdir ninja install
+

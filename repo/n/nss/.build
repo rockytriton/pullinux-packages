@@ -1,0 +1,35 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd nss-3.61 || cd $pckname
+
+patch -Np1 -i ../nss-3.61-standalone-1.patch &&
+
+cd nss &&
+
+make -j1 BUILD_OPT=1                  \
+  NSPR_INCLUDE_DIR=/usr/include/nspr  \
+  USE_SYSTEM_ZLIB=1                   \
+  ZLIB_LIBS=-lz                       \
+  NSS_ENABLE_WERROR=0                 \
+  $([ $(uname -m) = x86_64 ] && echo USE_64=1) \
+  $([ -f /usr/include/sqlite3.h ] && echo NSS_USE_SYSTEM_SQLITE=1)
+
+mkdir -p $pckdir/usr/lib/pkgconfig
+mkdir -p $pckdir/usr/bin
+mkdir -p $pckdir/usr/include
+
+cd ../dist                                                          &&
+
+install -v -m755 Linux*/lib/*.so              $pckdir/usr/lib              &&
+install -v -m644 Linux*/lib/{*.chk,libcrmf.a} $pckdir/usr/lib              &&
+
+install -v -m755 -d                           $pckdir/usr/include/nss      &&
+cp -v -RL {public,private}/nss/*              $pckdir/usr/include/nss      &&
+chmod -v 644                                  $pckdir/usr/include/nss/*    &&
+
+install -v -m755 Linux*/bin/{certutil,nss-config,pk12util} $pckdir/usr/bin &&
+
+install -v -m644 Linux*/lib/pkgconfig/nss.pc  $pckdir/usr/lib/pkgconfig
+
+ln -sfv ./pkcs11/p11-kit-trust.so $pckdir/usr/lib/libnssckbi.so
+

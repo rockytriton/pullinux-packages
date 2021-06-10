@@ -1,0 +1,26 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libinput-1.16.4 || cd $pckname
+
+mkdir build && cd build
+
+meson --prefix=$XORG_PREFIX \
+      -Dudev-dir=/lib/udev  \
+      -Ddebug-gui=false     \
+      -Dtests=false         \
+      -Ddocumentation=false \
+      -Dlibwacom=false      \
+      ..
+
+ninja && DESTDIR=$pckdir ninja install
+
+#KMOD
+#Device Drivers --->
+#  Input device support --->
+#    Miscellaneous Devices --->
+#    <*/M>   User level driver support        [CONFIG_INPUT_UINPUT]
+
+install -v -dm755      $pckdir/usr/share/doc/libinput-1.16.4/{html,api} &&
+cp -rv Documentation/* $pckdir/usr/share/doc/libinput-1.16.4/html &&
+cp -rv api/*           $pckdir/usr/share/doc/libinput-1.16.4/api
+

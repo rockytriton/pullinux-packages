@@ -1,8 +1,9 @@
 name: khtml
 version: 5.79.0
 repo: core
-source: https://download.kde.org/stable/frameworks/5.79/khtml-5.79.0.tar.xz
+source: https://download.kde.org/stable/frameworks/5.79/portingAids/khtml-5.79.0.tar.xz
 deps: [
+  'kdelibs4support',
   'kde-base',
 ]
 mkdeps: [

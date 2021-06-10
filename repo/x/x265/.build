@@ -1,0 +1,9 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd x265-3.4 || cd $pckname
+
+mkdir bld && cd bld
+cmake -DCMAKE_INSTALL_PREFIX=/usr ../source
+make && make DESTDIR=$pckdir install
+rm -vf $pckdir/usr/lib/libx265.a
+

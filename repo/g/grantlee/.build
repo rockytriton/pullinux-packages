@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd grantlee-5.2.0 || cd $pckname
+
+mkdir build && cd build
+cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release ..
+make && make DESTDIR=$pckdir install
+

@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd xf86-input-libinput-0.30.0 || cd $pckname
+
+./configure $XORG_CONFIG
+
+make && make DESTDIR=$pckdir install
+

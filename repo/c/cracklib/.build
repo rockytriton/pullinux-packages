@@ -1,0 +1,24 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd cracklib-2.9.7 || cd $pckname
+
+sed -i '/skipping/d' util/packer.c &&
+
+./configure --prefix=/usr    \
+            --disable-static \
+            --with-default-dict=/lib/cracklib/pw_dict
+
+make && make DESTDIR=$pckdir install
+
+mkdir -p $pckdir/lib
+mv -v /usr/lib/libcrack.so.* $pckdir/lib &&
+ln -sfv ../../lib/$(readlink $pckdir/usr/lib/libcrack.so) $pckdir/usr/lib/libcrack.so
+
+iinstall -v -m644 -D    ../cracklib-words-2.9.7.bz2 \
+                         $pckdir/usr/share/dict/cracklib-words.bz2    &&
+
+bunzip2 -v               $pckdir/usr/share/dict/cracklib-words.bz2    &&
+ln -v -sf cracklib-words $pckdir/usr/share/dict/words                 &&
+echo $(hostname) >>      $pckdir/usr/share/dict/cracklib-extra-words  &&
+install -v -m755 -d      $pckdir/lib/cracklib
+

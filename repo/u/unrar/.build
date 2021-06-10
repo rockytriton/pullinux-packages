@@ -1,0 +1,9 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd unrar
+
+make -f makefile
+
+mkdir -p $pckdir/usr/bin
+
+install -m755 unrar $pckdir/usr/bin
