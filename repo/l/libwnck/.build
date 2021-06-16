@@ -1,0 +1,11 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libwnck-2.30.7 || cd $pckname
+
+./configure --prefix=/usr \
+            --disable-static \
+            --program-suffix=-1 &&
+make GETTEXT_PACKAGE=libwnck-1
+
+make && make DESTDIR=$pckdir GETTEXT_PACKAGE=libwnck-1 install
+

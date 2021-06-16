@@ -14,14 +14,21 @@ int plx_build_package(plx_context *ctx, plx_package *pck) {
         return 0;
     }
 
-
     char full_path[1024];
 
-    sprintf(full_path, "/tmp/%s-%s-pullinux-1.2.0.txz", pck->name, pck->version);
+    sprintf(full_path, "/usr/share/plx/build/%s-%s-pullinux-1.2.0.txz", pck->name, pck->version);
 
     if (access(full_path, F_OK) == 0) {
-        printf("Not rebuild, %s already exists.  Delete to rebuild\n", full_path);
-        return 0;
+        FILE *fs = fopen(full_path, "r");
+
+        fseek(fs, 0L, SEEK_END);
+        size_t size = ftell(fs);
+        fclose(fs);
+
+        if (size > 100) {
+            printf("Not rebuild, %s already exists.  Delete to rebuild\n", full_path);
+            return 0;
+        }
     } 
 
     char *fn = 0;
@@ -42,8 +49,8 @@ int plx_build_package(plx_context *ctx, plx_package *pck) {
 
     char build_base[1024];
     char pck_base[1024];
-    snprintf(build_base, sizeof(build_base) - 1, "/tmp/build_%s", pck->name);
-    snprintf(pck_base, sizeof(pck_base) - 1, "/tmp/build_%s/pckdir", pck->name);
+    snprintf(build_base, sizeof(build_base) - 1, "/usr/share/plx/build/build_%s", pck->name);
+    snprintf(pck_base, sizeof(pck_base) - 1, "/usr/share/plx/build/build_%s/pckdir", pck->name);
 
     char command[2048];
     snprintf(command, sizeof(command) - 1, "rm -rf %s && mkdir -p %s && mkdir -p %s", build_base, build_base, pck_base);
@@ -153,7 +160,7 @@ int plx_build_package(plx_context *ctx, plx_package *pck) {
         return ret;
     }
 
-    snprintf(command, sizeof(command) - 1, "tar -cJpf /tmp/%s-%s-pullinux-1.2.0.txz -C %s .", pck->name, pck->version, pck_base);
+    snprintf(command, sizeof(command) - 1, "tar -cJpf /usr/share/plx/build/%s-%s-pullinux-1.2.0.txz -C %s .", pck->name, pck->version, pck_base);
 
     ret = system(command);
 
@@ -162,7 +169,7 @@ int plx_build_package(plx_context *ctx, plx_package *pck) {
         return ret;
     }
 
-    printf("Packaging complete: /tmp/%s-%s-pullinux-1.2.0.txz\n", pck->name, pck->version);
+    printf("Packaging complete: /usr/share/plx/build/%s-%s-pullinux-1.2.0.txz\n", pck->name, pck->version);
 
     snprintf(command, sizeof(command) - 1, "rm -rf %s", build_base);
 

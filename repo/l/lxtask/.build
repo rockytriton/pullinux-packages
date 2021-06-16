@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd lxtask-0.1.10 || cd $pckname
+
+./configure --prefix=/usr 
+
+make && make DESTDIR=$pckdir install
+

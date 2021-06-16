@@ -1,0 +1,10 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd notification-daemon-3.20.0 || cd $pckname
+
+./configure --prefix=/usr     \
+            --sysconfdir=/etc \
+            --disable-static
+
+make && make DESTDIR=$pckdir install
+

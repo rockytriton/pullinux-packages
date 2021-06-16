@@ -1,0 +1,4 @@
+install -v -d -m755 $pckdir/usr/share/fonts                               &&
+ln -svfn $XORG_PREFIX/share/fonts/X11/OTF $pckdir/usr/share/fonts/X11-OTF &&
+ln -svfn $XORG_PREFIX/share/fonts/X11/TTF $pckdir/usr/share/fonts/X11-TTF
+

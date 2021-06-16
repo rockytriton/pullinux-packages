@@ -1,0 +1,10 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd pygtk2-2.24.0 || cd $pckname
+
+sed -i '1394,1402 d' pango.defs
+
+./configure --prefix=/usr
+
+make && make DESTDIR=$pckdir install
+

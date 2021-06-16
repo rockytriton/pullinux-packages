@@ -1,0 +1,13 @@
+tar -xf $filename
+cd $pckname
+
+./configure --prefix=/usr --disable-static
+
+make && make DESTDIR=$pckdir install
+
+rm -rf $pckdir/usr/include/enchant                    &&
+ln -sfv enchant-2       $pckdir/usr/include/enchant   &&
+ln -sfv enchant-2       $pckdir/usr/bin/enchant       &&
+ln -sfv libenchant-2.so $pckdir/usr/lib/libenchant.so &&
+ln -sfv enchant-2.pc    $pckdir/usr/lib/pkgconfig/enchant.pc
+

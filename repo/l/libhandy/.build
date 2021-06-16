@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libhandy-1.0.3 || cd $pckname
+
+mkdir build && cd build
+meson --prefix=/usr ..
+ninja && DESTDIR=$pckdir ninja install
+

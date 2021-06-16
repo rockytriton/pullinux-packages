@@ -12,22 +12,61 @@ typedef enum {
     INIT, KEY, VALUE, DEP, MKDEP, EXTRA
 } parser_state;
 
+u32 plx_package_to_string(plx_package *pck, char *str, u32 max_size) {
+    char str_deps[2408];
+    char str_mkdeps[2408];
+    char str_extras[2408];
+
+    strcpy(str_deps, "");
+    strcpy(str_mkdeps, "");
+    strcpy(str_extras, "");
+
+    str_list *l = &pck->deps;
+    while(l && l->str) {
+        strcat(str_deps, "  '");
+        strcat(str_deps, l->str);
+        strcat(str_deps, "',\n");
+
+        l = l->next;
+    }
+
+    l = &pck->mkdeps;
+    while(l && l->str) {
+        strcat(str_mkdeps, "  '");
+        strcat(str_mkdeps, l->str);
+        strcat(str_mkdeps, "',\n");
+
+        l = l->next;
+    }
+
+    l = &pck->extras;
+    while(l && l->str) {
+        strcat(str_extras, "  '");
+        strcat(str_extras, l->str);
+        strcat(str_extras, "',\n");
+
+        l = l->next;
+    }
+
+    return snprintf(str, max_size, "name: %s\nversion: %s\nrepo: core\nsource: %s\ndeps: [\n%s\n]\nmkdeps: [\n%s\n]\nextras: [\n%s\n]\n",
+        pck->name, pck->version, pck->source, str_deps, str_mkdeps, str_extras);
+}
 
 bool plx_package_is_installed(plx_context *ctx, char *name) {
     char full_path[1024];
-    snprintf(full_path, sizeof(full_path) - 1, "%s/usr/share/plx/inst/%c/%s/.pck", ctx->plx_base, *name, name);
+    snprintf(full_path, sizeof(full_path) - 1, "%s/../inst/%c/%s/.pck", ctx->plx_repo_base, *name, name);
 
     return access(full_path, F_OK) == 0;
 }
 
 plx_package *plx_package_load(plx_context *ctx, char *name) {
     char full_path[1024];
-    snprintf(full_path, sizeof(full_path) - 1, "%s/usr/share/plx/repo/%c/%s/.pck", ctx->plx_base, *name, name);
+    snprintf(full_path, sizeof(full_path) - 1, "%s/%c/%s/.pck", ctx->plx_repo_base, *name, name);
 
     plx_package *pck = plx_parse_package(full_path);
     pck->installed = plx_package_is_installed(ctx, name);
 
-    snprintf(full_path, sizeof(full_path) - 1, "%s/usr/share/plx/repo/%c/%s", ctx->plx_base, *name, name);
+    snprintf(full_path, sizeof(full_path) - 1, "%s/%c/%s", ctx->plx_repo_base, *name, name);
     pck->repo_path = strdup(full_path);
     
     return pck;
@@ -47,10 +86,10 @@ package_list_entry *plx_package_list_find(package_list *list, char *name) {
     return 0;
 }
 
-package_list_entry *plx_package_list_add(package_list *list, package_list_entry *parent, plx_package *pck, bool add_deps) {
+package_list_entry *plx_package_list_add(package_list *list, package_list_entry *parent, plx_package *pck) {
     if (!pck) {
         fprintf(stderr, "Invalid Package!\n");
-        exit(-1);
+        return 0;
     }
 
     package_list_entry *child = malloc(sizeof(package_list_entry));
@@ -72,14 +111,14 @@ package_list_entry *plx_package_list_add(package_list *list, package_list_entry 
     return child;
 }
 
-void plx_package_load_all(plx_context *ctx, package_list *list) {
+bool plx_package_load_all(plx_context *ctx, package_list *list) {
     char *base_dirs = "abcdefghijklmnopqrstuvwxyz1234567890";
 
     char *b = base_dirs;
 
     while(*b) {
         char full_path[1024];
-        snprintf(full_path, sizeof(full_path) - 1, "%s/usr/share/plx/repo/%c", ctx->plx_base, *b);
+        snprintf(full_path, sizeof(full_path) - 1, "%s/%c", ctx->plx_repo_base, *b);
 
         struct dirent *entry;
         DIR *dp = opendir(full_path);
@@ -90,7 +129,9 @@ void plx_package_load_all(plx_context *ctx, package_list *list) {
                     continue;
                 }
 
-                plx_package_list_add(list, 0, plx_package_load(ctx, entry->d_name), false);
+                if (!plx_package_list_add(list, 0, plx_package_load(ctx, entry->d_name))) {
+                    return false;
+                }
             }
 
             closedir(dp);
@@ -98,6 +139,8 @@ void plx_package_load_all(plx_context *ctx, package_list *list) {
 
         b++;
     }
+
+    return true;
 }
 
 void print_list2(package_list *plst) {
@@ -125,7 +168,7 @@ void print_list2(package_list *plst) {
     printf("\n\n");
 }
 
-void plx_package_list_add_dependencies_from_list(plx_context *ctx, package_list *global_list, package_list *needed, package_list_entry *pcke, str_list *list) {
+bool plx_package_list_add_dependencies_from_list(plx_context *ctx, package_list *global_list, package_list *needed, package_list_entry *pcke, str_list *list, char *src, u32 level) {
     if (list && list->str) {
         str_list *l = list;
 
@@ -133,11 +176,8 @@ void plx_package_list_add_dependencies_from_list(plx_context *ctx, package_list 
             package_list_entry *e = plx_package_list_find(global_list, l->str);
 
             if (!e) {
-                printf("Unable to find package: %s...\n", l->str);
-                fflush(stdout);
-                exit(-6);
-                //l = l->next;
-                //continue;
+                fprintf(stderr, "Unable to find package: %s...\n", l->str);
+                return false;
             }
 
             plx_package *dep = e->pck;
@@ -147,11 +187,16 @@ void plx_package_list_add_dependencies_from_list(plx_context *ctx, package_list 
                 continue;
             }
 
+            if (!strcmp(dep->name, src)) {
+                //fprintf(stderr, "Found a cycle: %s\n", src);
+                return false;
+            }
+
             package_list_entry *existing = plx_package_list_find(needed, dep->name);
 
             if (existing) {
                 if (existing->prev && existing->next) {
-                    //printf("\t  - moving: %s\n", dep->name);
+                    //printf("\t%8d  - moving: %s (%s)\n", level, dep->name, src);
 
                     //print_list2(needed);
 
@@ -163,47 +208,47 @@ void plx_package_list_add_dependencies_from_list(plx_context *ctx, package_list 
                     needed->tail = existing;
                     //printf("\t  - moved: %s\n", dep->name);
 
-                    plx_package_list_add_dependencies(ctx, global_list, needed, existing);
+                    if (!plx_package_list_add_dependencies(ctx, global_list, needed, existing, dep->name, level + 1)) {
+                        return false;
+                    }
                 }
 
             } else {
-                package_list_entry *depe = plx_package_list_add(needed, 0, dep, false);
-                plx_package_list_add_dependencies(ctx, global_list, needed, depe);
+                package_list_entry *depe = plx_package_list_add(needed, 0, dep);
+
+                if (!depe) {
+                    return false;
+                }
+
+                if (!plx_package_list_add_dependencies(ctx, global_list, needed, depe, src, level + 1)) {
+                    return false;
+                }
             }
 
             l = l->next;
         }
 
     }
+
+    return true;
 }
 
-void plx_package_list_add_dependencies(plx_context *ctx, package_list *global_list, package_list *needed, package_list_entry *pcke) {
+bool plx_package_list_add_dependencies(plx_context *ctx, package_list *global_list, package_list *needed, package_list_entry *pcke, char *src, u32 level) {
     if (DEBUG) printf("Adding deps for %s\n", pcke->pck->name);
-    plx_package_list_add_dependencies_from_list(ctx, global_list, needed, pcke, &pcke->pck->deps);
-
-    if (ctx->rebuild) {
-        plx_package_list_add_dependencies_from_list(ctx, global_list, needed, pcke, &pcke->pck->mkdeps);
-    }
-    if (DEBUG) printf("Added deps for %s\n", pcke->pck->name);
-}
-
-void str_list_append(str_list *l, char *s) {
-    if (!l->str) {
-        l->str = strdup(s);
-        return;
+    
+    if (!plx_package_list_add_dependencies_from_list(ctx, global_list, needed, pcke, &pcke->pck->deps, src, level + 1)) {
+        return false;
     }
 
-    while(l) {
-        if (!l->next) {
-            l->next = malloc(sizeof(str_list));
-            l->next->next = 0;
-            l->next->str = strdup(s);
-
-            return;
+    if (ctx->use_make_deps) {
+        if (!plx_package_list_add_dependencies_from_list(ctx, global_list, needed, pcke, &pcke->pck->mkdeps, src, level + 1)) {
+            return false;
         }
-
-        l = l->next;
     }
+
+    if (DEBUG) printf("Added deps for %s\n", pcke->pck->name);
+
+    return true;
 }
 
 void set_field_value(plx_package *pck, char *name, char *value) {

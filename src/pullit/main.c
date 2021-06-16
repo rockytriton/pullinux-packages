@@ -64,28 +64,54 @@ int main(int argc, char **argv) {
         return -1;
     }
 
-    plx_context *ctx = plx_context_load(&arguments);
+    if (DEBUG) printf("Loading...\n");
+
+    plx_context *ctx = plx_context_load(&arguments, arguments.root, false);
+
+    if (DEBUG) printf("Loading all...\n");
 
     package_list pcklist = {0};
-    plx_package_load_all(ctx, &pcklist);
+    if (!plx_package_load_all(ctx, &pcklist)) {
+        return -1;
+    }
+
+    if (DEBUG) printf("Finding...\n");
 
     package_list needed = {0};
-    plx_package *pck = plx_package_list_find(&pcklist, arguments.package)->pck;
+    package_list_entry *fpe = plx_package_list_find(&pcklist, arguments.package);
+
+    if (!fpe) {
+        printf("Package not Found\n");
+        return -1;
+    }
+
+    plx_package *pck = fpe->pck;
+
+    if (DEBUG) printf("Found package\n");
 
     if (!pck) {
         printf("Package not found! %s\n", arguments.package);
         return -2;
     }
 
-    if (pck->installed && !ctx->rebuild) {
+    if (pck->installed && !arguments.rebuild) {
         printf("Package already installed!\n");
         return 0;
     }
 
-    package_list_entry *pcke = plx_package_list_add(&needed, 0, pck, false);
+    package_list_entry *pcke = plx_package_list_add(&needed, 0, pck);
+
+    if (!pcke) {
+        return -1;
+    }
+
+    if (DEBUG) printf("added to list\n");
 
     if (!arguments.nodeps) {
-        plx_package_list_add_dependencies(ctx, &pcklist, &needed, pcke);
+        if (DEBUG) printf("Found adding deps\n");
+        if (!plx_package_list_add_dependencies(ctx, &pcklist, &needed, pcke, pck->name, 1)) {
+            return false;
+        }
     }
 
 #ifdef DBG_LIST
@@ -116,7 +142,7 @@ int main(int argc, char **argv) {
     printf("\n");
 #endif
 
-    printf("The following packages will be %s:\n\n    ", ctx->rebuild ? "rebuilt" : "installed");
+    printf("The following packages will be %s:\n\n    ", arguments.rebuild ? "rebuilt" : "installed");
 
     package_list_entry *l = needed.head;
 
@@ -135,7 +161,7 @@ int main(int argc, char **argv) {
     sz[strlen(sz) - 1] = 0;
 
     if (!strcmp(sz, "Y") || !strlen(sz)) {
-        return plx_install(ctx, &needed);
+        return plx_install(ctx, &needed, arguments.install_rebuild);
     } 
     
     printf("Cancelled\n");

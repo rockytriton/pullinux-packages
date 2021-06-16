@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd vte-0.28.2 || cd $pckname
+
+./configure --prefix=/usr --disable-static --libexecdir=/usr/lib/vte
+
+make && make DESTDIR=$pckdir install
+

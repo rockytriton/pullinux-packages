@@ -18,7 +18,8 @@ deps: [
   'aspell',
   'avahi',
   'jasper',
-  'qrencode'
+  'qrencode',
+  'font-dejavu'
 ]
 mkdeps: []
 extras: [

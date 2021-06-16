@@ -1,0 +1,12 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libfm-1.3.2 || cd $pckname
+
+./configure --prefix=/usr     \
+            --sysconfdir=/etc \
+            --with-extra-only \
+            --with-gtk=no     \
+            --disable-static
+
+make && make DESTDIR=$pckdir install
+

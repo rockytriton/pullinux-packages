@@ -22,9 +22,9 @@ int plx_install_package(plx_context *ctx, plx_package *pck) {
     snprintf(fn, sizeof(fn) - 1, "%s-%s-pullinux-1.2.0.txz", pck->name, pck->version);
 
     char full_path[1024];
-    snprintf(full_path, sizeof(full_path) - 1, "%s/tmp/%s", ctx->plx_base, fn);
+    snprintf(full_path, sizeof(full_path) - 1, "%s/usr/share/plx/build/%s", ctx->plx_base, fn);
 
-    if (!ctx->rebuild || access(full_path, F_OK) != 0) {
+    if (!ctx->use_make_deps || access(full_path, F_OK) != 0) {
         char repo_url[1024];
         snprintf(repo_url, sizeof(repo_url) - 1, "%s/%s", ctx->plx_repo_url, fn);
 
@@ -115,8 +115,8 @@ int plx_install_package(plx_context *ctx, plx_package *pck) {
         }
     }
 
-    if (!ctx->rebuild) {
-        snprintf(full_path, sizeof(full_path) - 1, "%s/tmp/%s", ctx->plx_base, fn);
+    if (!ctx->use_make_deps) {
+        snprintf(full_path, sizeof(full_path) - 1, "%s/usr/share/plx/build/%s", ctx->plx_base, fn);
         remove(full_path);
     }
 
@@ -127,20 +127,20 @@ int plx_install_package(plx_context *ctx, plx_package *pck) {
     return system(command);
 }
 
-int plx_install(plx_context *ctx, package_list *list) {
+int plx_install(plx_context *ctx, package_list *list, bool install_rebuild) {
     //start at the tail and work your way back...
 
     package_list_entry *e = list->tail;
 
     while(e) {
-        printf("%s package: %s\n", ctx->rebuild ? "Rebuilding" : "Installing", e->pck->name);
+        printf("%s package: %s\n", ctx->use_make_deps ? "Rebuilding" : "Installing", e->pck->name);
 
-        if (ctx->rebuild) {
+        if (ctx->use_make_deps) {
             if (plx_build_package(ctx, e->pck)) {
                 return -3;
             }
 
-            if (!ctx->install_rebuild) {
+            if (!install_rebuild) {
                 printf("Install new build? Y/n: ");
                 fflush(stdout);
 

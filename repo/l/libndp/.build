@@ -1,0 +1,11 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libndp-1.7 || cd $pckname
+
+./configure --prefix=/usr        \
+            --sysconfdir=/etc    \
+            --localstatedir=/var \
+            --disable-static
+
+make && make DESTDIR=$pckdir install
+

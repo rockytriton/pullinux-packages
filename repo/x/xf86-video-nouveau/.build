@@ -1,0 +1,16 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd xf86-video-nouveau-1.0.17 || cd $pckname
+
+./configure $XORG_CONFIG
+
+make && make DESTDIR=$pckdir install
+
+
+#KMOD
+#Device Drivers  --->
+#  Graphics support --->
+#   <*> Direct Rendering Manager (XFree86 ... support) ---> [CONFIG_DRM]
+#   <*> Nouveau (NVIDIA) cards                              [CONFIG_DRM_NOUVEAU]
+#      [*]   Support for backlight control                     [CONFIG_DRM_NOUVEAU_BACKLIGHT]
+

@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd lxsession-0.5.5 || cd $pckname
+
+./configure --prefix=/usr --disable-man
+
+make && make DESTDIR=$pckdir install
+

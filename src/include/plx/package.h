@@ -16,10 +16,6 @@ extras: [
 is_group: false
 */
 
-typedef struct str_list_ {
-    char *str;
-    struct str_list_ *next;
-} str_list;
 
 typedef struct {
     char *name;
@@ -53,6 +49,10 @@ void plx_package_free(plx_package *pck);
 bool plx_package_is_installed(plx_context *ctx, char *name);
 plx_package *plx_package_load(plx_context *ctx, char *name);
 package_list_entry *plx_package_list_find(package_list *list, char *name);
-package_list_entry *plx_package_list_add(package_list *list, package_list_entry *parent, plx_package *pck, bool add_deps);
-void plx_package_load_all(plx_context *ctx, package_list *list);
-void plx_package_list_add_dependencies(plx_context *ctx, package_list *global_list, package_list *needed, package_list_entry *pcke);
+package_list_entry *plx_package_list_add(package_list *list, package_list_entry *parent, plx_package *pck);
+bool plx_package_load_all(plx_context *ctx, package_list *list);
+bool plx_package_list_add_dependencies(plx_context *ctx, package_list *global_list, package_list *needed, package_list_entry *pcke, char *src, u32 level);
+
+u32 plx_package_to_string(plx_package *pck, char *str, u32 max_size);
+
+

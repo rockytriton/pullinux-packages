@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd lxde-common-0.99.2 || cd $pckname
+
+./configure --prefix=/usr --sysconfdir=/etc 
+
+make && make DESTDIR=$pckdir install
+

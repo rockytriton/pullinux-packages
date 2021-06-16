@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libnotify-0.7.9 || cd $pckname
+
+mkdir build && cd build
+meson --prefix=/usr -Dgtk_doc=false -Dman=false ..
+ninja && DESTDIR=$pckdir ninja install
+

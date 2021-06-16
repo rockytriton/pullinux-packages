@@ -1,0 +1,16 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd nodejs-14.16.0 || cd $pckname
+
+./configure --prefix=/usr                  \
+            --shared-cares                 \
+            --shared-libuv                 \
+            --shared-openssl               \
+            --shared-nghttp2               \
+            --shared-zlib                  \
+            --with-intl=system-icu
+
+make && make DESTDIR=$pckdir install
+
+ln -sf node $pckdir/usr/share/doc/node-14.16.0
+

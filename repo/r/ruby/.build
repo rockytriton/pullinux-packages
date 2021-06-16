@@ -1,0 +1,6 @@
+tar -xf $filename
+cd $pckname
+
+./configure --prefix=/usr --disable-static --docdir=/usr/share/doc/ruby-3.0.0
+
+make && make DESTDIR=$pckdir install

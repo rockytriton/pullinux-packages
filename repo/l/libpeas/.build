@@ -1,0 +1,11 @@
+tar -xf $filename
+cd $pckname
+
+sed -i 's/test_exe,/test_exe, depends: [libintrospection_gir],/' tests/libpeas/meson.build
+
+mkdir -p build && cd build
+
+meson --prefix=/usr ..
+
+ninja && DESTDIR=$pckdir ninja install
+

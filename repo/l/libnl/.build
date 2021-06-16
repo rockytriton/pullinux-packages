@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd libnl-3.5.0 || cd $pckname
+
+./configure --prefix=/usr --disable-static --sysconfdir=/etc
+
+make && make DESTDIR=$pckdir install
+

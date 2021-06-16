@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd keybinder-0.3.1 || cd $pckname
+
+./configure --prefix=/usr --disable-lua 
+
+make && make DESTDIR=$pckdir install
+

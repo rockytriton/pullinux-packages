@@ -1,0 +1,11 @@
+tar -xf $filename
+cd $pckname
+
+mkdir -p gjsbuild && cd gjsbuild
+
+meson --prefix=/usr ..
+
+ninja && DESTDIR=$pckdir ninja install
+
+ln -sfv gjs-console $pckdir/usr/bin/gjs
+

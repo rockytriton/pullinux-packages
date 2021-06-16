@@ -1,0 +1,9 @@
+tar -xf $filename
+cd $pckname
+
+mkdir -p gcr-build && cd gcr-build
+
+meson --prefix=/usr -Dgtk_doc=false ..
+
+ninja && DESTDIR=$pckdir ninja install
+

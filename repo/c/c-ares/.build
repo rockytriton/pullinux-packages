@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd c-ares-1.17.1 || cd $pckname
+
+mkdir build && cd build
+cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+make && make DESTDIR=$pckdir install
+

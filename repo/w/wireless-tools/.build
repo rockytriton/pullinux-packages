@@ -1,0 +1,10 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd wireless-tools-29 || cd $pckname
+
+patch -Np1 -i ../wireless_tools-29-fix_iwlist_scanning-1.patch
+
+mkdir -p $pckdir/usr
+
+make && make PREFIX=$pckdir/usr INSTALL_MAN=$pckdir/usr/share/man install
+

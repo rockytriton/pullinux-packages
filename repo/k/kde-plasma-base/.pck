@@ -3,6 +3,7 @@ version: 5.21.1
 repo: core
 is_group: true
 deps: [
+  'networkmanager-qt',
   'gconf',
   'gtk+2',
   'gtk+3',

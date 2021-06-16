@@ -1,0 +1,9 @@
+tar -xf $filename
+cd $pckname
+
+mkdir -p build && cd build
+
+meson --prefix=/usr -Dgtk_doc=false -Dalways_build_tests=false ..
+
+ninja && DESTDIR=$pckdir ninja install
+

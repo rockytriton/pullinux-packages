@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd lxmenu-data-0.1.5 || cd $pckname
+
+./configure --prefix=/usr --sysconfdir=/etc
+
+make && make DESTDIR=$pckdir install
+

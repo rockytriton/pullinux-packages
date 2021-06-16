@@ -1,0 +1,17 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd upower-0.99.11 || cd $pckname
+
+./configure --prefix=/usr        \
+            --sysconfdir=/etc    \
+            --localstatedir=/var \
+            --enable-deprecated  \
+            --disable-static
+
+make && make DESTDIR=$pckdir install
+
+#KMOD
+#General Setup --->
+#    [*] Namespaces support --->     [CONFIG_NAMESPACES]
+#       [*] User namespace           [CONFIG_USER_NS]
+

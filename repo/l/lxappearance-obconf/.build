@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd lxappearance-obconf-0.2.3 || cd $pckname
+
+./configure --prefix=/usr --disable-static 
+
+make && make DESTDIR=$pckdir install
+

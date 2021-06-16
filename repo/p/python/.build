@@ -5,7 +5,7 @@ cd Python-3.9.2
             --enable-shared     \
             --with-system-expat \
             --with-system-ffi   \
-            --with-ensurepip=yes
+            --with-ensurepip=install
 
 make && make DESTDIR=$pckdir install
 

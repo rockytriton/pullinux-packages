@@ -10,6 +10,6 @@ cd libpwquality-1.4.4 || cd $pckname
 make && make DESTDIR=$pckdir install
 
 mkdir -p $pckdir/lib
-mv -v /usr/lib/libpwquality.so.* $pckdir/lib &&
+mv -v $pckdir/usr/lib/libpwquality.so.* $pckdir/lib &&
 ln -sfv ../../lib/$(readlink $pckdir/usr/lib/libpwquality.so) $pckdir/usr/lib/libpwquality.so
 

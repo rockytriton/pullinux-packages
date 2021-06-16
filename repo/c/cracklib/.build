@@ -14,7 +14,7 @@ mkdir -p $pckdir/lib
 mv -v /usr/lib/libcrack.so.* $pckdir/lib &&
 ln -sfv ../../lib/$(readlink $pckdir/usr/lib/libcrack.so) $pckdir/usr/lib/libcrack.so
 
-iinstall -v -m644 -D    ../cracklib-words-2.9.7.bz2 \
+install -v -m644 -D    ../cracklib-words-2.9.7.bz2 \
                          $pckdir/usr/share/dict/cracklib-words.bz2    &&
 
 bunzip2 -v               $pckdir/usr/share/dict/cracklib-words.bz2    &&

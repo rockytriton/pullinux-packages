@@ -1,0 +1,66 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd network-manager-1.30.0 || cd $pckname
+
+sed -e 's/-qt4/-qt5/'              \
+    -e 's/moc_location/host_bins/' \
+    -i examples/C/qt/meson.build   &&
+
+sed -e 's/Qt/&5/'                  \
+    -i meson.build
+
+sed '/initrd/d' -i src/core/meson.build
+
+grep -rl '^#!.*python$' | xargs sed -i '1s/python/&3/'
+
+
+mkdir build &&
+cd    build    &&
+
+CXXFLAGS+="-O2 -fPIC"            \
+meson --prefix /usr              \
+      -Dlibaudit=no              \
+      -Dlibpsl=false             \
+      -Dnmtui=false               \
+      -Dovs=false                \
+      -Dppp=false                \
+      -Dselinux=false            \
+      -Dqt=true                 \
+      -Dudev_dir=/lib/udev       \
+      -Dsession_tracking=systemd \
+      -Dmodem_manager=false      \
+      -Dsystemdsystemunitdir=/lib/systemd/system \
+      .. &&
+ninja
+
+DESTDIR=$pckdir ninja install &&
+mv -v $pckdir/usr/share/doc/NetworkManager{,-1.30.0}
+
+
+#KMOD
+#Device Drivers --->
+#  [*] Network device support         [CONFIG_NETDEVICES] --->
+#    [*] Bonding driver support       [CONFIG_BONDING]
+#    [*] Dummy net driver support     [CONFIG_DUMMY]
+#    [*] Ethernet team driver support [CONFIG_NET_TEAM]
+
+mkdir -p $pckdir/etc/NetworkManager
+
+cat >> $pckdir/etc/NetworkManager/NetworkManager.conf << "EOF"
+[main]
+plugins=keyfile
+EOF
+
+mkdir -p $pckdir/etc/NetworkManager/conf.d
+
+cat > $pckdir/etc/NetworkManager/conf.d/polkit.conf << "EOF"
+[main]
+auth-polkit=true
+EOF
+
+cat > $pckdir/etc/NetworkManager/conf.d/no-dns-update.conf << "EOF"
+[main]
+dns=none
+EOF
+
+

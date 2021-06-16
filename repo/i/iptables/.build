@@ -1,0 +1,35 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd iptables-1.8.7 || cd $pckname
+
+./configure --prefix=/usr      \
+            --sbindir=/sbin    \
+            --disable-nftables \
+            --enable-libipq    \
+            --with-xtlibdir=/lib/xtables
+
+make && make DESTDIR=$pckdir install
+
+mkdir -p $pckdir/usr/bin
+mkdir -p $pckdir/lib
+
+ln -sfv ../../sbin/xtables-legacy-multi $pckdir/usr/bin/iptables-xml &&
+
+for file in ip4tc ip6tc ipq xtables
+do
+  mv -v $pckdir/usr/lib/lib${file}.so.* $pckdir/lib &&
+  ln -sfv ../../lib/$(readlink $pckdir/usr/lib/lib${file}.so) $pckdir/usr/lib/lib${file}.so
+done
+
+#KMOD
+#[*] Networking support  --->                                          [CONFIG_NET]
+#      Networking Options  --->
+#        [*] Network packet filtering framework (Netfilter) --->       [CONFIG_NETFILTER]
+#          [*] Advanced netfilter configuration                        [CONFIG_NETFILTER_ADVANCED]
+#          Core Netfilter Configuration --->
+#            <*/M> Netfilter connection tracking support               [CONFIG_NF_CONNTRACK]
+#            <*/M> Netfilter Xtables support (required for ip_tables)  [CONFIG_NETFILTER_XTABLES]
+#            <*/M> LOG target support                                  [CONFIG_NETFILTER_XT_TARGET_LOG]
+#          IP: Netfilter Configuration --->
+#            <*/M> IP tables support (required for filtering/masq/NAT) [CONFIG_IP_NF_IPTABLES]
+

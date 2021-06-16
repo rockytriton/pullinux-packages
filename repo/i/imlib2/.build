@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd imlib2-1.7.1 || cd $pckname
+
+./configure --prefix=/usr --disable-static 
+
+make && make DESTDIR=$pckdir install
+

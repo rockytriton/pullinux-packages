@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd encodings-1.0.5 || cd $pckname
+
+./configure $XORG_CONFIG 
+
+make && make DESTDIR=$pckdir install
+

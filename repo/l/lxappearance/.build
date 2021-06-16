@@ -1,0 +1,9 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd lxappearance-0.6.3 || cd $pckname
+
+./configure --prefix=/usr --sysconfdir=/etc \
+            --enable-dbus 
+
+make && make DESTDIR=$pckdir install
+

@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd pcmanfm-1.3.2 || cd $pckname
+
+./configure --prefix=/usr --sysconfdir=/etc
+
+make && make DESTDIR=$pckdir install
+

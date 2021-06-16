@@ -1,0 +1,9 @@
+tar -xf $filename
+cd $pckname
+
+mkdir -p build && cd build
+
+meson --prefix=/usr -Denable-gtk-doc=false ..
+
+ninja && DESTDIR=$pckdir ninja install
+

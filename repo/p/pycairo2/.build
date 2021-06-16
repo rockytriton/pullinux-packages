@@ -1,0 +1,7 @@
+tar -xf pycairo-1.18.2.tar.gz
+cd pycairo-1.18.2
+
+python2 setup.py build
+
+python2 setup.py install --optimize=1 --root=$pckdir 
+

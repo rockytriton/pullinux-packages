@@ -1,0 +1,21 @@
+tar -xf $filename
+cd $pckname
+
+sed -e '/noinst_SCRIPTS = gpg-zip/c sbin_SCRIPTS += gpg-zip' \
+    -i tools/Makefile.in
+
+./configure --prefix=/usr            \
+            --localstatedir=/var     \
+            --docdir=/usr/share/doc/gnupg-2.2.27
+
+make && make DESTDIR=$pckdir install
+
+
+install -v -m755 -d $pckdir/usr/share/doc/gnupg-2.2.27/html            &&
+install -v -m644    doc/gnupg_nochunks.html \
+                    $pckdir/usr/share/doc/gnupg-2.2.27/html/gnupg.html &&
+install -v -m644    doc/*.texi doc/gnupg.txt \
+                    $pckdir/usr/share/doc/gnupg-2.2.27 &&
+install -v -m644    doc/gnupg.html/* \
+                    $pckdir/usr/share/doc/gnupg-2.2.27/html
+

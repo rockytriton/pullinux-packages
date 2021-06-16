@@ -1,0 +1,8 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd pygobject2-2.28.7 || cd $pckname
+
+./configure --prefix=/usr --disable-introspection
+
+make && make DESTDIR=$pckdir install
+

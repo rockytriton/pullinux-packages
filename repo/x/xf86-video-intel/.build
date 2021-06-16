@@ -1,0 +1,17 @@
+tar -xf $filename
+pckname=${filename%.t*}
+cd xf86-video-intel-20210222 || cd $pckname
+
+./autogen.sh $XORG_CONFIG     \
+            --enable-kms-only \
+            --enable-uxa      \
+            --mandir=/usr/share/man
+
+make && make DESTDIR=$pckdir install
+
+#KMOD
+#Device Drivers  --->
+#  Graphics support --->
+#   <*> Direct Rendering Manager (XFree86 ... support) ---> [CONFIG_DRM]
+#   <*> Intel 8xx/9xx/G3x/G4x/HD Graphics                   [CONFIG_DRM_I915]
+

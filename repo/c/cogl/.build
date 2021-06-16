@@ -1,0 +1,10 @@
+tar -xf $filename
+cd $pckname
+
+./configure --prefix=/usr --prefix=/usr  \
+            --enable-gles1 \
+            --enable-gles2 \
+            --enable-{kms,wayland,xlib}-egl-platform \
+            --enable-wayland-egl-server
+
+make && make DESTDIR=$pckdir install
