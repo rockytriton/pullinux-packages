@@ -10,9 +10,12 @@
 #include <stdlib.h>
 
 int plx_build_package(plx_context *ctx, plx_package *pck) {
-    if (pck->is_group) {
+    printf("Building package: %s\n", pck->name);
+    
+    if (pck->no_package) {
         return 0;
     }
+    
 
     char full_path[1024];
 

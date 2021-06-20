@@ -2,6 +2,7 @@ name: lxde
 version: 0.99.2
 repo: core
 is_group: true
+no_package: true
 deps: [
   'lxmenu-data',
   'libfm-extra',

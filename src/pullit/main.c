@@ -7,6 +7,12 @@
 #include <unistd.h>
 #include <argp.h>
 
+#include <signal.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/mount.h>
+
 static char doc[] = "pullit package manager";
 static char args_doc[] = "[PACKAGE_NAME]";
 
@@ -17,6 +23,8 @@ static struct argp_option options[] = {
     { "no-deps", 'n', 0, 0, "No dependencies"},
     {0}
 };
+
+static plx_context *ctx;
 
 static error_t parse_opt(int key, char *arg, struct argp_state *state) {
     plx_args *arguments = state->input;
@@ -46,7 +54,57 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state) {
 
 static struct argp argp = { options, parse_opt, args_doc, doc, 0, 0, 0 };
 
+bool ensure_installed(plx_context *ctx, package_list *global_list, package_list *needed, char *pckname) {
+    package_list_entry *fpe = plx_package_list_find(global_list, pckname);
+
+    if (!fpe) {
+        return false;
+    }
+
+    plx_package *pck = fpe->pck;
+
+    if (pck->installed) {
+        return true;
+    }
+
+    if (!plx_package_list_add_deps_new(ctx, global_list, needed, pck->name)) {
+        return false;
+    }
+
+    package_list_entry *pcke = plx_package_list_add(needed, 0, pck);
+
+    if (!pcke) {
+        return false;
+    }
+
+    return true;
+}
+
+void cleanup_bind_mounts() {
+    char sz[1024];
+    printf("Unbinding mounts...\n");
+    sprintf(sz, "%s/dev/pts", ctx->plx_base); umount(sz);
+    sprintf(sz, "%s/dev", ctx->plx_base); umount(sz);
+    sprintf(sz, "%s/proc", ctx->plx_base); umount(sz);
+    sprintf(sz, "%s/sys", ctx->plx_base); umount(sz);
+    sprintf(sz, "%s/run", ctx->plx_base); umount(sz);
+    sprintf(sz, "%s/usr/share/plx/dl-cache", ctx->plx_base); umount(sz);
+}
+
+void handle_close(int n) {
+    cleanup_bind_mounts();
+    exit(-1);
+}
+
 int main(int argc, char **argv) {
+
+    struct sigaction sigIntHandler;
+
+    sigIntHandler.sa_handler = handle_close;
+    sigemptyset(&sigIntHandler.sa_mask);
+    sigIntHandler.sa_flags = 0;
+
+    sigaction(SIGINT, &sigIntHandler, NULL);
 
     plx_args arguments;
     arguments.root = "/";
@@ -66,7 +124,11 @@ int main(int argc, char **argv) {
 
     if (DEBUG) printf("Loading...\n");
 
-    plx_context *ctx = plx_context_load(&arguments, arguments.root, false);
+    ctx = plx_context_load(&arguments, arguments.root, false);
+
+    if (arguments.rebuild) {
+        ctx->use_make_deps = true;
+    }
 
     if (DEBUG) printf("Loading all...\n");
 
@@ -99,48 +161,41 @@ int main(int argc, char **argv) {
         return 0;
     }
 
-    package_list_entry *pcke = plx_package_list_add(&needed, 0, pck);
-
-    if (!pcke) {
+    if (!ensure_installed(ctx, &pcklist, &needed, "base-fs")) {
         return -1;
     }
 
-    if (DEBUG) printf("added to list\n");
+    if (!ensure_installed(ctx, &pcklist, &needed, "base")) {
+        return -1;
+    }
 
-    if (!arguments.nodeps) {
-        if (DEBUG) printf("Found adding deps\n");
-        if (!plx_package_list_add_dependencies(ctx, &pcklist, &needed, pcke, pck->name, 1)) {
-            return false;
+    fpe = plx_package_list_find(&pcklist, "base");
+
+    if (fpe->pck->installed) {
+        if (!plx_enter_chroot(ctx)) {
+            return -1;
         }
     }
 
-#ifdef DBG_LIST
-    printf("List Head: %s\n", needed.head->pck->name);
-    printf("List Tail: %s\n", needed.tail->pck->name);
+    fpe = plx_package_list_find(&needed, arguments.package);
+    
+    if (!fpe) {
 
-    printf("\n\n\nLIST:\n");
-
-    package_list_entry *l = needed.head;
-
-    while(l) {
-        printf("%s(", l->pck->name);
-
-        if (l->pck->deps.str) {
-            str_list *sl = &l->pck->deps;
-
-            while(sl) {
-                printf("%s,", sl->str);
-                sl = sl->next;
+        if (!arguments.nodeps) {
+            printf("Adding deps...\n");
+            if (!plx_package_list_add_deps_new(ctx, &pcklist, &needed, pck->name)) {
+                return -1;
             }
         }
 
-        printf(")->");
+        package_list_entry *pcke = plx_package_list_add(&needed, 0, pck);
 
-        l = l->next;
+        if (!pcke) {
+            return -1;
+        }
     }
 
-    printf("\n");
-#endif
+    if (DEBUG) printf("added to list\n");
 
     printf("The following packages will be %s:\n\n    ", arguments.rebuild ? "rebuilt" : "installed");
 
@@ -160,10 +215,13 @@ int main(int argc, char **argv) {
 
     sz[strlen(sz) - 1] = 0;
 
+    int n = 1;
+
     if (!strcmp(sz, "Y") || !strlen(sz)) {
-        return plx_install(ctx, &needed, arguments.install_rebuild);
-    } 
+        n = plx_install(ctx, &needed, arguments.install_rebuild);
+    }
+
+    cleanup_bind_mounts();
     
-    printf("Cancelled\n");
-    return 1;
+    return n;
 }

@@ -9,6 +9,7 @@ deps: [
   'librsvg',
   'lxsession',
   'polkit-gnome',
+  'xf86-input-libinput'
 ]
 mkdeps: []
 extras: [

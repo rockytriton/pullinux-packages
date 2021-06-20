@@ -23,6 +23,7 @@ typedef struct {
     char *repo;
     char *source;
     bool is_group;
+    bool no_package;
     str_list deps;
     str_list mkdeps;
     str_list extras;
@@ -56,3 +57,4 @@ bool plx_package_list_add_dependencies(plx_context *ctx, package_list *global_li
 u32 plx_package_to_string(plx_package *pck, char *str, u32 max_size);
 
 
+bool plx_package_list_add_deps_new(plx_context *ctx, package_list *global_list, package_list *needed, char *pckname);

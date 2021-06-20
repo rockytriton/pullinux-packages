@@ -233,6 +233,78 @@ bool plx_package_list_add_dependencies_from_list(plx_context *ctx, package_list 
     return true;
 }
 
+bool plx_package_list_is_after(package_list_entry *parent, package_list_entry *child) {
+
+    for (package_list_entry *l = parent; l != 0; l = l->next) {
+        if (l == child) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool plx_package_list_add_deps_new(plx_context *ctx, package_list *global_list, package_list *needed, char *pckname);
+
+bool plx_package_list_add_deps_from_list_new(plx_context *ctx, package_list *global_list, package_list *needed, package_list_entry *pcke, str_list *list) {
+    for (str_list *l = list; l != 0 && l->str != 0; l = l->next) {
+        package_list_entry *e = plx_package_list_find(global_list, l->str);
+
+        if (!e) {
+            fprintf(stderr, "Unable to find package: %s...\n", l->str);
+            return false;
+        }
+            
+        plx_package *dep = e->pck;
+
+        if (dep->installed) {
+            continue;
+        }
+
+        package_list_entry *existing = plx_package_list_find(needed, dep->name);
+
+        if (!existing) {
+            printf("Dep %s of %s not existing...\n", dep->name, pcke->pck->name);
+            if (!plx_package_list_add_deps_new(ctx, global_list, needed, l->str)) {
+                return false;
+            }
+
+            package_list_entry *depe = plx_package_list_add(needed, 0, dep);
+
+            if (!depe) {
+                return false;
+            }
+        } else {
+            printf("Dep %s of %s not exists...\n", dep->name, pcke->pck->name);
+        }
+    }
+
+    return true;
+}
+
+
+bool plx_package_list_add_deps_new(plx_context *ctx, package_list *global_list, package_list *needed, char *pckname) {
+    package_list_entry *e = plx_package_list_find(global_list, pckname);
+
+    if (!e) {
+        return false;
+    }
+
+    printf("Adding deps: %s\n", e->pck->name);
+    if (!plx_package_list_add_deps_from_list_new(ctx, global_list, needed, e, &e->pck->deps)) {
+        return false;
+    }
+
+    if (ctx->use_make_deps) {
+        printf("Adding mkdeps: %s\n", e->pck->name);
+        if (!plx_package_list_add_deps_from_list_new(ctx, global_list, needed, e, &e->pck->mkdeps)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 bool plx_package_list_add_dependencies(plx_context *ctx, package_list *global_list, package_list *needed, package_list_entry *pcke, char *src, u32 level) {
     if (DEBUG) printf("Adding deps for %s\n", pcke->pck->name);
     
@@ -268,6 +340,8 @@ void set_field_value(plx_package *pck, char *name, char *value) {
         str_list_append(&pck->mkdeps, value);
     } else if (!strcmp(name, "extras")) {
         str_list_append(&pck->extras, value);
+    } else if (!strcmp(name, "no_package")) {
+        pck->no_package = !strcmp(value, "true");
     }
 }
 

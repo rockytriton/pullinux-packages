@@ -35,4 +35,4 @@ void str_list_append(str_list *l, char *s);
 void str_list_copy(str_list *to, str_list *from);
 str_list *str_list_from_str(char *str, char *sep);
 
-#define DEBUG 0 
+#define DEBUG 1 

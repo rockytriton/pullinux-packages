@@ -28,7 +28,8 @@ bool plx_download_file(char *url, char *filename) {
     curl_easy_setopt(curl_handle, CURLOPT_NOPROGRESS, 1L);
     curl_easy_setopt(curl_handle, CURLOPT_FOLLOWLOCATION, 1L);
     curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, write_data);
-
+    curl_easy_setopt(curl_handle, CURLOPT_FAILONERROR, 1L);
+    
     FILE *pagefile = fopen(filename, "wb");
 
     if(pagefile) {
@@ -54,6 +55,10 @@ bool plx_download_file(char *url, char *filename) {
         }
         
         fclose(pagefile);
+
+        if (!success) {
+            remove(pagefile);
+        }
 
         printf("\n");
     }
